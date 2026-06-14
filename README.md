@@ -1,41 +1,30 @@
 # Followup - Order Follow-Up Emails for WooCommerce
 
-Automated post-purchase emails for WooCommerce: **thank-you**, **review request**, **cross-sell** and **win-back**, sent a configurable number of days after an order reaches a chosen status.
+Followup sends automated post-purchase emails to your WooCommerce customers a configurable number of days after an order reaches a status such as Completed. Use it to thank buyers, ask for reviews, suggest related products and win back lapsed customers — all on autopilot.
 
-Self-contained (no third-party runtime dependencies). FREE, wp.org-ready MVP. The premium add-on lives in [`followup-pro`](https://github.com/wppoland/followup-pro).
+## Features
 
-## How it works
+- Four ready-to-use email types: thank-you, review request, cross-sell and win-back.
+- Per type, control whether it is enabled, which order status triggers it, the delay in days, and the subject and body.
+- Templates support `{customer}`, `{order}` and `{site}` placeholders.
+- A daily background task finds due orders and sends the emails via `wp_mail`.
+- Sending is idempotent: the same follow-up is never sent twice for the same order, so overlapping runs are safe.
+- A global From name and email for all messages.
 
-- A daily wp-cron event (`followup_daily_event`) finds orders that have been in the configured trigger status for at least the configured delay (in days) and have not yet received that follow-up.
-- Emails are sent via `wp_mail` with `{customer}` / `{order}` / `{site}` placeholders rendered.
-- **Idempotent:** each follow-up type is recorded against the order (`_followup_sent_{type}` meta) before sending, so the same email is never sent twice — safe across overlapping cron runs.
+## Installation
 
-## Admin
+1. Upload the plugin to `/wp-content/plugins/followup`, or install it via **Plugins → Add New**.
+2. Activate it. WooCommerce must be active.
+3. Go to **WooCommerce → Follow-ups** to enable email types and edit the templates.
 
-WooCommerce → **Follow-ups**. Per type: enable, trigger order status, delay (days), subject and body. Plus a global From name/email.
+## Frequently Asked Questions
 
-## Architecture
+**When are emails actually sent?**
+A daily event checks for orders that have been in the configured status for at least the configured number of days, and sends any that have not been sent yet.
 
-- `followup.php` — bootstrap; schedules/clears the cron on activation/deactivation; boots on `init:0` and fires `do_action('followup/booted', Plugin::instance())`.
-- `src/Plugin.php` — DI container + boot order from `config/services.php` and `config/hooks.php`.
-- `src/Service/Scheduler.php` — the daily cron worker (due-order discovery + idempotent send).
-- `src/Service/Mailer.php` — placeholder rendering + `wp_mail`.
-- `src/Admin/SettingsPage.php` — WooCommerce submenu settings page.
-- `src/Settings.php`, `src/FollowupTypes.php` — settings access and the type registry (filterable via `followup/types`).
+**Will a customer ever get the same email twice?**
+No. Each follow-up type is recorded against the order once it is sent, so it is never sent again for that order.
 
-## Extension points
+Built by WPPoland — https://plogins.com
 
-- `followup/booted` (action) — fired after boot; the PRO add-on hooks here.
-- `followup/types` (filter) — register additional follow-up types.
-- `followup/mail` (filter) — modify the rendered email before sending.
-- `followup/sent` (action) — fired after a follow-up is sent.
-
-## Development
-
-```bash
-composer install
-composer cs        # PHPCS
-composer analyse   # PHPStan level 6
-```
-
-License: GPL-2.0-or-later.
+License: GPL-2.0-or-later
