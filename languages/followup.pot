@@ -1,0 +1,180 @@
+# Copyright (C) 2026 WPPoland
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Followup - Order Follow-Up Emails for WooCommerce 0.1.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/followup\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-06-14T20:20:58+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: followup\n"
+
+#. Plugin Name of the plugin
+#: followup.php
+msgid "Followup - Order Follow-Up Emails for WooCommerce"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: followup.php
+msgid "https://plogins.com/followup/"
+msgstr ""
+
+#. Description of the plugin
+#: followup.php
+msgid "Send automated post-purchase emails: thank-you, review requests and win-back."
+msgstr ""
+
+#. Author of the plugin
+#: followup.php
+msgid "WPPoland"
+msgstr ""
+
+#. Author URI of the plugin
+#: followup.php
+msgid "https://plogins.com/"
+msgstr ""
+
+#: followup.php:65
+msgid "Followup - Order Follow-Up Emails for WooCommerce requires WooCommerce to be active."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:40
+msgid "Follow-up Emails"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:41
+msgid "Follow-ups"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:99
+msgid "More information"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:120
+msgid "Active"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:122
+msgid "No emails enabled"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:129
+msgid "Automated post-purchase emails"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:130
+msgid "Each enabled email is sent once per order, a set number of days after the order reaches the chosen status. A daily background task finds due orders and sends them. The same email is never sent twice for the same order."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:138
+msgid "Sender"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:139
+msgid "Who follow-up emails appear to come from. Leave blank to use your store name and admin email."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:145
+msgid "From name"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:146
+msgid "The sender name shown in the customer's inbox. Defaults to your site name."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:158
+msgid "From email"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:159
+msgid "The sender address. Defaults to your site admin email. Use an address on your own domain for the best deliverability."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:172
+msgid "Available template tokens"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:173
+msgid "Tokens you can use in subjects and bodies:"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:190
+msgid "Enabled"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:200
+msgid "Trigger status"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:201
+msgid "The email is scheduled once an order reaches this status."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:218
+msgid "Delay (days)"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:219
+msgid "How many days after the trigger status to wait before sending. 0 sends on the next daily run."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:228
+msgid "days after the order reaches the status above"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:233
+msgid "Subject"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:243
+msgid "Body"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:248
+msgid "Plain text. Tokens above are replaced when the email is sent."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:328
+msgid "Completed"
+msgstr ""
+
+#: src/FollowupTypes.php:23
+msgid "Thank-you"
+msgstr ""
+
+#: src/FollowupTypes.php:24
+msgid "A warm thank-you sent shortly after the order is fulfilled."
+msgstr ""
+
+#: src/FollowupTypes.php:27
+msgid "Review request"
+msgstr ""
+
+#: src/FollowupTypes.php:28
+msgid "Asks the customer to leave a review once they have had time with the product."
+msgstr ""
+
+#: src/FollowupTypes.php:31
+msgid "Cross-sell"
+msgstr ""
+
+#: src/FollowupTypes.php:32
+msgid "Suggests related products a couple of weeks after purchase."
+msgstr ""
+
+#: src/FollowupTypes.php:35
+msgid "Win-back"
+msgstr ""
+
+#: src/FollowupTypes.php:36
+msgid "Re-engages a customer who has not ordered again after a longer gap."
+msgstr ""
+
+#: src/Service/Mailer.php:83
+msgid "there"
+msgstr ""
