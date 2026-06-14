@@ -33,19 +33,5 @@ return [
             'subject' => 'How did we do, {customer}?',
             'body'    => "Hi {customer},\n\nYou received order {order} a little while ago. Would you take a moment to leave a review? It helps us a lot and helps other shoppers too.\n\nThank you,\n{site}",
         ],
-        'cross_sell' => [
-            'enabled' => false,
-            'status'  => 'completed',
-            'delay'   => 14,
-            'subject' => 'You might also like these, {customer}',
-            'body'    => "Hi {customer},\n\nSince your order {order}, we have added new products we think you'll love. Come take a look!\n\nSee you soon,\n{site}",
-        ],
-        'win_back' => [
-            'enabled' => false,
-            'status'  => 'completed',
-            'delay'   => 60,
-            'subject' => 'We miss you, {customer}',
-            'body'    => "Hi {customer},\n\nIt has been a while since order {order}. We'd love to welcome you back to {site} - there's plenty new to discover.\n\nHope to see you soon,\n{site}",
-        ],
     ],
 ];

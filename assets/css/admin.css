@@ -8,7 +8,6 @@
 
 .followup-admin {
     --fu-accent: #2563eb;
-    --fu-accent-contrast: #ffffff;
     --fu-surface: #ffffff;
     --fu-surface-alt: #f6f7f9;
     --fu-border: #d8dce0;
@@ -130,57 +129,6 @@
 }
 
 .followup-switch__text { font-size: 0.85rem; }
-
-/* Inline help tooltip. */
-.followup-admin__label {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-}
-
-.followup-help {
-    inline-size: 18px;
-    block-size: 18px;
-    padding: 0;
-    border: 1px solid var(--fu-border);
-    border-radius: 50%;
-    background: var(--fu-surface-alt);
-    color: var(--fu-text-muted);
-    font-size: 11px;
-    font-weight: 700;
-    line-height: 1;
-    cursor: help;
-    transition: background var(--fu-speed) ease, color var(--fu-speed) ease;
-}
-
-.followup-help:hover,
-.followup-help:focus-visible {
-    background: var(--fu-accent);
-    color: var(--fu-accent-contrast);
-}
-
-.followup-tooltip {
-    max-inline-size: 320px;
-    margin: 0;
-    padding: 0.6rem 0.8rem;
-    border: 1px solid var(--fu-border);
-    border-radius: var(--fu-radius);
-    background: var(--fu-surface);
-    color: var(--fu-text);
-    box-shadow: var(--fu-shadow);
-    font-weight: 400;
-}
-
-/* JS-enabled: hide the inline fallback, rely on the popover. */
-.followup-js .followup-help-fallback { display: none; }
-
-.followup-help-fallback {
-    display: block;
-    margin-top: 0.35rem;
-    font-size: 0.82rem;
-    font-weight: 400;
-    color: var(--fu-text-muted);
-}
 
 :where(.followup-admin) :focus-visible {
     outline: 2px solid var(--fu-accent);

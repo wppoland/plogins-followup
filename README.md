@@ -1,10 +1,10 @@
 # Followup - Order Follow-Up Emails for WooCommerce
 
-Followup sends automated post-purchase emails to your WooCommerce customers a configurable number of days after an order reaches a status such as Completed. Use it to thank buyers, ask for reviews, suggest related products and win back lapsed customers — all on autopilot.
+Followup sends automated post-purchase emails to your WooCommerce customers a configurable number of days after an order reaches a status such as Completed. Use it to thank buyers and ask for reviews — all on autopilot.
 
 ## Features
 
-- Four ready-to-use email types: thank-you, review request, cross-sell and win-back.
+- Two ready-to-use email types: thank-you and review request.
 - Per type, control whether it is enabled, which order status triggers it, the delay in days, and the subject and body.
 - Templates support `{customer}`, `{order}` and `{site}` placeholders.
 - A daily background task finds due orders and sends the emails via `wp_mail`.

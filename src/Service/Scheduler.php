@@ -139,14 +139,6 @@ final class Scheduler implements HasHooks
             }
 
             ++$sent;
-
-            /**
-             * Fires after a follow-up email has been sent for an order.
-             *
-             * @param \WC_Order $order
-             * @param string    $type
-             */
-            do_action('followup/sent', $order, $type);
         }
 
         return $sent;

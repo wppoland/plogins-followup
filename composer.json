@@ -1,6 +1,6 @@
 {
     "name": "wppoland/followup",
-    "description": "Send automated post-purchase emails: thank-you, review requests and win-back.",
+    "description": "Send automated post-purchase emails to WooCommerce customers: thank-you and review requests.",
     "type": "wordpress-plugin",
     "license": "GPL-2.0-or-later",
     "require": {

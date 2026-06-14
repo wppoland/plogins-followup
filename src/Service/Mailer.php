@@ -16,8 +16,8 @@ defined('ABSPATH') || exit;
  *  - {order}    the order number (e.g. #1234)
  *  - {site}     the site/blog name
  *
- * Sending is intentionally simple (wp_mail, plain text); deliverability tuning,
- * HTML templates and per-status scheduling live in the PRO add-on.
+ * Sending is intentionally simple: plain-text messages via wp_mail, so they
+ * inherit whatever mail configuration the site already uses.
  */
 final class Mailer
 {
@@ -51,26 +51,7 @@ final class Mailer
 
         $headers = $this->headers();
 
-        /**
-         * Filter the rendered follow-up email just before sending.
-         *
-         * @param array{to: string, subject: string, body: string, headers: array<int, string>} $mail
-         * @param \WC_Order $order
-         * @param string    $type
-         */
-        $mail = apply_filters('followup/mail', [
-            'to'      => $recipient,
-            'subject' => $subject,
-            'body'    => $body,
-            'headers' => $headers,
-        ], $order, $type);
-
-        return (bool) wp_mail(
-            (string) $mail['to'],
-            (string) $mail['subject'],
-            (string) $mail['body'],
-            (array) $mail['headers'],
-        );
+        return (bool) wp_mail($recipient, $subject, $body, $headers);
     }
 
     /**

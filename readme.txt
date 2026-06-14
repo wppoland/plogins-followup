@@ -9,18 +9,16 @@ Stable tag: 0.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Send automated post-purchase emails for WooCommerce: thank-you, review requests, cross-sell and win-back, a set number of days after an order.
+Send automated post-purchase emails for WooCommerce: thank-you and review requests, a set number of days after an order.
 
 == Description ==
 
 Followup sends automated post-purchase emails to your WooCommerce customers, a configurable number of days after an order reaches a status such as Completed.
 
-Four ready-to-use email types are included:
+Two ready-to-use email types are included:
 
 * **Thank-you** - a warm message shortly after the order is fulfilled.
 * **Review request** - asks for a review once the customer has had time with the product.
-* **Cross-sell** - suggests related products a couple of weeks later.
-* **Win-back** - re-engages customers who have not ordered again after a longer gap.
 
 For each type you control whether it is enabled, which order status triggers it, the delay in days, and the subject and body. Templates support `{customer}`, `{order}` and `{site}` placeholders.
 
@@ -57,4 +55,4 @@ No. Each follow-up type is recorded against the order once it is sent, so it is 
 == Changelog ==
 
 = 0.1.0 =
-* Initial release: thank-you, review request, cross-sell and win-back follow-up emails with per-type enable, trigger status, delay and templates; idempotent daily sender.
+* Initial release: thank-you and review request follow-up emails with per-type enable, trigger status, delay and templates; idempotent daily sender.

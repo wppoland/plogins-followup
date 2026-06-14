@@ -74,31 +74,6 @@ final class SettingsPage implements HasHooks
             [],
             \Followup\VERSION,
         );
-
-        wp_enqueue_script(
-            'followup-admin',
-            FOLLOWUP_URL . 'assets/js/admin.js',
-            [],
-            \Followup\VERSION,
-            ['in_footer' => true, 'strategy' => 'defer'],
-        );
-    }
-
-    /**
-     * Render an accessible inline-help affordance: a "?" button wired to a
-     * tooltip via aria-describedby. JS upgrades it to a popover; without JS the
-     * help text stays readable as a visible fallback span.
-     */
-    private function help(string $id, string $text): void
-    {
-        printf(
-            '<button type="button" class="followup-help" aria-describedby="%1$s" aria-label="%2$s">?</button>'
-                . '<span id="%1$s" role="tooltip" popover class="followup-tooltip">%3$s</span>'
-                . '<span class="followup-help-fallback">%3$s</span>',
-            esc_attr($id),
-            esc_attr__('More information', 'followup'),
-            esc_html($text),
-        );
     }
 
     public function renderPage(): void
@@ -141,28 +116,24 @@ final class SettingsPage implements HasHooks
                         <tbody>
                             <tr>
                                 <th scope="row">
-                                    <span class="followup-admin__label">
-                                        <label for="followup_from_name"><?php esc_html_e('From name', 'followup'); ?></label>
-                                        <?php $this->help('fu-help-from-name', __('The sender name shown in the customer\'s inbox. Defaults to your site name.', 'followup')); ?>
-                                    </span>
+                                    <label for="followup_from_name"><?php esc_html_e('From name', 'followup'); ?></label>
                                 </th>
                                 <td>
                                     <input type="text" id="followup_from_name" class="regular-text"
                                         name="<?php echo esc_attr($option); ?>[from_name]"
                                         value="<?php echo esc_attr((string) ($settings['from_name'] ?? '')); ?>" />
+                                    <p class="description"><?php esc_html_e('The sender name shown in the customer\'s inbox. Defaults to your site name.', 'followup'); ?></p>
                                 </td>
                             </tr>
                             <tr>
                                 <th scope="row">
-                                    <span class="followup-admin__label">
-                                        <label for="followup_from_email"><?php esc_html_e('From email', 'followup'); ?></label>
-                                        <?php $this->help('fu-help-from-email', __('The sender address. Defaults to your site admin email. Use an address on your own domain for the best deliverability.', 'followup')); ?>
-                                    </span>
+                                    <label for="followup_from_email"><?php esc_html_e('From email', 'followup'); ?></label>
                                 </th>
                                 <td>
                                     <input type="email" id="followup_from_email" class="regular-text"
                                         name="<?php echo esc_attr($option); ?>[from_email]"
                                         value="<?php echo esc_attr((string) ($settings['from_email'] ?? '')); ?>" />
+                                    <p class="description"><?php esc_html_e('The sender address. Defaults to your site admin email. Use an address on your own domain for the best deliverability.', 'followup'); ?></p>
                                 </td>
                             </tr>
                         </tbody>
@@ -196,10 +167,7 @@ final class SettingsPage implements HasHooks
                             <tbody>
                                 <tr>
                                     <th scope="row">
-                                        <span class="followup-admin__label">
-                                            <label for="<?php echo esc_attr($id . '_status'); ?>"><?php esc_html_e('Trigger status', 'followup'); ?></label>
-                                            <?php $this->help($id . '-help-status', __('The email is scheduled once an order reaches this status.', 'followup')); ?>
-                                        </span>
+                                        <label for="<?php echo esc_attr($id . '_status'); ?>"><?php esc_html_e('Trigger status', 'followup'); ?></label>
                                     </th>
                                     <td>
                                         <select id="<?php echo esc_attr($id . '_status'); ?>" name="<?php echo esc_attr($base); ?>[status]">
@@ -210,14 +178,12 @@ final class SettingsPage implements HasHooks
                                                 <option value="<?php echo esc_attr($slug); ?>" <?php selected($current, $slug); ?>><?php echo esc_html($label); ?></option>
                                             <?php endforeach; ?>
                                         </select>
+                                        <p class="description"><?php esc_html_e('The email is scheduled once an order reaches this status.', 'followup'); ?></p>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row">
-                                        <span class="followup-admin__label">
-                                            <label for="<?php echo esc_attr($id . '_delay'); ?>"><?php esc_html_e('Delay (days)', 'followup'); ?></label>
-                                            <?php $this->help($id . '-help-delay', __('How many days after the trigger status to wait before sending. 0 sends on the next daily run.', 'followup')); ?>
-                                        </span>
+                                        <label for="<?php echo esc_attr($id . '_delay'); ?>"><?php esc_html_e('Delay (days)', 'followup'); ?></label>
                                     </th>
                                     <td>
                                         <input type="number" min="0" max="3650" step="1"
@@ -226,6 +192,7 @@ final class SettingsPage implements HasHooks
                                             value="<?php echo esc_attr((string) absint($email['delay'] ?? 0)); ?>"
                                             class="small-text" />
                                         <span class="description"><?php esc_html_e('days after the order reaches the status above', 'followup'); ?></span>
+                                        <p class="description"><?php esc_html_e('Use 0 to send on the next daily run.', 'followup'); ?></p>
                                     </td>
                                 </tr>
                                 <tr>
