@@ -50,6 +50,10 @@ No. Each follow-up type is recorded against the order once it is sent, so it is 
 
 `{customer}` (first name), `{order}` (order number) and `{site}` (your site name), in both the subject and body.
 
+= Which order statuses can trigger a follow-up? =
+
+You choose the trigger status per email type (for example processing or completed) and the delay in days before it sends.
+
 == Screenshots ==
 
 1. The Follow-ups settings screen: enable each email type and edit its trigger status, delay and templates.
