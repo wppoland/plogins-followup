@@ -1,34 +1,44 @@
 /**
  * Followup admin settings styles.
  *
- * Modern custom properties, dark-mode aware, transitions guarded by
- * prefers-reduced-motion, accessible focus states. Scoped to .followup-admin so
- * nothing leaks into the rest of wp-admin.
+ * The plugin's world is the post-purchase mail: an order drops, time waits,
+ * a follow-up is posted. The one moment that matters is the delay — so the
+ * delay reads as a postmark date stamp on a mailing strip, and an enabled
+ * email card carries a perforated stamp edge. Accent is postmark ink, not the
+ * generic admin blue. Themeable --fu-* tokens with sane fallbacks; dark-scheme
+ * aware; motion guarded by prefers-reduced-motion; accessible focus. Scoped to
+ * .followup-admin so nothing leaks into the rest of wp-admin.
  */
 
 .followup-admin {
-    --fu-accent: #2563eb;
+    --fu-ink: #8a2846;            /* postmark cancellation ink */
+    --fu-ink-deep: #5e1b30;
+    --fu-accent: var(--fu-ink);
     --fu-surface: #ffffff;
-    --fu-surface-alt: #f6f7f9;
-    --fu-border: #d8dce0;
+    --fu-surface-alt: #f7f4f0;    /* warm paper, not cold grey */
+    --fu-paper-edge: #efe8df;
+    --fu-border: #ddd5c9;
     --fu-text: #1d2327;
-    --fu-text-muted: #646970;
-    --fu-on: #008a20;
-    --fu-off: #8a8f94;
-    --fu-radius: 8px;
-    --fu-shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.05);
-    --fu-speed: 150ms;
+    --fu-text-muted: #6b6258;
+    --fu-on: #1f7a4d;
+    --fu-off: #736d65;            /* deepened: white label needs >=4.5:1 (WCAG AA) */
+    --fu-radius: 10px;
+    --fu-shadow: 0 1px 2px rgba(64, 30, 40, 0.06), 0 2px 8px rgba(64, 30, 40, 0.05);
+    --fu-speed: 160ms;
 }
 
 @media (prefers-color-scheme: dark) {
     .followup-admin {
-        --fu-accent: #5b8dff;
-        --fu-surface: #1e2329;
-        --fu-surface-alt: #262c33;
-        --fu-border: #3a424b;
+        --fu-ink: #e0708e;
+        --fu-ink-deep: #c4506f;
+        --fu-surface: #20262d;
+        --fu-surface-alt: #272d31;
+        --fu-paper-edge: #2e3439;
+        --fu-border: #3d4148;
         --fu-text: #e6e9ec;
-        --fu-text-muted: #a7adb4;
-        --fu-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+        --fu-text-muted: #a7a39b;
+        --fu-on: #188048;            /* deepened: white label needs >=4.5:1 (WCAG AA) */
+        --fu-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
     }
 }
 
@@ -60,7 +70,11 @@
     color: var(--fu-text);
 }
 
-.followup-admin__intro-icon { font-size: 1.8rem; line-height: 1; }
+.followup-admin__intro-icon {
+    font-size: 1.8rem;
+    line-height: 1;
+    color: var(--fu-ink);
+}
 .followup-admin__intro h2 { margin: 0 0 0.25rem; font-size: 1.05rem; }
 .followup-admin__intro p { margin: 0; color: var(--fu-text-muted); }
 
@@ -93,8 +107,6 @@
 }
 
 .followup-tokens__label { color: var(--fu-text-muted); margin-inline-end: 0.25rem; }
-.followup-tokens code,
-.followup-tokens__label + code,
 .followup-tokens code {
     background: var(--fu-surface);
     border: 1px solid var(--fu-border);
@@ -112,12 +124,33 @@
 
 .followup-email__head h2 { margin: 0.5rem 0; }
 
+/* The enabled card carries a perforated stamp edge on its leading side. */
 .followup-email {
+    position: relative;
     border-inline-start: 4px solid var(--fu-border);
     transition: border-color var(--fu-speed) ease;
 }
 
-.followup-email.is-enabled { border-inline-start-color: var(--fu-accent); }
+.followup-email.is-enabled {
+    border-inline-start-color: transparent;
+}
+
+.followup-email.is-enabled::before {
+    content: "";
+    position: absolute;
+    inset-block: 6px;
+    inset-inline-start: -2px;
+    width: 6px;
+    border-radius: 6px;
+    /* Perforated stamp edge: dots of ink punched along the seam. */
+    background-image: radial-gradient(
+        circle at center,
+        var(--fu-ink) 0 2.2px,
+        transparent 2.6px
+    );
+    background-size: 6px 9px;
+    background-repeat: repeat-y;
+}
 
 .followup-switch {
     display: inline-flex;
@@ -130,8 +163,106 @@
 
 .followup-switch__text { font-size: 0.85rem; }
 
+/* ---- Postmark mailing strip: drop -> wait -> sent ------------------------ */
+
+.followup-postmark {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0.25rem 0 1rem;
+    padding: 0.55rem 0.85rem;
+    background: var(--fu-surface-alt);
+    border: 1px solid var(--fu-border);
+    border-radius: var(--fu-radius);
+    color: var(--fu-text-muted);
+    font-size: 0.82rem;
+    overflow: hidden;
+}
+
+.followup-postmark__drop,
+.followup-postmark__send {
+    flex: 0 0 auto;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+}
+
+.followup-postmark__send { color: var(--fu-text); }
+
+/* Dotted travel line, like a folded route on an envelope. */
+.followup-postmark__line {
+    flex: 1 1 auto;
+    min-width: 1.5rem;
+    height: 0;
+    border-top: 2px dotted var(--fu-border);
+}
+
+/* The day-count rendered as a round postmark / cancellation stamp. */
+.followup-postmark__stamp {
+    flex: 0 0 auto;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 3.4rem;
+    height: 3.4rem;
+    border-radius: 50%;
+    border: 2px dashed var(--fu-ink);
+    color: var(--fu-ink);
+    background:
+        radial-gradient(circle at center, transparent 58%, rgba(138, 40, 70, 0.06) 60%);
+    line-height: 1;
+    transform: rotate(-7deg);
+    transform-origin: center;
+}
+
+@media (prefers-color-scheme: dark) {
+    .followup-postmark__stamp {
+        background:
+            radial-gradient(circle at center, transparent 58%, rgba(224, 112, 142, 0.1) 60%);
+    }
+}
+
+.followup-postmark__days {
+    font-size: 1.25rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+}
+
+.followup-postmark__days-unit {
+    font-size: 0.58rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 0.1em;
+}
+
+/* The one earned micro-interaction: enabling the email presses the stamp in. */
+.followup-postmark__stamp.is-pressing {
+    animation: followup-stamp var(--fu-speed) cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes followup-stamp {
+    0% {
+        transform: rotate(-7deg) scale(1.35);
+        opacity: 0.35;
+    }
+    60% {
+        transform: rotate(-4deg) scale(0.94);
+        opacity: 1;
+    }
+    100% {
+        transform: rotate(-7deg) scale(1);
+    }
+}
+
+/* Idle card: the postmark waits in faint grey until the email is live. */
+.followup-email:not(.is-enabled) .followup-postmark__stamp {
+    border-color: var(--fu-border);
+    color: var(--fu-text-muted);
+    background: none;
+}
+
 :where(.followup-admin) :focus-visible {
-    outline: 2px solid var(--fu-accent);
+    outline: 2px solid var(--fu-ink);
     outline-offset: 2px;
 }
 
@@ -140,5 +271,7 @@
     .followup-admin *::before,
     .followup-admin *::after {
         transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
     }
 }
