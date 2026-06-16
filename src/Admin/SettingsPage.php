@@ -95,6 +95,10 @@ final class SettingsPage implements HasHooks
         $types    = FollowupTypes::all();
         $statuses = $this->orderStatuses();
         $anyOn    = $this->anyEnabled($settings, $types);
+
+        // Concrete fall-backs so "leave blank" shows what it actually resolves to.
+        $defaultName  = (string) get_bloginfo('name');
+        $defaultEmail = (string) get_option('admin_email', '');
         ?>
         <div class="wrap followup-admin">
             <h1>
@@ -129,8 +133,14 @@ final class SettingsPage implements HasHooks
                                 <td>
                                     <input type="text" id="followup_from_name" class="regular-text"
                                         name="<?php echo esc_attr($option); ?>[from_name]"
+                                        placeholder="<?php echo esc_attr($defaultName); ?>"
                                         value="<?php echo esc_attr((string) ($settings['from_name'] ?? '')); ?>" />
-                                    <p class="description"><?php esc_html_e('The sender name shown in the customer\'s inbox. Defaults to your site name.', 'followup'); ?></p>
+                                    <p class="description">
+                                        <?php
+                                        /* translators: %s: the store name used as the fall-back sender. */
+                                        printf(esc_html__('Shown as the sender in the customer inbox. Left blank, emails come from %s.', 'followup'), '<strong>' . esc_html($defaultName) . '</strong>');
+                                        ?>
+                                    </p>
                                 </td>
                             </tr>
                             <tr>
@@ -140,8 +150,15 @@ final class SettingsPage implements HasHooks
                                 <td>
                                     <input type="email" id="followup_from_email" class="regular-text"
                                         name="<?php echo esc_attr($option); ?>[from_email]"
+                                        placeholder="<?php echo esc_attr($defaultEmail); ?>"
                                         value="<?php echo esc_attr((string) ($settings['from_email'] ?? '')); ?>" />
-                                    <p class="description"><?php esc_html_e('The sender address. Defaults to your site admin email. Use an address on your own domain for the best deliverability.', 'followup'); ?></p>
+                                    <p class="description">
+                                        <?php
+                                        /* translators: %s: the admin email used as the fall-back sender address. */
+                                        printf(esc_html__('Reply-to address for these emails. Left blank, they send from %s.', 'followup'), '<strong>' . esc_html($defaultEmail) . '</strong>');
+                                        ?>
+                                        <?php esc_html_e('An address on your own domain delivers most reliably.', 'followup'); ?>
+                                    </p>
                                 </td>
                             </tr>
                         </tbody>
@@ -167,11 +184,12 @@ final class SettingsPage implements HasHooks
                     <div class="followup-admin__card followup-email <?php echo $enabled ? 'is-enabled' : ''; ?>">
                         <div class="followup-email__head">
                             <h2><?php echo esc_html((string) $meta['label']); ?></h2>
-                            <label class="followup-switch" for="<?php echo esc_attr($id . '_enabled'); ?>">
+                            <label class="followup-switch" for="<?php echo esc_attr($id . '_enabled'); ?>"
+                                title="<?php esc_attr_e('When off, this email is never scheduled or sent.', 'followup'); ?>">
                                 <input type="checkbox" id="<?php echo esc_attr($id . '_enabled'); ?>"
                                     class="followup-email__toggle"
                                     name="<?php echo esc_attr($base); ?>[enabled]" value="1" <?php checked($enabled, true); ?> />
-                                <span class="followup-switch__text"><?php esc_html_e('Enabled', 'followup'); ?></span>
+                                <span class="followup-switch__text"><?php esc_html_e('Send this email', 'followup'); ?></span>
                             </label>
                         </div>
                         <p class="followup-admin__card-hint"><?php echo esc_html((string) $meta['description']); ?></p>
@@ -239,6 +257,7 @@ final class SettingsPage implements HasHooks
                                         <input type="text" id="<?php echo esc_attr($id . '_subject'); ?>" class="large-text"
                                             name="<?php echo esc_attr($base); ?>[subject]"
                                             value="<?php echo esc_attr((string) ($email['subject'] ?? '')); ?>" />
+                                        <p class="description"><?php esc_html_e('The inbox subject line. Tokens above work here too — a name in the subject lifts open rates.', 'followup'); ?></p>
                                     </td>
                                 </tr>
                                 <tr>
