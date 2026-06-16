@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-14T22:02:14+00:00\n"
+"POT-Creation-Date: 2026-06-16T20:24:21+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: followup\n"
@@ -51,91 +51,145 @@ msgstr ""
 msgid "Follow-ups"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:95
+#: src/Admin/SettingsPage.php:107
 msgid "Active"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:97
+#: src/Admin/SettingsPage.php:109
 msgid "No emails enabled"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:104
+#: src/Admin/SettingsPage.php:116
 msgid "Automated post-purchase emails"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:105
+#: src/Admin/SettingsPage.php:117
 msgid "Each enabled email is sent once per order, a set number of days after the order reaches the chosen status. A daily background task finds due orders and sends them. The same email is never sent twice for the same order."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:113
+#: src/Admin/SettingsPage.php:125
 msgid "Sender"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:114
+#: src/Admin/SettingsPage.php:126
 msgid "Who follow-up emails appear to come from. Leave blank to use your store name and admin email."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:119
+#: src/Admin/SettingsPage.php:131
 msgid "From name"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:125
-msgid "The sender name shown in the customer's inbox. Defaults to your site name."
+#. translators: %s: the store name used as the fall-back sender.
+#: src/Admin/SettingsPage.php:141
+#, php-format
+msgid "Shown as the sender in the customer inbox. Left blank, emails come from %s."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:130
+#: src/Admin/SettingsPage.php:148
 msgid "From email"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:136
-msgid "The sender address. Defaults to your site admin email. Use an address on your own domain for the best deliverability."
+#. translators: %s: the admin email used as the fall-back sender address.
+#: src/Admin/SettingsPage.php:158
+#, php-format
+msgid "Reply-to address for these emails. Left blank, they send from %s."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:143
+#: src/Admin/SettingsPage.php:160
+msgid "An address on your own domain delivers most reliably."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:168
 msgid "Available template tokens"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:144
+#: src/Admin/SettingsPage.php:169
 msgid "Tokens you can use in subjects and bodies:"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:161
-msgid "Enabled"
+#: src/Admin/SettingsPage.php:188
+msgid "When off, this email is never scheduled or sent."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:170
+#: src/Admin/SettingsPage.php:192
+msgid "Send this email"
+msgstr ""
+
+#. translators: %s: order status name, e.g. Completed.
+#: src/Admin/SettingsPage.php:199
+#, php-format
+msgid "Order reaches %s"
+msgstr ""
+
+#. translators: %d: number of days.
+#: src/Admin/SettingsPage.php:201
+#, php-format
+msgid "wait %d day"
+msgid_plural "wait %d days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Admin/SettingsPage.php:203
+msgid "next daily run"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:207
+#: src/Admin/SettingsPage.php:213
+msgid "day"
+msgid_plural "days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Admin/SettingsPage.php:207
+msgid "days"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:208
+#: src/Admin/SettingsPage.php:213
+msgid "soon"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:216
+msgid "Email sent"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:223
 msgid "Trigger status"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:181
+#: src/Admin/SettingsPage.php:234
 msgid "The email is scheduled once an order reaches this status."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:186
+#: src/Admin/SettingsPage.php:239
 msgid "Delay (days)"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:194
+#: src/Admin/SettingsPage.php:248
 msgid "days after the order reaches the status above"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:195
+#: src/Admin/SettingsPage.php:249
 msgid "Use 0 to send on the next daily run."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:200
+#: src/Admin/SettingsPage.php:254
 msgid "Subject"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:210
+#: src/Admin/SettingsPage.php:260
+msgid "The inbox subject line. Tokens above work here too — a name in the subject lifts open rates."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:265
 msgid "Body"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:215
+#: src/Admin/SettingsPage.php:270
 msgid "Plain text. Tokens above are replaced when the email is sent."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:295
+#: src/Admin/SettingsPage.php:350
 msgid "Completed"
 msgstr ""
 
@@ -155,6 +209,6 @@ msgstr ""
 msgid "Asks the customer to leave a review once they have had time with the product."
 msgstr ""
 
-#: src/Service/Mailer.php:64
+#: src/Service/Mailer.php:87
 msgid "there"
 msgstr ""
