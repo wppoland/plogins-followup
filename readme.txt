@@ -15,14 +15,16 @@ Send automated post-purchase emails for WooCommerce: thank-you and review reques
 
 Followup sends automated post-purchase emails to your WooCommerce customers, a configurable number of days after an order reaches a status such as Completed.
 
-Two ready-to-use email types are included:
+Two email types come ready to use:
 
-* **Thank-you** - a warm message shortly after the order is fulfilled.
-* **Review request** - asks for a review once the customer has had time with the product.
+* **Thank-you**: a short note shortly after the order is fulfilled.
+* **Review request**: asks for a review once the customer has had the product for a while.
 
-For each type you control whether it is enabled, which order status triggers it, the delay in days, and the subject and body. Templates support `{customer}`, `{order}` and `{site}` placeholders.
+For each type you set whether it is enabled, which order status triggers it, how many days to wait, and the subject and body. Subjects and bodies support `{customer}` (first name), `{order}` (order number) and `{site}` (site name).
 
-A daily background task (wp-cron) finds orders that are due and sends the emails via `wp_mail`. Sending is idempotent: the same follow-up is never sent twice for the same order, tracked per-order so overlapping runs are safe.
+A daily wp-cron event picks up orders that are due and sends the emails with `wp_mail`, so they use whatever mail setup the site already has. Each follow-up is recorded against the order as soon as it sends, so the same one is never sent twice, even if two cron runs overlap.
+
+The plugin is not on the WordPress.org directory yet. Source code and issue tracker live at https://github.com/wppoland/followup.
 
 == Installation ==
 
