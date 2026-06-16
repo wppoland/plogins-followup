@@ -49,9 +49,32 @@ final class Mailer
             return false;
         }
 
-        $headers = $this->headers();
+        $mail = [
+            'to'      => $recipient,
+            'subject' => $subject,
+            'body'    => $body,
+            'headers' => $this->headers(),
+        ];
 
-        return (bool) wp_mail($recipient, $subject, $body, $headers);
+        /**
+         * Filters the follow-up email arguments just before sending.
+         *
+         * Add-ons (e.g. Followup Pro) use this to transform the plain-text body
+         * into branded HTML and adjust the Content-Type header. By default the
+         * arguments are sent unchanged as a plain-text message via wp_mail.
+         *
+         * @param array{to: string, subject: string, body: string, headers: array<int, string>} $mail  Email arguments.
+         * @param \WC_Order                                                                       $order The order being followed up.
+         * @param string                                                                          $type  The follow-up type (e.g. "thankyou", "review").
+         */
+        $mail = (array) apply_filters('followup/mail', $mail, $order, $type);
+
+        return (bool) wp_mail(
+            (string) ($mail['to'] ?? $recipient),
+            (string) ($mail['subject'] ?? $subject),
+            (string) ($mail['body'] ?? $body),
+            (array) ($mail['headers'] ?? []),
+        );
     }
 
     /**

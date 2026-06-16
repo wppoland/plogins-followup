@@ -54,5 +54,14 @@ final class Plugin
                 $service->registerHooks();
             }
         }
+
+        /**
+         * Fires after the plugin has fully booted and all FREE services have
+         * registered their hooks. Add-ons (e.g. Followup Pro) listen here to
+         * extend the shared container and register their own hook subscribers.
+         *
+         * @param Plugin $plugin The booted plugin instance.
+         */
+        do_action('followup/booted', $this);
     }
 }
