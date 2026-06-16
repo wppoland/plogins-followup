@@ -21,7 +21,7 @@
     --fu-text: #1d2327;
     --fu-text-muted: #6b6258;
     --fu-on: #1f7a4d;
-    --fu-off: #9a948c;
+    --fu-off: #736d65;            /* deepened: white label needs >=4.5:1 (WCAG AA) */
     --fu-radius: 10px;
     --fu-shadow: 0 1px 2px rgba(64, 30, 40, 0.06), 0 2px 8px rgba(64, 30, 40, 0.05);
     --fu-speed: 160ms;
@@ -37,7 +37,7 @@
         --fu-border: #3d4148;
         --fu-text: #e6e9ec;
         --fu-text-muted: #a7a39b;
-        --fu-on: #4cc38a;
+        --fu-on: #188048;            /* deepened: white label needs >=4.5:1 (WCAG AA) */
         --fu-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
     }
 }
