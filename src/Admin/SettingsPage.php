@@ -74,6 +74,14 @@ final class SettingsPage implements HasHooks
             [],
             \Followup\VERSION,
         );
+
+        wp_enqueue_script(
+            'followup-admin',
+            FOLLOWUP_URL . 'assets/js/admin.js',
+            [],
+            \Followup\VERSION,
+            true,
+        );
     }
 
     public function renderPage(): void
@@ -151,6 +159,11 @@ final class SettingsPage implements HasHooks
                     $base    = $option . '[emails][' . $type . ']';
                     $id      = 'followup_' . $type;
                     ?>
+                    <?php
+                    $curStatus = (string) ($email['status'] ?? 'completed');
+                    $curDelay  = (int) absint($email['delay'] ?? 0);
+                    $sendLabel = (string) ($statuses[ $curStatus ] ?? ucfirst($curStatus));
+                    ?>
                     <div class="followup-admin__card followup-email <?php echo $enabled ? 'is-enabled' : ''; ?>">
                         <div class="followup-email__head">
                             <h2><?php echo esc_html((string) $meta['label']); ?></h2>
@@ -162,6 +175,28 @@ final class SettingsPage implements HasHooks
                             </label>
                         </div>
                         <p class="followup-admin__card-hint"><?php echo esc_html((string) $meta['description']); ?></p>
+
+                        <?php
+                        /* translators: %s: order status name, e.g. Completed. */
+                        $dropLine = sprintf(__('Order reaches %s', 'followup'), $sendLabel);
+                        /* translators: %d: number of days. */
+                        $waitLine = sprintf(_n('wait %d day', 'wait %d days', $curDelay, 'followup'), $curDelay);
+                        if (0 === $curDelay) {
+                            $waitLine = __('next daily run', 'followup');
+                        }
+                        ?>
+                        <div class="followup-postmark" aria-hidden="true"
+                            data-fu-units="<?php echo esc_attr(__('day', 'followup') . '|' . __('days', 'followup')); ?>"
+                            data-fu-soon="<?php echo esc_attr__('soon', 'followup'); ?>">
+                            <span class="followup-postmark__drop"><?php echo esc_html($dropLine); ?></span>
+                            <span class="followup-postmark__line"></span>
+                            <span class="followup-postmark__stamp" data-fu-stamp>
+                                <span class="followup-postmark__days"><?php echo esc_html((string) $curDelay); ?></span>
+                                <span class="followup-postmark__days-unit"><?php echo esc_html(0 === $curDelay ? __('soon', 'followup') : _n('day', 'days', $curDelay, 'followup')); ?></span>
+                            </span>
+                            <span class="followup-postmark__line"></span>
+                            <span class="followup-postmark__send"><?php esc_html_e('Email sent', 'followup'); ?></span>
+                        </div>
 
                         <table class="form-table" role="presentation">
                             <tbody>
@@ -190,6 +225,7 @@ final class SettingsPage implements HasHooks
                                             id="<?php echo esc_attr($id . '_delay'); ?>"
                                             name="<?php echo esc_attr($base); ?>[delay]"
                                             value="<?php echo esc_attr((string) absint($email['delay'] ?? 0)); ?>"
+                                            data-fu-delay
                                             class="small-text" />
                                         <span class="description"><?php esc_html_e('days after the order reaches the status above', 'followup'); ?></span>
                                         <p class="description"><?php esc_html_e('Use 0 to send on the next daily run.', 'followup'); ?></p>
