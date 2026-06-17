@@ -29,11 +29,13 @@ final class Mailer
      * Send a single follow-up email for an order. Returns true when wp_mail
      * accepted the message. Performs no idempotency checks itself — the caller
      * (Scheduler) owns "send once" semantics.
+     *
+     * @param array{id: string, enabled?: bool, status?: string, delay?: int, subject: string, body: string} $step
      */
-    public function send(\WC_Order $order, string $type): bool
+    public function send(\WC_Order $order, array $step): bool
     {
-        $config = $this->settings->email($type);
-        if (null === $config) {
+        $type = sanitize_key((string) ($step['id'] ?? ''));
+        if ('' === $type) {
             return false;
         }
 
@@ -42,8 +44,8 @@ final class Mailer
             return false;
         }
 
-        $subject = $this->render((string) ($config['subject'] ?? ''), $order);
-        $body    = $this->render((string) ($config['body'] ?? ''), $order);
+        $subject = $this->render((string) ($step['subject'] ?? ''), $order);
+        $body    = $this->render((string) ($step['body'] ?? ''), $order);
 
         if ('' === trim($subject) || '' === trim($body)) {
             return false;

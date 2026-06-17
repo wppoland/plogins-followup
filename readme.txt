@@ -5,7 +5,7 @@ Requires at least: 6.5
 Tested up to: 7.0
 Requires PHP: 8.1
 Requires Plugins: woocommerce
-Stable tag: 0.1.0
+Stable tag: 0.1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -23,6 +23,8 @@ Two email types come ready to use:
 For each type you set whether it is enabled, which order status triggers it, how many days to wait, and the subject and body. Subjects and bodies support `{customer}` (first name), `{order}` (order number) and `{site}` (site name).
 
 A daily wp-cron event picks up orders that are due and sends the emails with `wp_mail`, so they use whatever mail setup the site already has. Each follow-up is recorded against the order as soon as it sends, so the same one is never sent twice, even if two cron runs overlap.
+
+Developers can extend the sequence through the `followup/sequence_steps` filter. Each custom step can provide its own trigger status, delay, subject and body while reusing Followup's idempotent scheduler.
 
 The plugin is not on the WordPress.org directory yet. Source code and issue tracker live at https://github.com/wppoland/followup.
 
@@ -63,6 +65,9 @@ You choose the trigger status per email type (for example processing or complete
 Followup does not connect to any external services. It has no API keys, sends no data off-site, and loads nothing from a remote URL or CDN. Everything runs on your own WordPress install: settings are stored in the `followup_settings` and `followup_db_version` options, and each sent follow-up is recorded as `_followup_sent_{type}` order meta so it is never sent twice. Emails go out through your site's own `wp_mail()` using your WooCommerce store sender, so they travel by whatever mail setup you already have.
 
 == Changelog ==
+
+= 0.1.1 =
+* Add the `followup/sequence_steps` extension filter so add-ons can append custom post-purchase email steps.
 
 = 0.1.0 =
 * Initial release: thank-you and review request follow-up emails with per-type enable, trigger status, delay and templates; idempotent daily sender.

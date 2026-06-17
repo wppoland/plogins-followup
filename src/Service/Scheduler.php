@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Followup\Service;
 
 use Followup\Contract\HasHooks;
-use Followup\FollowupTypes;
-use Followup\Settings;
+use Followup\Service\SequenceSteps;
 
 defined('ABSPATH') || exit;
 
@@ -32,7 +31,7 @@ final class Scheduler implements HasHooks
     private const BATCH_LIMIT = 200;
 
     public function __construct(
-        private readonly Settings $settings,
+        private readonly SequenceSteps $sequenceSteps,
         private readonly Mailer $mailer,
     ) {
     }
@@ -65,26 +64,29 @@ final class Scheduler implements HasHooks
             return;
         }
 
-        foreach (FollowupTypes::all() as $type => $_meta) {
-            $config = $this->settings->email($type);
-            if (null === $config || empty($config['enabled'])) {
+        foreach ($this->sequenceSteps->resolve() as $step) {
+            if (empty($step['enabled'])) {
                 continue;
             }
 
-            $this->processType($type, $config);
+            $this->processStep($step);
         }
     }
 
     /**
-     * Find and send the follow-up of one type to all currently-due orders.
+     * Find and send one sequence step to all currently-due orders.
      *
-     * @param array<string, mixed> $config
+     * @param array{id: string, enabled: bool, status: string, delay: int, subject: string, body: string} $step
      */
-    private function processType(string $type, array $config): int
+    private function processStep(array $step): int
     {
-        $status = (string) ($config['status'] ?? 'completed');
-        $delay  = max(0, absint($config['delay'] ?? 0));
-        $status = sanitize_key($status);
+        $type   = sanitize_key((string) ($step['id'] ?? ''));
+        $status = sanitize_key((string) ($step['status'] ?? 'completed'));
+        $delay  = max(0, absint($step['delay'] ?? 0));
+
+        if ('' === $type) {
+            return 0;
+        }
 
         // Only orders modified on/before this cutoff are old enough. We use the
         // order's last-modified date as a proxy for "entered status N days ago";
@@ -129,7 +131,7 @@ final class Scheduler implements HasHooks
             $order->update_meta_data($metaKey, gmdate('c'));
             $order->save_meta_data();
 
-            $ok = $this->mailer->send($order, $type);
+            $ok = $this->mailer->send($order, $step);
 
             if (! $ok) {
                 // Roll back the claim so a transient failure can retry tomorrow.
