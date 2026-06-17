@@ -58,6 +58,10 @@ You choose the trigger status per email type (for example processing or complete
 
 1. The Follow-ups settings screen: enable each email type and edit its trigger status, delay and templates.
 
+== External Services ==
+
+Followup does not connect to any external services. It has no API keys, sends no data off-site, and loads nothing from a remote URL or CDN. Everything runs on your own WordPress install: settings are stored in the `followup_settings` and `followup_db_version` options, and each sent follow-up is recorded as `_followup_sent_{type}` order meta so it is never sent twice. Emails go out through your site's own `wp_mail()` using your WooCommerce store sender, so they travel by whatever mail setup you already have.
+
 == Changelog ==
 
 = 0.1.0 =
