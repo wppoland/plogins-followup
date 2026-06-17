@@ -13,6 +13,7 @@ use Followup\Container;
 use Followup\Migrator;
 use Followup\Service\Mailer;
 use Followup\Service\Scheduler;
+use Followup\Service\SequenceSteps;
 use Followup\Settings;
 
 defined('ABSPATH') || exit;
@@ -26,8 +27,12 @@ return static function (Container $c): void {
         $c->get(Settings::class),
     ));
 
-    $c->singleton(Scheduler::class, static fn (Container $c): Scheduler => new Scheduler(
+    $c->singleton(SequenceSteps::class, static fn (Container $c): SequenceSteps => new SequenceSteps(
         $c->get(Settings::class),
+    ));
+
+    $c->singleton(Scheduler::class, static fn (Container $c): Scheduler => new Scheduler(
+        $c->get(SequenceSteps::class),
         $c->get(Mailer::class),
     ));
 
