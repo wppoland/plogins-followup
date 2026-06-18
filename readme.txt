@@ -1,5 +1,5 @@
 === Followup - Order Follow-Up Emails for WooCommerce ===
-Contributors: wppoland
+Contributors: motylanogha
 Tags: woocommerce, email, follow-up, post-purchase, review request
 Requires at least: 6.5
 Tested up to: 7.0
