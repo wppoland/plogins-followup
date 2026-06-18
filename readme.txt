@@ -36,6 +36,15 @@ The plugin is not on the WordPress.org directory yet. Source code and issue trac
 
 == Frequently Asked Questions ==
 
+= Documentation and links =
+
+* **Documentation** - https://plogins.com/followup/docs/
+* **Plugin page** - https://plogins.com/followup/
+* **Source code** - https://github.com/wppoland/followup
+* **Bug reports and feature requests** - https://github.com/wppoland/followup/issues
+* **Discussions and questions** - https://github.com/wppoland/followup/discussions
+
+
 = Does it require WooCommerce? =
 
 Yes. WooCommerce must be installed and active.
