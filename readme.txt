@@ -5,7 +5,7 @@ Requires at least: 6.5
 Tested up to: 7.0
 Requires PHP: 8.1
 Requires Plugins: woocommerce
-Stable tag: 0.1.1
+Stable tag: 0.1.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -74,6 +74,9 @@ You choose the trigger status per email type (for example processing or complete
 Followup does not connect to any external services. It has no API keys, sends no data off-site, and loads nothing from a remote URL or CDN. Everything runs on your own WordPress install: settings are stored in the `followup_settings` and `followup_db_version` options, and each sent follow-up is recorded as `_followup_sent_{type}` order meta so it is never sent twice. Emails go out through your site's own `wp_mail()` using your WooCommerce store sender, so they travel by whatever mail setup you already have.
 
 == Changelog ==
+
+= 0.1.3 =
+* `followup/should_send` filter before a follow-up claims an order, so PRO can defer sends to a chosen hour or weekday.
 
 = 0.1.2 =
 * Fire `followup/email_sent` after a follow-up is accepted by wp_mail for PRO send reporting.
