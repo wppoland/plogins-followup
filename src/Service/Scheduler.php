@@ -122,6 +122,17 @@ final class Scheduler implements HasHooks
                 continue;
             }
 
+            /**
+             * Gate whether a follow-up should send on this cron run.
+             *
+             * @param bool     $send  Whether to send (default true).
+             * @param \WC_Order $order The candidate order.
+             * @param array{id: string, enabled: bool, status: string, delay: int, subject: string, body: string} $step The sequence step.
+             */
+            if (! apply_filters('followup/should_send', true, $order, $step)) {
+                continue;
+            }
+
             // Claim the order first (idempotency guard): mark before sending so a
             // crash mid-send cannot cause a duplicate on the next run. Re-check
             // the flag to avoid a race with a parallel run.
