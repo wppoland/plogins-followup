@@ -72,6 +72,22 @@ final class Mailer
          */
         $mail = (array) apply_filters('followup/mail', $mail, $order, $type);
 
+        /**
+         * Filter the URLs discovered in the follow-up body after all mail transforms.
+         *
+         * @param list<string>                                                                                    $links Discovered http(s) URLs.
+         * @param \WC_Order                                                                                       $order The order being followed up.
+         * @param array{id: string, enabled?: bool, status?: string, delay?: int, subject: string, body: string} $step  The sequence step.
+         * @param array{to: string, subject: string, body: string, headers: array<int, string>}                 $mail  Final mail arguments.
+         */
+        $mail['links'] = apply_filters(
+            'followup/email_links',
+            self::extractUrls((string) ($mail['body'] ?? '')),
+            $order,
+            $step,
+            $mail,
+        );
+
         $sent = (bool) wp_mail(
             (string) ($mail['to'] ?? $recipient),
             (string) ($mail['subject'] ?? $subject),
@@ -136,5 +152,29 @@ final class Mailer
         }
 
         return [ sprintf('From: %s <%s>', $name, $email) ];
+    }
+
+    /**
+     * @return list<string>
+     */
+    private static function extractUrls(string $body): array
+    {
+        if ('' === $body) {
+            return [];
+        }
+
+        $urls = [];
+
+        if (preg_match_all('#https?://[^\s<>"\']+#i', $body, $matches) === 1) {
+            foreach ($matches[0] as $url) {
+                $url = esc_url_raw((string) $url);
+
+                if ('' !== $url) {
+                    $urls[] = $url;
+                }
+            }
+        }
+
+        return array_values(array_unique($urls));
     }
 }
