@@ -75,6 +75,10 @@ Followup does not connect to any external services. It has no API keys, sends no
 
 == Changelog ==
 
+= 0.1.2 =
+* Fire `followup/email_sent` after a follow-up is accepted by wp_mail for PRO send reporting.
+* Document the `{coupon}` placeholder for Followup Pro coupon blocks.
+
 = 0.1.1 =
 * Add the `followup/sequence_steps` extension filter so add-ons can append custom post-purchase email steps.
 

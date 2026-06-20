@@ -15,6 +15,7 @@ defined('ABSPATH') || exit;
  *  - {customer} the customer's first name (falls back to "there")
  *  - {order}    the order number (e.g. #1234)
  *  - {site}     the site/blog name
+ *  - {coupon}   replaced by Followup Pro when coupon blocks are enabled
  *
  * Sending is intentionally simple: plain-text messages via wp_mail, so they
  * inherit whatever mail configuration the site already uses.
@@ -71,12 +72,25 @@ final class Mailer
          */
         $mail = (array) apply_filters('followup/mail', $mail, $order, $type);
 
-        return (bool) wp_mail(
+        $sent = (bool) wp_mail(
             (string) ($mail['to'] ?? $recipient),
             (string) ($mail['subject'] ?? $subject),
             (string) ($mail['body'] ?? $body),
             (array) ($mail['headers'] ?? []),
         );
+
+        if ($sent) {
+            /**
+             * Fires after a follow-up email is accepted by wp_mail.
+             *
+             * @param \WC_Order $order The order that received the follow-up.
+             * @param array{id: string, enabled?: bool, status?: string, delay?: int, subject: string, body: string} $step  The sequence step.
+             * @param array{to: string, subject: string, body: string, headers: array<int, string>} $mail Final mail arguments.
+             */
+            do_action('followup/email_sent', $order, $step, $mail);
+        }
+
+        return $sent;
     }
 
     /**
