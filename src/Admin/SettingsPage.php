@@ -257,7 +257,7 @@ final class SettingsPage implements HasHooks
                                         <input type="text" id="<?php echo esc_attr($id . '_subject'); ?>" class="large-text"
                                             name="<?php echo esc_attr($base); ?>[subject]"
                                             value="<?php echo esc_attr((string) ($email['subject'] ?? '')); ?>" />
-                                        <p class="description"><?php esc_html_e('The inbox subject line. Tokens above work here too — a name in the subject lifts open rates.', 'followup'); ?></p>
+                                        <p class="description"><?php esc_html_e('The inbox subject line. Tokens above work here too, a name in the subject lifts open rates.', 'followup'); ?></p>
                                     </td>
                                 </tr>
                                 <tr>

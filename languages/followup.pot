@@ -174,7 +174,7 @@ msgid "Subject"
 msgstr ""
 
 #: src/Admin/SettingsPage.php:260
-msgid "The inbox subject line. Tokens above work here too — a name in the subject lifts open rates."
+msgid "The inbox subject line. Tokens above work here too, a name in the subject lifts open rates."
 msgstr ""
 
 #: src/Admin/SettingsPage.php:265
