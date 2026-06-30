@@ -116,7 +116,7 @@ final class Mailer
     {
         $first = trim((string) $order->get_billing_first_name());
         if ('' === $first) {
-            $first = __('there', 'followup');
+            $first = __('there', 'plogins-followup');
         }
 
         $replacements = [
