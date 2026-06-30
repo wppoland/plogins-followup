@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name:       Followup - Order Follow-Up Emails for WooCommerce
- * Plugin URI:        https://plogins.com/followup/
+ * Plugin Name:       Plogins Followup for WooCommerce
+ * Plugin URI:        https://plogins.com/plogins-followup/
  * Description:        Send automated post-purchase emails to WooCommerce customers: thank-you and review requests, a set number of days after an order.
- * Version:           0.1.4
+ * Version:           0.1.5
  * Requires at least: 6.5
  * Requires PHP:      8.1
  * Requires Plugins:  woocommerce
@@ -11,7 +11,7 @@
  * Author URI:        https://wppoland.com
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       followup
+ * Text Domain:       plogins-followup
  * Domain Path:       /languages
  * Tested up to:      7.0
  * WC requires at least: 8.0
@@ -26,7 +26,7 @@ namespace Followup;
 
 defined('ABSPATH') || exit;
 
-const VERSION     = '0.1.4';
+const VERSION     = '0.1.5';
 const PLUGIN_FILE = __FILE__;
 
 define('FOLLOWUP_DIR', plugin_dir_path(__FILE__));
@@ -62,7 +62,7 @@ add_action('plugins_loaded', static function (): void {
     if (! class_exists('WooCommerce')) {
         add_action('admin_notices', static function (): void {
             echo '<div class="notice notice-error"><p>';
-            echo esc_html__('Followup - Order Follow-Up Emails for WooCommerce requires WooCommerce to be active.', 'followup');
+            echo esc_html__('Followup - Order Follow-Up Emails for WooCommerce requires WooCommerce to be active.', 'plogins-followup');
             echo '</p></div>';
         });
         return;

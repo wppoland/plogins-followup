@@ -1,11 +1,11 @@
-=== Followup - Order Follow-Up Emails for WooCommerce ===
+=== Plogins Followup for WooCommerce ===
 Contributors: motylanogha
 Tags: woocommerce, email, follow-up, post-purchase, review request
 Requires at least: 6.5
 Tested up to: 7.0
 Requires PHP: 8.1
 Requires Plugins: woocommerce
-Stable tag: 0.1.4
+Stable tag: 0.1.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,7 +26,7 @@ A daily wp-cron event picks up orders that are due and sends the emails with `wp
 
 Developers can extend the sequence through the `followup/sequence_steps` filter. Each custom step can provide its own trigger status, delay, subject and body while reusing Followup's idempotent scheduler.
 
-The plugin is not on the WordPress.org directory yet. Source code and issue tracker live at https://github.com/wppoland/followup.
+The plugin is not on the WordPress.org directory yet. Source code and issue tracker live at https://github.com/wppoland/plogins-followup.
 
 == Installation ==
 
@@ -38,11 +38,10 @@ The plugin is not on the WordPress.org directory yet. Source code and issue trac
 
 = Documentation and links =
 
-* **Documentation** - https://plogins.com/followup/docs/
-* **Plugin page** - https://plogins.com/followup/
-* **Source code** - https://github.com/wppoland/followup
-* **Bug reports and feature requests** - https://github.com/wppoland/followup/issues
-* **Discussions and questions** - https://github.com/wppoland/followup/discussions
+* **Documentation** - https://plogins.com/plogins-followup/docs/
+* **Plugin page** - https://plogins.com/plogins-followup/
+* **Source code** - https://github.com/wppoland/plogins-followup
+* **Bug reports and feature requests** - https://github.com/wppoland/plogins-followup/issues
 
 
 = Does it require WooCommerce? =
@@ -74,6 +73,9 @@ You choose the trigger status per email type (for example processing or complete
 Followup does not connect to any external services. It has no API keys, sends no data off-site, and loads nothing from a remote URL or CDN. Everything runs on your own WordPress install: settings are stored in the `followup_settings` and `followup_db_version` options, and each sent follow-up is recorded as `_followup_sent_{type}` order meta so it is never sent twice. Emails go out through your site's own `wp_mail()` using your WooCommerce store sender, so they travel by whatever mail setup you already have.
 
 == Changelog ==
+
+= 0.1.5 =
+* Renamed to Plogins Followup for WooCommerce for a more distinctive plugin name.
 
 = 0.1.4 =
 * `followup/email_links` filter exposes URLs discovered in the final follow-up body for PRO engagement tracking.

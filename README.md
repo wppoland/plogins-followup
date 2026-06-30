@@ -1,7 +1,7 @@
-# Followup
+# Plogins Followup for WooCommerce
 
-- **Plugin page:** https://plogins.com/followup/
-- **Documentation:** https://plogins.com/followup/docs/
+- **Plugin page:** https://plogins.com/plogins-followup/
+- **Documentation:** https://plogins.com/plogins-followup/docs/
 - **Author:** [WPPoland.com](https://wppoland.com)
 - **WordPress.org contributor:** motylanogha
-- **Source:** https://github.com/wppoland/followup
+- **Source:** https://github.com/wppoland/plogins-followup
