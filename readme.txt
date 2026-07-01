@@ -64,6 +64,11 @@ No. Each follow-up type is recorded against the order once it is sent, so it is 
 
 You choose the trigger status per email type (for example processing or completed) and the delay in days before it sends.
 
+
+= Does this plugin work on WordPress Multisite? =
+
+Yes. This plugin is compatible with WordPress Multisite. Network activate it or activate it on individual sites; each site keeps its own settings and data.
+
 == Screenshots ==
 
 1. The Follow-ups settings screen: enable each email type and edit its trigger status, delay and templates.
