@@ -1,4 +1,4 @@
-=== Plogins Followup - Follow-Up Emails for WooCommerce ===
+=== Followup - Follow-Up Emails for WooCommerce ===
 Contributors: motylanogha
 Tags: woocommerce, email, follow-up, post-purchase, review request
 Requires at least: 6.5
