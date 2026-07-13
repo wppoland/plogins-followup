@@ -26,22 +26,6 @@
     --fu-shadow: 0 1px 2px rgba(64, 30, 40, 0.06), 0 2px 8px rgba(64, 30, 40, 0.05);
     --fu-speed: 160ms;
 }
-
-@media (prefers-color-scheme: dark) {
-    .followup-admin {
-        --fu-ink: #e0708e;
-        --fu-ink-deep: #c4506f;
-        --fu-surface: #20262d;
-        --fu-surface-alt: #272d31;
-        --fu-paper-edge: #2e3439;
-        --fu-border: #3d4148;
-        --fu-text: #e6e9ec;
-        --fu-text-muted: #a7a39b;
-        --fu-on: #188048;            /* deepened: white label needs >=4.5:1 (WCAG AA) */
-        --fu-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
-    }
-}
-
 .followup-admin__status {
     display: inline-block;
     margin-inline-start: 0.5rem;
@@ -214,14 +198,6 @@
     transform: rotate(-7deg);
     transform-origin: center;
 }
-
-@media (prefers-color-scheme: dark) {
-    .followup-postmark__stamp {
-        background:
-            radial-gradient(circle at center, transparent 58%, rgba(224, 112, 142, 0.1) 60%);
-    }
-}
-
 .followup-postmark__days {
     font-size: 1.25rem;
     font-weight: 800;
