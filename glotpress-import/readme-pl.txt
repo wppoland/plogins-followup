@@ -4,8 +4,8 @@ Tags: woocommerce, email, follow-up, post-purchase, review request
 Requires at least: 6.5
 Tested up to: 7.0
 Requires PHP: 8.1
-Wymaga wtyczek: woocommerce
-Stable tag: 1.0.1
+Requires Plugins: woocommerce
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,18 +13,18 @@ Wysyłaj automatyczne e-maile po zakupie dla WooCommerce: podziękowania i proś
 
 == Description ==
 
-Funkcja Followup wysyła automatyczne wiadomości e-mail po zakupie do klientów WooCommerce w konfigurowalną liczbę dni po osiągnięciu przez zamówienie statusu takiego jak Zrealizowane.
+Followup wysyła automatyczne wiadomości e-mail po zakupie do klientów WooCommerce w konfigurowalnej liczbie dni po osiągnięciu przez zamówienie statusu takiego jak Zrealizowane.
 
 Gotowe do użycia są dwa typy e-maili:
 
 * <strong>Dziękujemy</strong>: krótka notatka wkrótce po zrealizowaniu zamówienia.
 * <strong>Prośba o recenzję</strong>: prosi o recenzję, gdy klient będzie miał produkt przez jakiś czas.
 
-Dla każdego typu ustawiasz, czy jest on włączony, jaki status zamówienia go uruchamia, ile dni należy czekać oraz temat i treść. Podmioty i organy obsługują `{customer}` (imię), `{order}` (numer zamówienia) i `{site}` (nazwa witryny).
+Dla każdego typu ustawiasz, czy jest on włączony, jaki status zamówienia go uruchamia, ile dni należy czekać oraz temat i treść. Tematy i treści obsługują `{customer}` (imię), `{order}` (numer zamówienia) i `{site}` (nazwa witryny).
 
-Codzienne zdarzenie wp-cron odbiera terminowe zamówienia i wysyła e-maile z adresem `wp_mail`, dzięki czemu korzystają z konfiguracji poczty, którą już ma witryna. Każde kolejne polecenie jest rejestrowane w powiązaniu z zamówieniem zaraz po jego wysłaniu, więc to samo nigdy nie jest wysyłane dwukrotnie, nawet jeśli dwa uruchomienia cron nakładają się na siebie.
+Codzienne zdarzenie wp-cron odbiera zamówienia, których termin nadszedł, i wysyła e-maile za pomocą `wp_mail`, dzięki czemu korzystają z konfiguracji poczty, którą witryna już ma. Każdy follow-up jest rejestrowany przy zamówieniu zaraz po wysłaniu, więc ten sam nigdy nie zostaje wysłany dwukrotnie, nawet jeśli dwa uruchomienia crona nakładają się na siebie.
 
-Programiści mogą rozszerzyć sekwencję za pomocą filtra „kontynuacja/kroki_sekwencji”. Każdy niestandardowy krok może zapewnić własny status wyzwalacza, opóźnienie, temat i treść podczas ponownego wykorzystania idempotentnego harmonogramu Followup.
+Programiści mogą rozszerzyć sekwencję za pomocą filtra `followup/sequence_steps`. Każdy niestandardowy krok może udostępnić własny status wyzwalacza, opóźnienie, temat i treść, wykorzystując ponownie idempotentny harmonogram Followup.
 
 Wtyczki nie ma jeszcze w katalogu WordPress.org. Kod źródłowy i narzędzie do śledzenia problemów dostępne są na stronie https://github.com/wppoland/plogins-followup.
 
@@ -32,7 +32,7 @@ Wtyczki nie ma jeszcze w katalogu WordPress.org. Kod źródłowy i narzędzie do
 
 1. Prześlij wtyczkę do `/wp-content/plugins/followup` lub zainstaluj poprzez Wtyczki -> Dodaj nową.
 2. Aktywuj. WooCommerce musi być aktywny.
-3. Przejdź do WooCommerce -> Kontynuacje, aby włączyć typy wiadomości e-mail i edytować szablony.
+3. Przejdź do WooCommerce -> Follow-ups, aby włączyć typy wiadomości e-mail i edytować szablony.
 
 == Frequently Asked Questions ==
 
@@ -54,7 +54,7 @@ Codzienne zdarzenie wp-cron sprawdza zamówienia, które mają skonfigurowany st
 
 = Will a customer ever get the same email twice? =
 
-Nie. Każdy rodzaj dalszych działań jest rejestrowany w odniesieniu do zamówienia po jego wysłaniu, więc nigdy więcej nie jest wysyłany w ramach tego zamówienia.
+Nie. Każdy typ follow-up jest rejestrowany przy zamówieniu po wysłaniu, więc nigdy nie jest wysyłany ponownie dla tego zamówienia.
 
 = Which placeholders can I use? =
 
@@ -62,41 +62,48 @@ Nie. Każdy rodzaj dalszych działań jest rejestrowany w odniesieniu do zamówi
 
 = Which order statuses can trigger a follow-up? =
 
-Wybierasz status wyzwalacza według typu wiadomości e-mail (na przykład przetworzenie lub ukończenie) i opóźnienie w dniach przed wysłaniem.
+Wybierasz status wyzwalacza dla każdego typu wiadomości e-mail (na przykład w trakcie realizacji lub zrealizowane) oraz opóźnienie w dniach przed wysłaniem.
 
 
 = Does this plugin work on WordPress Multisite? =
 
-Tak. Ta wtyczka jest kompatybilna z WordPress Multisite. Aktywuj go w sieci lub aktywuj na poszczególnych stronach; każda witryna przechowuje własne ustawienia i dane.
+Tak. Ta wtyczka jest kompatybilna z WordPress Multisite. Włącz ją dla całej sieci lub na poszczególnych stronach; każda witryna przechowuje własne ustawienia i dane.
 
 == Screenshots ==
 
-1. Ekran ustawień dalszych działań: włącz każdy typ wiadomości e-mail i edytuj jego stan wyzwalania, opóźnienie i szablony.
+1. Ekran ustawień Follow-ups: włącz każdy typ wiadomości e-mail i edytuj jego status wyzwalacza, opóźnienie i szablony.
 
 == External Services ==
 
-Followup nie łączy się z żadnymi usługami zewnętrznymi. Nie ma kluczy API, nie wysyła danych poza witrynę i nie ładuje niczego ze zdalnego adresu URL lub CDN. Wszystko działa na Twojej własnej instalacji WordPressa: ustawienia są przechowywane w opcjach `followup_settings` i `followup_db_version`, a każde wysłane polecenie uzupełniające jest rejestrowane jako meta zamówienia `_followup_sent_{type}`, dzięki czemu nigdy nie jest wysyłane dwukrotnie. Wiadomości e-mail są wysyłane za pośrednictwem funkcji `wp_mail()` znajdującej się w Twojej witrynie przy użyciu nadawcy ze sklepu WooCommerce, więc są przesyłane według dowolnej konfiguracji poczty, którą już posiadasz.
+Followup nie łączy się z żadnymi usługami zewnętrznymi. Nie ma kluczy API, nie wysyła danych poza witrynę i nie ładuje niczego ze zdalnego adresu URL ani z CDN. Wszystko działa w Twojej własnej instalacji WordPressa: ustawienia są przechowywane w opcjach `followup_settings` i `followup_db_version`, a każdy wysłany follow-up jest rejestrowany jako meta zamówienia `_followup_sent_{type}`, dzięki czemu nigdy nie jest wysyłany dwukrotnie. Wiadomości e-mail są wysyłane za pomocą funkcji `wp_mail()` Twojej witryny, z użyciem nadawcy Twojego sklepu WooCommerce, więc korzystają z dowolnej konfiguracji poczty, którą już masz.
+
+== Translations ==
+
+Plogins Followup zawiera tłumaczenia interfejsu wtyczki na język polski, niemiecki i hiszpański. Domena tekstowa to `plogins-followup`, więc pakiety językowe WordPress.org mogą również zastąpić lub rozszerzyć te dołączone tłumaczenia.
 
 == Changelog ==
+
+= 1.0.2 =
+* Dodano dołączone tłumaczenia na język polski, niemiecki i hiszpański dla interfejsu wtyczki.
 
 = 1.0.1 =
 * Pierwsza stabilna wersja.
 
 = 0.1.5 =
-* Zmieniono nazwę na Plogins Followup dla WooCommerce, aby uzyskać bardziej charakterystyczną nazwę wtyczki.
+* Zmieniono nazwę na Plogins Followup for WooCommerce, aby nadać wtyczce bardziej charakterystyczną nazwę.
 
 = 0.1.4 =
-* Filtr „followup/email_links” udostępnia adresy URL wykryte w końcowej treści dalszych działań w celu śledzenia zaangażowania PRO.
+* Filtr `followup/email_links` udostępnia adresy URL wykryte w końcowej treści follow-upa na potrzeby śledzenia zaangażowania w PRO.
 
 = 0.1.3 =
-* Filtr „kontynuacja/powinna_wysłać” przed złożeniem zamówienia przez kolejną osobę, dzięki czemu PRO może odroczyć wysyłkę do wybranej godziny lub dnia tygodnia.
+* Filtr `followup/should_send` uruchamiany, zanim follow-up przejmie zamówienie, dzięki czemu PRO może odroczyć wysyłkę do wybranej godziny lub dnia tygodnia.
 
 = 0.1.2 =
-* Uruchom `followup/email_sent` po zaakceptowaniu monitu przez wp_mail w celu raportowania wysyłania PRO.
-* Udokumentuj symbol zastępczy `{coupon}` dla bloków kuponów Followup Pro.
+* Uruchamia `followup/email_sent` po zaakceptowaniu follow-upa przez wp_mail na potrzeby raportowania wysyłek w PRO.
+* Udokumentowano symbol zastępczy `{coupon}` dla bloków kuponów Followup Pro.
 
 = 0.1.1 =
-* Dodaj filtr rozszerzenia „followup/sequence_steps”, aby dodatki mogły dołączać niestandardowe kroki w wiadomościach e-mail po zakupie.
+* Dodano filtr rozszerzeń `followup/sequence_steps`, aby dodatki mogły dołączać niestandardowe kroki e-maili po zakupie.
 
 = 0.1.0 =
-* Pierwsza wersja: dalsze wiadomości e-mail z podziękowaniami i prośbą o recenzję z możliwością włączenia poszczególnych typów, stanu wyzwalania, opóźnienia i szablonów; idempotentny nadawca dzienny.
+* Pierwsza wersja: e-maile follow-up z podziękowaniem i prośbą o recenzję, z włączaniem poszczególnych typów, statusem wyzwalacza, opóźnieniem i szablonami; idempotentny dzienny mechanizm wysyłki.

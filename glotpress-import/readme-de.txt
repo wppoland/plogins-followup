@@ -4,8 +4,8 @@ Tags: woocommerce, email, follow-up, post-purchase, review request
 Requires at least: 6.5
 Tested up to: 7.0
 Requires PHP: 8.1
-Erfordert Plugins: woocommerce
-Stable tag: 1.0.1
+Requires Plugins: woocommerce
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,24 +13,24 @@ Sende automatisierte E-Mails nach dem Kauf für WooCommerce: Dankes- und Bewertu
 
 == Description ==
 
-Follow-up sendet automatisch E-Mails nach dem Kauf an deine WooCommerce-Kunden, eine konfigurierbare Anzahl von Tagen, nachdem eine Bestellung den Status „Abgeschlossen“ erreicht hat.
+Followup sendet automatisch E-Mails nach dem Kauf an deine WooCommerce-Kunden, eine konfigurierbare Anzahl von Tagen, nachdem eine Bestellung einen Status wie „Abgeschlossen“ erreicht hat.
 
 Zwei E-Mail-Typen sind sofort einsatzbereit:
 
 * <strong>Dankeschön</strong>: eine kurze Nachricht kurz nach der Ausführung der Bestellung.
 * <strong>Bewertungsanfrage</strong>: Bittet um eine Bewertung, sobald der Kunde das Produkt eine Weile besitzt.
 
-Für jeden Typ lege fest, ob er aktiviert ist, welcher Bestellstatus ihn auslöst, wie viele Tage gewartet werden soll sowie den Betreff und den Text. Themen und Inhalt unterstützen „{customer}“ (Vorname), „{order}“ (Bestellnummer) und „{site}“ (Site-Name).
+Für jeden Typ lege fest, ob er aktiviert ist, welcher Bestellstatus ihn auslöst, wie viele Tage gewartet werden soll sowie den Betreff und den Text. Betreffzeilen und Inhalte unterstützen `{customer}` (Vorname), `{order}` (Bestellnummer) und `{site}` (Site-Name).
 
-Ein tägliches wp-cron-Event nimmt fällige Bestellungen entgegen und versendet die E-Mails mit „wp_mail“, sodass sie das bereits vorhandene E-Mail-Setup der Website verwenden. Jede Nachverfolgung wird sofort nach dem Absenden für die Bestellung erfasst, so dass dieselbe nie zweimal gesendet wird, selbst wenn sich zwei Cron-Läufe überschneiden.
+Ein tägliches wp-cron-Event nimmt fällige Bestellungen entgegen und versendet die E-Mails mit `wp_mail`, sodass sie das bereits vorhandene E-Mail-Setup der Website verwenden. Jedes Follow-up wird sofort nach dem Absenden für die Bestellung erfasst, sodass dasselbe nie zweimal gesendet wird, selbst wenn sich zwei Cron-Läufe überschneiden.
 
-Entwickler können die Sequenz über den Filter „followup/sequence_steps“ erweitern. Jeder benutzerdefinierte Schritt kann seinen eigenen Auslöserstatus, seine eigene Verzögerung, seinen eigenen Betreff und seinen eigenen Text bereitstellen und dabei den idempotenten Planer von Followup wiederverwenden.
+Entwickler können die Sequenz über den Filter `followup/sequence_steps` erweitern. Jeder benutzerdefinierte Schritt kann seinen eigenen Auslöserstatus, seine eigene Verzögerung, seinen eigenen Betreff und seinen eigenen Text bereitstellen und dabei den idempotenten Planer von Followup wiederverwenden.
 
-Das Plugin befindet sich noch nicht im WordPress.org-Verzeichnis. Quellcode und Issue-Tracker live unter https://github.com/wppoland/plogins-followup.
+Das Plugin befindet sich noch nicht im WordPress.org-Verzeichnis. Quellcode und Issue-Tracker findest du unter https://github.com/wppoland/plogins-followup.
 
 == Installation ==
 
-1. Lade das Plugin nach „/wp-content/plugins/followup“ hoch oder installiere es über Plugins -> Neu hinzufügen.
+1. Lade das Plugin nach `/wp-content/plugins/followup` hoch oder installiere es über Plugins -> Neu hinzufügen.
 2. Aktiviere es. WooCommerce muss aktiv sein.
 3. Gehe zu WooCommerce -> Follow-ups, um E-Mail-Typen zu aktivieren und die Vorlagen zu bearbeiten.
 
@@ -58,11 +58,11 @@ Nein. Jeder Folgetyp wird für die Bestellung erfasst, sobald sie gesendet wurde
 
 = Which placeholders can I use? =
 
-„{customer}“ (Vorname), „{order}“ (Bestellnummer) und „{site}“ (Name deiner Website), sowohl im Betreff als auch im Text.
+`{customer}` (Vorname), `{order}` (Bestellnummer) und `{site}` (Name deiner Website), sowohl im Betreff als auch im Text.
 
 = Which order statuses can trigger a follow-up? =
 
-Du wählen den Auslöserstatus pro E-Mail-Typ (z. B. „Verarbeitet“ oder „Abgeschlossen“) und die Verzögerung in Tagen vor dem Versand.
+Du wählst den Auslöserstatus pro E-Mail-Typ (z. B. „Verarbeitet“ oder „Abgeschlossen“) und die Verzögerung in Tagen vor dem Versand.
 
 
 = Does this plugin work on WordPress Multisite? =
@@ -75,28 +75,35 @@ Ja. Dieses Plugin ist mit WordPress Multisite kompatibel. Aktiviere es im Netzwe
 
 == External Services ==
 
-Followup stellt keine Verbindung zu externen Diensten her. Es verfügt über keine API-Schlüssel, sendet keine Daten an einen externen Standort und lädt nichts von einer Remote-URL oder einem CDN. Alles läuft auf deiner eigenen WordPress-Installation: Die Einstellungen werden in den Optionen „followup_settings“ und „followup_db_version“ gespeichert und jedes gesendete Follow-up wird als Auftragsmeta „_followup_sent_{type}“ aufgezeichnet, sodass es nie zweimal gesendet wird. E-Mails werden über das eigene „wp_mail()“ deiner Website mit dem Absender Ihres WooCommerce-Shops verschickt, sodass sie über das E-Mail-Setup weitergeleitet werden, das du bereits haben.
+Followup stellt keine Verbindung zu externen Diensten her. Es verfügt über keine API-Schlüssel, sendet keine Daten an einen externen Standort und lädt nichts von einer Remote-URL oder einem CDN. Alles läuft auf deiner eigenen WordPress-Installation: Die Einstellungen werden in den Optionen `followup_settings` und `followup_db_version` gespeichert und jedes gesendete Follow-up wird als Bestell-Meta `_followup_sent_{type}` aufgezeichnet, sodass es nie zweimal gesendet wird. E-Mails werden über das eigene `wp_mail()` deiner Website mit dem Absender deines WooCommerce-Shops verschickt, sodass sie über das E-Mail-Setup laufen, das du bereits hast.
+
+== Translations ==
+
+Plogins Followup umfasst polnische, deutsche und spanische Übersetzungen für die Plugin-Schnittstelle. Die Textdomain ist `plogins-followup`, sodass WordPress.org-Sprachpakete diese gebündelten Übersetzungen auch überschreiben oder erweitern können.
 
 == Changelog ==
+
+= 1.0.2 =
+* Gebündelte polnische, deutsche und spanische Übersetzungen für die Plugin-Schnittstelle hinzugefügt.
 
 = 1.0.1 =
 * Erste stabile Version.
 
 = 0.1.5 =
-* Für einen eindeutigeren Plugin-Namen in Plogins Followup für WooCommerce umbenannt.
+* Für einen unverwechselbareren Plugin-Namen in Plogins Followup for WooCommerce umbenannt.
 
 = 0.1.4 =
-* Der Filter „followup/email_links“ macht URLs verfügbar, die im letzten Follow-up-Text für die PRO-Engagement-Verfolgung entdeckt wurden.
+* Der Filter `followup/email_links` macht URLs verfügbar, die im letzten Follow-up-Text gefunden wurden, für das PRO-Engagement-Tracking.
 
 = 0.1.3 =
-* „Followup/should_send“-Filter, bevor ein Follow-up eine Bestellung beansprucht, sodass PRO den Versand auf eine ausgewählte Stunde oder einen Wochentag verschieben kann.
+* `followup/should_send`-Filter, bevor ein Follow-up eine Bestellung beansprucht, sodass PRO den Versand auf eine ausgewählte Stunde oder einen Wochentag verschieben kann.
 
 = 0.1.2 =
-* Löse „followup/email_sent“ aus, nachdem ein Follow-up von wp_mail für PRO-Sendeberichte akzeptiert wurde.
-* Dokumentiere den Platzhalter „{coupon}“ für Followup Pro-Gutscheinblöcke.
+* Löse `followup/email_sent` aus, nachdem ein Follow-up von wp_mail für PRO-Sendeberichte akzeptiert wurde.
+* Dokumentiere den Platzhalter `{coupon}` für Followup Pro-Gutscheinblöcke.
 
 = 0.1.1 =
-* Füge den Erweiterungsfilter „followup/sequence_steps“ hinzu, damit Add-ons benutzerdefinierte E-Mail-Schritte nach dem Kauf anhängen können.
+* Füge den Erweiterungsfilter `followup/sequence_steps` hinzu, damit Add-ons benutzerdefinierte E-Mail-Schritte nach dem Kauf anhängen können.
 
 = 0.1.0 =
 * Erstveröffentlichung: Dankes- und Bewertungsanfrage-Folge-E-Mails mit Aktivierung pro Typ, Auslöserstatus, Verzögerung und Vorlagen; idempotenter täglicher Absender.

@@ -8,14 +8,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: plogins-i18n\n"
 
-msgid "Requires Plugins: woocommerce"
-msgstr "Requiere complementos: woocommerce"
-
 msgid "Send automated post-purchase emails for WooCommerce: thank-you and review requests, a set number of days after an order."
-msgstr "Envíe correos electrónicos automatizados posteriores a la compra para WooCommerce: solicitudes de agradecimiento y revisión, una cantidad determinada de días después de realizar un pedido."
+msgstr "Envía correos electrónicos automatizados posteriores a la compra para WooCommerce: solicitudes de agradecimiento y revisión, una cantidad determinada de días después de realizar un pedido."
 
 msgid "Followup sends automated post-purchase emails to your WooCommerce customers, a configurable number of days after an order reaches a status such as Completed."
-msgstr "El seguimiento envía correos electrónicos automatizados posteriores a la compra a sus clientes de WooCommerce, una cantidad configurable de días después de que un pedido alcanza un estado como Completado."
+msgstr "Followup envía correos electrónicos automatizados posteriores a la compra a tus clientes de WooCommerce, una cantidad configurable de días después de que un pedido alcanza un estado como Completado."
 
 msgid "Two email types come ready to use:"
 msgstr "Dos tipos de correo electrónico vienen listos para usar:"
@@ -24,19 +21,19 @@ msgid "* <strong>Thank-you</strong>: a short note shortly after the order is ful
 msgstr "* <strong>Gracias</strong>: una breve nota poco después de que se complete el pedido.\n* <strong>Solicitud de revisión</strong>: solicita una revisión una vez que el cliente ha tenido el producto por un tiempo."
 
 msgid "For each type you set whether it is enabled, which order status triggers it, how many days to wait, and the subject and body. Subjects and bodies support `{customer}` (first name), `{order}` (order number) and `{site}` (site name)."
-msgstr "Para cada tipo, estableces si está habilitado, qué estado del pedido lo activa, cuántos días esperar y el asunto y el cuerpo. Los sujetos y cuerpos admiten `{customer}` (nombre), `{order}` (número de pedido) y `{site}` (nombre del sitio)."
+msgstr "Para cada tipo, estableces si está habilitado, qué estado del pedido lo activa, cuántos días esperar y el asunto y el cuerpo. Los asuntos y los cuerpos admiten `{customer}` (nombre), `{order}` (número de pedido) y `{site}` (nombre del sitio)."
 
 msgid "A daily wp-cron event picks up orders that are due and sends the emails with `wp_mail`, so they use whatever mail setup the site already has. Each follow-up is recorded against the order as soon as it sends, so the same one is never sent twice, even if two cron runs overlap."
 msgstr "Un evento diario de wp-cron recoge los pedidos vencidos y envía los correos electrónicos con `wp_mail`, por lo que utilizan cualquier configuración de correo que ya tenga el sitio. Cada seguimiento se registra en el pedido tan pronto como se envía, por lo que el mismo nunca se envía dos veces, incluso si dos ejecuciones de cron se superponen."
 
 msgid "Developers can extend the sequence through the `followup/sequence_steps` filter. Each custom step can provide its own trigger status, delay, subject and body while reusing Followup's idempotent scheduler."
-msgstr "Los desarrolladores pueden ampliar la secuencia a través del filtro \"seguimiento/pasos_de secuencia\". Cada paso personalizado puede proporcionar su propio estado de activación, retraso, tema y cuerpo mientras se reutiliza el programador idempotente de Followup."
+msgstr "Los desarrolladores pueden ampliar la secuencia a través del filtro `followup/sequence_steps`. Cada paso personalizado puede proporcionar su propio estado de activación, retraso, asunto y cuerpo mientras reutiliza el programador idempotente de Followup."
 
 msgid "The plugin is not on the WordPress.org directory yet. Source code and issue tracker live at https://github.com/wppoland/plogins-followup."
-msgstr "El complemento aún no está en el directorio de WordPress.org. Código fuente y rastreador de problemas en vivo en https://github.com/wppoland/plogins-followup."
+msgstr "El complemento aún no está en el directorio de WordPress.org. El código fuente y el gestor de incidencias están en https://github.com/wppoland/plogins-followup."
 
 msgid "1. Upload the plugin to `/wp-content/plugins/followup`, or install via Plugins -> Add New.\n2. Activate it. WooCommerce must be active.\n3. Go to WooCommerce -> Follow-ups to enable email types and edit the templates."
-msgstr "1. Cargue el complemento en `/wp-content/plugins/followup`, o instálelo a través de Complementos -> Añadir nuevo.\n2. Actívalo. WooCommerce debe estar activo.\n3. Vaya a WooCommerce -> Seguimientos para habilitar los tipos de correo electrónico y editar las plantillas."
+msgstr "1. Sube el complemento a `/wp-content/plugins/followup`, o instálalo desde Complementos -> Añadir nuevo.\n2. Actívalo. WooCommerce debe estar activo.\n3. Ve a WooCommerce -> Follow-ups para activar los tipos de correo electrónico y editar las plantillas."
 
 msgid "* <strong>Documentation</strong> - https://plogins.com/plogins-followup/docs/\n* <strong>Plugin page</strong> - https://plogins.com/plogins-followup/\n* <strong>Source code</strong> - https://github.com/wppoland/plogins-followup\n* <strong>Bug reports and feature requests</strong> - https://github.com/wppoland/plogins-followup/issues"
 msgstr "* <strong>Documentación</strong> - https://plogins.com/es/plogins-followup/docs/\n* <strong>Página de complementos</strong> - https://plogins.com/es/plogins-followup/\n* <strong>Código fuente</strong> - https://github.com/wppoland/plogins-followup\n* <strong>Informes de errores y solicitudes de funciones</strong> - https://github.com/wppoland/plogins-followup/issues"
@@ -54,22 +51,28 @@ msgid "`{customer}` (first name), `{order}` (order number) and `{site}` (your si
 msgstr "`{customer}` (nombre), `{order}` (número de pedido) y `{site}` (nombre de tu sitio), tanto en el asunto como en el cuerpo."
 
 msgid "You choose the trigger status per email type (for example processing or completed) and the delay in days before it sends."
-msgstr "Usted elige el estado de activación por tipo de correo electrónico (por ejemplo, procesado o completado) y la demora en días antes de que se envíe."
+msgstr "Eliges el estado de activación por tipo de correo electrónico (por ejemplo, procesado o completado) y la demora en días antes de que se envíe."
 
 msgid "Yes. This plugin is compatible with WordPress Multisite. Network activate it or activate it on individual sites; each site keeps its own settings and data."
-msgstr "Sí. Este complemento es compatible con WordPress Multisite. Activarlo en red o activarlo en sitios individuales; Cada sitio mantiene su propia configuración y datos."
+msgstr "Sí. Este complemento es compatible con WordPress Multisite. Actívalo en red o en sitios concretos; cada sitio mantiene sus propios ajustes y datos."
 
 msgid "1. The Follow-ups settings screen: enable each email type and edit its trigger status, delay and templates."
-msgstr "1. La pantalla de configuración de Seguimientos: activa cada tipo de correo electrónico y edite su estado de activación, retraso y plantillas."
+msgstr "1. La pantalla de ajustes de Follow-ups: activa cada tipo de correo electrónico y edita su estado de activación, retraso y plantillas."
 
 msgid "Followup does not connect to any external services. It has no API keys, sends no data off-site, and loads nothing from a remote URL or CDN. Everything runs on your own WordPress install: settings are stored in the `followup_settings` and `followup_db_version` options, and each sent follow-up is recorded as `_followup_sent_{type}` order meta so it is never sent twice. Emails go out through your site's own `wp_mail()` using your WooCommerce store sender, so they travel by whatever mail setup you already have."
-msgstr "El seguimiento no se conecta a ningún servicio externo. No tiene claves API, no envía datos fuera del sitio y no carga nada desde una URL o CDN remota. Todo se ejecuta en su propia instalación de WordPress: las configuraciones se almacenan en las opciones `followup_settings` y `followup_db_version`, y cada seguimiento enviado se registra como meta de pedido `_followup_sent_{type}`, por lo que nunca se envía dos veces. Los correos electrónicos se envían a través del `wp_mail()` de tu sitio utilizando el remitente de su tienda WooCommerce, por lo que viajan mediante cualquier configuración de correo que ya tenga."
+msgstr "Followup no se conecta a ningún servicio externo. No tiene claves de API, no envía datos fuera del sitio y no carga nada desde una URL o CDN remota. Todo se ejecuta en tu propia instalación de WordPress: los ajustes se almacenan en las opciones `followup_settings` y `followup_db_version`, y cada seguimiento enviado se registra como meta de pedido `_followup_sent_{type}`, por lo que nunca se envía dos veces. Los correos electrónicos se envían a través del `wp_mail()` de tu sitio utilizando el remitente de tu tienda WooCommerce, por lo que viajan mediante cualquier configuración de correo que ya tengas."
+
+msgid "Plogins Followup includes Polish, German and Spanish translations for the plugin interface. The text domain is `plogins-followup`, so WordPress.org language packs can also override or extend these bundled translations."
+msgstr "Plogins Followup incluye traducciones al polaco, alemán y español para la interfaz del complemento. El dominio de texto es `plogins-followup`, por lo que los paquetes de idioma de WordPress.org también pueden anular o ampliar estas traducciones empaquetadas."
+
+msgid "* Added bundled Polish, German and Spanish translations for the plugin interface."
+msgstr "* Se añadieron traducciones integradas en polaco, alemán y español para la interfaz del complemento."
 
 msgid "* First stable release."
 msgstr "* Primera versión estable."
 
 msgid "* Renamed to Plogins Followup for WooCommerce for a more distinctive plugin name."
-msgstr "* Renombrado a Plogins Followup para WooCommerce para obtener un nombre de complemento más distintivo."
+msgstr "* Renombrado a Plogins Followup for WooCommerce para un nombre de complemento más distintivo."
 
 msgid "* `followup/email_links` filter exposes URLs discovered in the final follow-up body for PRO engagement tracking."
 msgstr "* El filtro `followup/email_links` expone las URL descubiertas en el cuerpo de seguimiento final para el seguimiento de la participación PRO."
@@ -78,7 +81,7 @@ msgid "* `followup/should_send` filter before a follow-up claims an order, so PR
 msgstr "* Filtro `followup/should_send` antes de que un seguimiento reclame un pedido, por lo que PRO puede diferir los envíos a una hora o día de la semana elegidos."
 
 msgid "* Fire `followup/email_sent` after a follow-up is accepted by wp_mail for PRO send reporting.\n* Document the `{coupon}` placeholder for Followup Pro coupon blocks."
-msgstr "* Activa `followup/email_sent` después de que wp_mail acepte un seguimiento para informes de envío PRO.\n* Documente el marcador de posición `{coupon}` para los bloques de cupones de Followup Pro."
+msgstr "* Activa `followup/email_sent` después de que wp_mail acepte un seguimiento para informes de envío PRO.\n* Documenta el marcador de posición `{coupon}` para los bloques de cupones de Followup Pro."
 
 msgid "* Add the `followup/sequence_steps` extension filter so add-ons can append custom post-purchase email steps."
 msgstr "* Añade el filtro de extensión `followup/sequence_steps` para que los complementos puedan añadir pasos de correo electrónico personalizados posteriores a la compra."
