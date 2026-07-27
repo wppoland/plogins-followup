@@ -22,8 +22,15 @@ final class SettingsPage implements HasHooks
 {
     private const PAGE = 'followup-settings';
 
+    private ?ProUpsell $proUpsell = null;
+
     public function __construct(private readonly Settings $settings)
     {
+    }
+
+    private function proUpsell(): ProUpsell
+    {
+        return $this->proUpsell ??= new ProUpsell();
     }
 
     public function registerHooks(): void
@@ -31,6 +38,7 @@ final class SettingsPage implements HasHooks
         add_action('admin_menu', [$this, 'addMenuPage']);
         add_action('admin_init', [$this, 'registerSettings']);
         add_action('admin_enqueue_scripts', [$this, 'enqueueAssets']);
+        $this->proUpsell()->registerHooks();
     }
 
     public function addMenuPage(): void
@@ -109,6 +117,8 @@ final class SettingsPage implements HasHooks
                     <span class="followup-admin__status followup-admin__status--off"><?php esc_html_e('No emails enabled', 'plogins-followup'); ?></span>
                 <?php endif; ?>
             </h1>
+
+            <?php $this->proUpsell()->banner(); ?>
 
             <div class="followup-admin__intro">
                 <span class="followup-admin__intro-icon" aria-hidden="true">&#9993;</span>
@@ -277,6 +287,8 @@ final class SettingsPage implements HasHooks
 
                 <?php submit_button(); ?>
             </form>
+
+            <?php $this->proUpsell()->cards(); ?>
         </div>
         <?php
     }
