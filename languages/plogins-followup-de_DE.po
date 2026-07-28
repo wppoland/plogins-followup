@@ -19,7 +19,7 @@ msgstr ""
 #. Plugin Name of the plugin
 #: followup.php
 msgid "Followup - Order Follow-Up Emails for WooCommerce"
-msgstr "Follow-up – Bestell-Follow-up-E-Mails für WooCommerce"
+msgstr "Follow-up, Bestell-Follow-up-E-Mails für WooCommerce"
 
 #. Plugin URI of the plugin
 #: followup.php
@@ -51,7 +51,7 @@ msgid ""
 "Followup - Order Follow-Up Emails for WooCommerce requires WooCommerce to be "
 "active."
 msgstr ""
-"Follow-up – Bestell-Folge-E-Mails für WooCommerce erfordern, dass "
+"Follow-up, Bestell-Folge-E-Mails für WooCommerce erfordern, dass "
 "WooCommerce aktiv ist."
 
 #: src/Admin/SettingsPage.php:40

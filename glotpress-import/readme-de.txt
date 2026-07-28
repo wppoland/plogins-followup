@@ -40,8 +40,8 @@ Das Plugin befindet sich noch nicht im WordPress.org-Verzeichnis. Quellcode und 
 
 * <strong>Dokumentation</strong> - https://plogins.com/de/plogins-followup/docs/
 * <strong>Plugin-Seite</strong> - https://plogins.com/de/plogins-followup/
-* <strong>Quellcode</strong> – https://github.com/wppoland/plogins-followup
-* <strong>Fehlerberichte und Funktionsanfragen</strong> – https://github.com/wppoland/plogins-followup/issues
+* <strong>Quellcode</strong>, https://github.com/wppoland/plogins-followup
+* <strong>Fehlerberichte und Funktionsanfragen</strong>, https://github.com/wppoland/plogins-followup/issues
 
 
 = Does it require WooCommerce? =

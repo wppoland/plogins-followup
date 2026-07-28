@@ -28,7 +28,7 @@ final class Mailer
 
     /**
      * Send a single follow-up email for an order. Returns true when wp_mail
-     * accepted the message. Performs no idempotency checks itself — the caller
+     * accepted the message. Performs no idempotency checks itself, the caller
      * (Scheduler) owns "send once" semantics.
      *
      * @param array{id: string, enabled?: bool, status?: string, delay?: int, subject: string, body: string} $step
