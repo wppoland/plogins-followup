@@ -1,7 +1,7 @@
 {
   "$schema": "https://playground.wordpress.net/blueprint-schema.json",
   "meta": {
-    "title": "Plogins Followup - Follow-Up Emails for WooCommerce — Live Preview",
+    "title": "Plogins Followup - Follow-Up Emails for WooCommerce, Live Preview",
     "author": "WPPoland"
   },
   "landingPage": "/wp-admin/admin.php?page=followup-settings",

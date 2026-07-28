@@ -4,18 +4,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Followup - Order Follow-Up Emails for WooCommerce 0.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/followup\n"
-"POT-Creation-Date: 2026-06-16T20:24:21+00:00\n"
+"POT-Creation-Date: 2026-06-17T15:07:34+00:00\n"
 "PO-Revision-Date: 2026-06-15 00:00+0000\n"
-"Last-Translator: WPPoland <hello@plogins.com>\n"
-"Language-Team: Polish <pl_PL@li.org>\n"
+"Last-Translator: motylanogha <szatkowski.mariusz@gmail.com>\n"
+"Language-Team: Polish <pl@li.org>\n"
 "Language: pl_PL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 "
 "|| n%100>14) ? 1 : 2);\n"
-"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: plogins-followup\n"
+"X-Generator: WP-CLI 2.12.0\n"
 
 #. Plugin Name of the plugin
 #: followup.php
@@ -103,10 +103,11 @@ msgstr "Nazwa nadawcy"
 
 #. translators: %s: the store name used as the fall-back sender.
 #: src/Admin/SettingsPage.php:141
-#, php-format
 msgid ""
 "Shown as the sender in the customer inbox. Left blank, emails come from %s."
 msgstr ""
+"Wyświetlany jako nadawca w skrzynce odbiorczej klienta. Pozostawione puste, "
+"e-maile pochodzą z %s."
 
 #: src/Admin/SettingsPage.php:148
 msgid "From email"
@@ -114,13 +115,12 @@ msgstr "Adres e-mail nadawcy"
 
 #. translators: %s: the admin email used as the fall-back sender address.
 #: src/Admin/SettingsPage.php:158
-#, php-format
 msgid "Reply-to address for these emails. Left blank, they send from %s."
-msgstr ""
+msgstr "Adres zwrotny dla tych e-maili. Pozostawione puste, wysyłają z %s."
 
 #: src/Admin/SettingsPage.php:160
 msgid "An address on your own domain delivers most reliably."
-msgstr ""
+msgstr "Najbardziej niezawodny jest adres we własnej domenie."
 
 #: src/Admin/SettingsPage.php:168
 msgid "Available template tokens"
@@ -133,52 +133,52 @@ msgstr "Symbole zastępcze, których możesz użyć w tematach i treściach:"
 #: src/Admin/SettingsPage.php:188
 msgid "When off, this email is never scheduled or sent."
 msgstr ""
+"Gdy ta opcja jest wyłączona, ten e-mail nie jest nigdy planowany ani "
+"wysyłany."
 
 #: src/Admin/SettingsPage.php:192
 msgid "Send this email"
-msgstr ""
+msgstr "Wyślij tego e-maila"
 
 #. translators: %s: order status name, e.g. Completed.
 #: src/Admin/SettingsPage.php:199
-#, php-format
 msgid "Order reaches %s"
-msgstr ""
+msgstr "Zamówienie dociera do %s"
 
 #. translators: %d: number of days.
 #: src/Admin/SettingsPage.php:201
-#, php-format
 msgid "wait %d day"
 msgid_plural "wait %d days"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "poczekaj %d dzień"
+msgstr[1] "poczekaj %d dni"
+msgstr[2] "poczekaj %d dni"
 
 #: src/Admin/SettingsPage.php:203
 msgid "next daily run"
-msgstr ""
+msgstr "następne codzienne uruchomienie"
 
 #: src/Admin/SettingsPage.php:207 src/Admin/SettingsPage.php:213
 msgid "day"
 msgid_plural "days"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "dzień"
+msgstr[1] "dni"
+msgstr[2] "dni"
 
 #: src/Admin/SettingsPage.php:207
 msgid "days"
-msgstr ""
+msgstr "dni"
 
 #: src/Admin/SettingsPage.php:208 src/Admin/SettingsPage.php:213
 msgid "soon"
-msgstr ""
+msgstr "wkrótce"
 
 #: src/Admin/SettingsPage.php:216
 msgid "Email sent"
-msgstr ""
+msgstr "E-mail wysłany"
 
 #: src/Admin/SettingsPage.php:223
 msgid "Trigger status"
-msgstr "Status wyzwalający"
+msgstr "Stan wyzwalający"
 
 #: src/Admin/SettingsPage.php:234
 msgid "The email is scheduled once an order reaches this status."
@@ -205,6 +205,8 @@ msgid ""
 "The inbox subject line. Tokens above work here too, a name in the subject "
 "lifts open rates."
 msgstr ""
+"Temat skrzynki odbiorczej. Tokeny powyżej działają również tutaj, nazwa w "
+"temacie podnosi stawki otwarć."
 
 #: src/Admin/SettingsPage.php:265
 msgid "Body"
@@ -238,9 +240,69 @@ msgid ""
 msgstr ""
 "Prosi klienta o wystawienie opinii, gdy zdąży już zapoznać się z produktem."
 
-#: src/Service/Mailer.php:87
+#: src/Service/Mailer.php:90
 msgid "there"
 msgstr "Drogi Kliencie"
+
+#: src/Admin/ProUpsell.php:78
+msgid "Wkrótce"
+msgstr "Wkrótce"
+
+#: src/Admin/ProUpsell.php:78
+msgid "Coming soon"
+msgstr "Wkrótce"
+
+#. translators: %d: yearly price in PLN
+#: src/Admin/ProUpsell.php:83
+#, php-format
+msgid "od %d zł/rok"
+msgstr "od %d zł/rok"
+
+#. translators: 1: currency symbol, 2: yearly price
+#: src/Admin/ProUpsell.php:88
+#, php-format
+msgid "from %1$s%2$d/yr"
+msgstr "od %1$s%2$d/rok"
+
+#: src/Admin/ProUpsell.php:97
+msgid "Upgrade to PRO"
+msgstr "Przejdź na PRO"
+
+#: src/Admin/ProUpsell.php:98
+msgid "Powiadom mnie"
+msgstr "Powiadom mnie"
+
+#: src/Admin/ProUpsell.php:98
+msgid "Get notified"
+msgstr "Powiadom mnie"
+
+#: src/Admin/ProUpsell.php:128
+msgid "Permission denied."
+msgstr "Brak uprawnień."
+
+#. translators: %s: PRO edition name
+#: src/Admin/ProUpsell.php:158
+#, php-format
+msgid "Do more with %s"
+msgstr "Zrób więcej dzięki %s"
+
+#: src/Admin/ProUpsell.php:165
+msgid "Dismiss this notice"
+msgstr "Odrzuć to powiadomienie"
+
+#: src/Admin/ProUpsell.php:182
+msgid "Unlock every PRO feature"
+msgstr "Odblokuj wszystkie funkcje PRO"
+
+#: src/Admin/ProUpsell.php:195
+msgid "one licence, every PRO feature"
+msgstr "jedna licencja, wszystkie funkcje PRO"
+
+#. translators: %s: PRO edition name
+#: src/Admin/ProUpsell.php:214
+#, php-format
+msgid "What %s adds"
+msgstr "Co dodaje %s"
 
 #~ msgid ""
 #~ "The sender name shown in the customer's inbox. Defaults to your site name."
