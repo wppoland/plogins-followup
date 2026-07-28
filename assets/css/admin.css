@@ -2,7 +2,7 @@
  * Followup admin settings styles.
  *
  * The plugin's world is the post-purchase mail: an order drops, time waits,
- * a follow-up is posted. The one moment that matters is the delay — so the
+ * a follow-up is posted. The one moment that matters is the delay, so the
  * delay reads as a postmark date stamp on a mailing strip, and an enabled
  * email card carries a perforated stamp edge. Accent is postmark ink, not the
  * generic admin blue. Themeable --fu-* tokens with sane fallbacks; dark-scheme
@@ -253,7 +253,7 @@
 }
 
 /* ------------------------------------------------------------------ *
- * PRO upsell — dismissible banner, sidebar promo, "what PRO adds"
+ * PRO upsell, dismissible banner, sidebar promo, "what PRO adds"
  * locked cards. Pure advertising (no disabled inputs), scoped to
  * .followup-admin, styled in the plugin's own postmark-ink palette.
  * ------------------------------------------------------------------ */
