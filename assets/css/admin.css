@@ -2,7 +2,7 @@
  * Followup admin settings styles.
  *
  * The plugin's world is the post-purchase mail: an order drops, time waits,
- * a follow-up is posted. The one moment that matters is the delay — so the
+ * a follow-up is posted. The one moment that matters is the delay, so the
  * delay reads as a postmark date stamp on a mailing strip, and an enabled
  * email card carries a perforated stamp edge. Accent is postmark ink, not the
  * generic admin blue. Themeable --fu-* tokens with sane fallbacks; dark-scheme
@@ -26,22 +26,6 @@
     --fu-shadow: 0 1px 2px rgba(64, 30, 40, 0.06), 0 2px 8px rgba(64, 30, 40, 0.05);
     --fu-speed: 160ms;
 }
-
-@media (prefers-color-scheme: dark) {
-    .followup-admin {
-        --fu-ink: #e0708e;
-        --fu-ink-deep: #c4506f;
-        --fu-surface: #20262d;
-        --fu-surface-alt: #272d31;
-        --fu-paper-edge: #2e3439;
-        --fu-border: #3d4148;
-        --fu-text: #e6e9ec;
-        --fu-text-muted: #a7a39b;
-        --fu-on: #188048;            /* deepened: white label needs >=4.5:1 (WCAG AA) */
-        --fu-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
-    }
-}
-
 .followup-admin__status {
     display: inline-block;
     margin-inline-start: 0.5rem;
@@ -214,14 +198,6 @@
     transform: rotate(-7deg);
     transform-origin: center;
 }
-
-@media (prefers-color-scheme: dark) {
-    .followup-postmark__stamp {
-        background:
-            radial-gradient(circle at center, transparent 58%, rgba(224, 112, 142, 0.1) 60%);
-    }
-}
-
 .followup-postmark__days {
     font-size: 1.25rem;
     font-weight: 800;
@@ -277,24 +253,18 @@
 }
 
 /* ------------------------------------------------------------------ *
- * PRO upsell — dismissible banner, sidebar promo, "what PRO adds"
+ * PRO upsell, dismissible banner, sidebar promo, "what PRO adds"
  * locked cards. Pure advertising (no disabled inputs), scoped to
- * .followup-admin, using the plugin's own postmark-ink accent
- * (--fu-ink) for decoration. The CTA/tag backgrounds use a fixed deep
- * ink (--fu-pro-cta, #5e1b30) so white text clears WCAG AA (>= 8:1) in
- * both colour schemes; the lighter accent is decorative only. Surfaces
- * are kept light (white cards) like the rest of the promo, independent
- * of the dark-scheme tokens above.
+ * .followup-admin, styled in the plugin's own postmark-ink palette.
  * ------------------------------------------------------------------ */
+
 .followup-admin {
-    --fu-pro-cta: #5e1b30;       /* fixed deep ink; white text >= AA both schemes */
-    --fu-pro-muted: #646970;
-    --fu-pro-radius: 8px;
+    --fu-pro-radius: var(--fu-radius);
     --fu-pro-radius-sm: 6px;
     --fu-pro-gap: 20px;
 }
 
-/* Two-column wrapper (form + promo aside); single column on narrow screens. */
+/* Optional two-column wrapper (form + promo aside); single column on narrow. */
 .followup-admin .followup-cols { display: grid; gap: var(--fu-pro-gap); grid-template-columns: 1fr; align-items: start; }
 @media (min-width: 1100px) {
     .followup-admin .followup-cols { grid-template-columns: minmax(0, 1fr) 300px; }
@@ -305,57 +275,55 @@
     display: flex;
     align-items: center;
     gap: 14px;
-    max-width: 880px;
-    margin: 0 0 var(--fu-pro-gap);
+    margin: 1em 0 var(--fu-pro-gap);
     padding: 12px 16px;
-    border: 1px solid color-mix(in srgb, var(--fu-ink) 30%, #dcdcde);
+    border: 1px solid color-mix(in srgb, var(--fu-ink) 30%, var(--fu-border));
     border-inline-start: 4px solid var(--fu-ink);
     border-radius: var(--fu-pro-radius);
-    background: color-mix(in srgb, var(--fu-ink) 7%, #fff);
+    background: color-mix(in srgb, var(--fu-ink) 6%, var(--fu-surface));
 }
 .followup-admin .followup-pro-banner__tag,
 .followup-admin .followup-pro-card__badge,
 .followup-admin .followup-pro-aside__eyebrow {
     font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
 }
-.followup-admin .followup-pro-banner__tag { flex: 0 0 auto; padding: 2px 8px; border-radius: 999px; color: #fff; background: var(--fu-pro-cta); }
-.followup-admin .followup-pro-banner__text { flex: 1 1 auto; margin: 0; color: #1d2327; }
-.followup-admin .followup-pro-banner__sub { margin-inline-start: 4px; color: var(--fu-pro-muted); }
-.followup-admin .followup-pro-banner__price { margin-inline-start: 6px; color: var(--fu-pro-muted); font-weight: 600; white-space: nowrap; }
-.followup-admin .followup-pro-banner__dismiss { flex: 0 0 auto; font-size: 18px; line-height: 1; text-decoration: none; color: var(--fu-pro-muted); padding: 4px; border-radius: 4px; }
-.followup-admin .followup-pro-banner__dismiss:hover { color: #1d2327; background: rgba(0, 0, 0, .05); }
+.followup-admin .followup-pro-banner__tag { flex: 0 0 auto; padding: 2px 8px; border-radius: 999px; color: #fff; background: var(--fu-ink-deep); }
+.followup-admin .followup-pro-banner__text { flex: 1 1 auto; margin: 0; color: var(--fu-text); }
+.followup-admin .followup-pro-banner__sub { margin-inline-start: 4px; color: var(--fu-text-muted); }
+.followup-admin .followup-pro-banner__price { margin-inline-start: 6px; color: var(--fu-text-muted); font-weight: 600; white-space: nowrap; }
+.followup-admin .followup-pro-banner__dismiss { flex: 0 0 auto; font-size: 18px; line-height: 1; text-decoration: none; color: var(--fu-text-muted); padding: 4px; border-radius: 4px; }
+.followup-admin .followup-pro-banner__dismiss:hover { color: var(--fu-text); background: rgba(0, 0, 0, .05); }
 
-/* Accent CTA buttons (override WP blue with the readable deep ink) */
+/* Accent CTA buttons (override WP blue with the readable ink accent) */
 .followup-admin .followup-pro-banner__cta.button-primary,
 .followup-admin .followup-pro-aside__cta.button-primary {
-    background: var(--fu-pro-cta); border-color: color-mix(in srgb, var(--fu-pro-cta) 80%, #000); color: #fff; text-shadow: none; box-shadow: none;
+    background: var(--fu-ink-deep); border-color: color-mix(in srgb, var(--fu-ink-deep) 80%, #000); color: #fff; text-shadow: none; box-shadow: none;
 }
 .followup-admin .followup-pro-banner__cta.button-primary:hover,
-.followup-admin .followup-pro-aside__cta.button-primary:hover { background: color-mix(in srgb, var(--fu-pro-cta) 88%, #000); }
+.followup-admin .followup-pro-aside__cta.button-primary:hover { background: color-mix(in srgb, var(--fu-ink-deep) 88%, #000); }
 
 /* Sidebar promo card */
 .followup-admin .followup-pro-aside {
-    max-width: none; margin: 0; box-shadow: none;
-    background: #fff; border: 1px solid #dcdcde; border-top: 3px solid var(--fu-ink); border-radius: var(--fu-pro-radius); padding: 18px 20px; position: sticky; top: 40px;
+    background: var(--fu-surface); border: 1px solid var(--fu-border); border-top: 3px solid var(--fu-ink); border-radius: var(--fu-pro-radius); padding: 18px 20px; position: sticky; top: 40px;
 }
-.followup-admin .followup-pro-aside__eyebrow { margin: 0 0 4px; color: var(--fu-pro-cta); }
-.followup-admin .followup-pro-aside__heading { margin: 0 0 12px; font-size: 16px; line-height: 1.3; color: #1d2327; }
+.followup-admin .followup-pro-aside__eyebrow { margin: 0 0 4px; color: var(--fu-ink-deep); }
+.followup-admin .followup-pro-aside__heading { margin: 0 0 12px; font-size: 16px; line-height: 1.3; }
 .followup-admin .followup-pro-aside__list { margin: 0 0 16px; padding: 0; list-style: none; }
-.followup-admin .followup-pro-aside__list li { display: flex; align-items: flex-start; gap: 8px; padding: 5px 0; color: #1d2327; font-size: 13px; }
+.followup-admin .followup-pro-aside__list li { display: flex; align-items: flex-start; gap: 8px; padding: 5px 0; color: var(--fu-text); font-size: 13px; }
 .followup-admin .followup-pro-aside__lock::before,
 .followup-admin .followup-pro-card__lock::before { content: "\f160"; font-family: dashicons; font-size: 15px; line-height: 1.2; color: var(--fu-ink); }
 .followup-admin .followup-pro-aside__cta { width: 100%; text-align: center; }
-.followup-admin .followup-pro-aside__price { margin: 10px 0 0; font-size: 12px; color: var(--fu-pro-muted); text-align: center; }
+.followup-admin .followup-pro-aside__price { margin: 10px 0 0; font-size: 12px; color: var(--fu-text-muted); text-align: center; }
 
 /* "What PRO adds" locked cards */
-.followup-admin .followup-pro-cards { max-width: 60rem; margin: var(--fu-pro-gap) 0 0; }
-.followup-admin .followup-pro-cards__title { font-size: 15px; margin: 0 0 12px; color: #1d2327; }
+.followup-admin .followup-pro-cards { margin: var(--fu-pro-gap) 0 0; }
+.followup-admin .followup-pro-cards__title { font-size: 15px; margin: 0 0 12px; }
 .followup-admin .followup-pro-cards__grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); }
-.followup-admin .followup-pro-card { position: relative; padding: 16px; border: 1px solid #dcdcde; border-radius: var(--fu-pro-radius-sm); background: color-mix(in srgb, var(--fu-ink) 3%, #fff); }
-.followup-admin .followup-pro-card__badge { position: absolute; top: 12px; inset-inline-end: 12px; padding: 1px 7px; border-radius: 999px; color: var(--fu-pro-cta); border: 1px solid color-mix(in srgb, var(--fu-ink) 40%, #fff); }
+.followup-admin .followup-pro-card { position: relative; padding: 16px; border: 1px solid var(--fu-border); border-radius: var(--fu-pro-radius-sm); background: color-mix(in srgb, var(--fu-ink) 3%, var(--fu-surface)); }
+.followup-admin .followup-pro-card__badge { position: absolute; top: 12px; inset-inline-end: 12px; padding: 1px 7px; border-radius: 999px; color: var(--fu-ink-deep); border: 1px solid color-mix(in srgb, var(--fu-ink) 40%, var(--fu-surface)); }
 .followup-admin .followup-pro-card__lock { display: inline-block; margin-bottom: 6px; }
-.followup-admin .followup-pro-card__title { margin: 0 0 6px; font-size: 14px; line-height: 1.3; color: #1d2327; }
-.followup-admin .followup-pro-card__desc { margin: 0; font-size: 12.5px; line-height: 1.5; color: var(--fu-pro-muted); }
+.followup-admin .followup-pro-card__title { margin: 0 0 6px; font-size: 14px; line-height: 1.3; }
+.followup-admin .followup-pro-card__desc { margin: 0; font-size: 12.5px; line-height: 1.5; color: var(--fu-text-muted); }
 
 @media (prefers-reduced-motion: no-preference) {
     .followup-admin .followup-pro-banner__cta, .followup-admin .followup-pro-aside__cta { transition: background-color .15s ease, border-color .15s ease; }

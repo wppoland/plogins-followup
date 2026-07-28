@@ -1,5 +1,5 @@
 /**
- * Followup admin — postmark interactions.
+ * Followup admin, postmark interactions.
  *
  * Presentation only: keeps the postmark date stamp in sync with the delay
  * field, and re-presses the stamp when an email type is enabled. No behaviour
