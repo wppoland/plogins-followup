@@ -49,8 +49,8 @@ msgstr "https://plogins.com/"
 
 #: followup.php:65
 msgid ""
-"Followup - Order Follow-Up Emails for WooCommerce requires WooCommerce to be"
-" active."
+"Followup - Order Follow-Up Emails for WooCommerce requires WooCommerce to be "
+"active."
 msgstr ""
 "Seguimiento: los correos electrónicos de seguimiento de pedidos para "
 "WooCommerce requieren que WooCommerce esté activo."
@@ -81,10 +81,10 @@ msgid ""
 "order reaches the chosen status. A daily background task finds due orders "
 "and sends them. The same email is never sent twice for the same order."
 msgstr ""
-"Cada correo electrónico habilitado se envía una vez por pedido, una cantidad"
-" determinada de días después de que el pedido alcance el estado elegido. Una"
-" tarea diaria en segundo plano encuentra pedidos vencidos y los envía. Nunca"
-" se envía el mismo correo electrónico dos veces para el mismo pedido."
+"Cada correo electrónico habilitado se envía una vez por pedido, una cantidad "
+"determinada de días después de que el pedido alcance el estado elegido. Una "
+"tarea diaria en segundo plano encuentra pedidos vencidos y los envía. Nunca "
+"se envía el mismo correo electrónico dos veces para el mismo pedido."
 
 #: src/Admin/SettingsPage.php:125
 msgid "Sender"
@@ -92,11 +92,11 @@ msgstr "Remitente"
 
 #: src/Admin/SettingsPage.php:126
 msgid ""
-"Who follow-up emails appear to come from. Leave blank to use your store name"
-" and admin email."
+"Who follow-up emails appear to come from. Leave blank to use your store name "
+"and admin email."
 msgstr ""
-"De quién parecen provenir los correos electrónicos de seguimiento. Déjelo en"
-" blanco para usar el nombre de su tienda y el correo electrónico del "
+"De quién parecen provenir los correos electrónicos de seguimiento. Déjelo en "
+"blanco para usar el nombre de su tienda y el correo electrónico del "
 "administrador."
 
 #: src/Admin/SettingsPage.php:131
@@ -125,8 +125,7 @@ msgstr ""
 #: src/Admin/SettingsPage.php:160
 msgid "An address on your own domain delivers most reliably."
 msgstr ""
-"Una dirección en su propio dominio ofrece resultados de manera más "
-"confiable."
+"Una dirección en su propio dominio ofrece resultados de manera más confiable."
 
 #: src/Admin/SettingsPage.php:168
 msgid "Available template tokens"
@@ -242,8 +241,7 @@ msgstr "Solicitud de revisión"
 
 #: src/FollowupTypes.php:27
 msgid ""
-"Asks the customer to leave a review once they have had time with the "
-"product."
+"Asks the customer to leave a review once they have had time with the product."
 msgstr ""
 "Pide al cliente que deje una reseña una vez que haya tenido tiempo con el "
 "producto."
@@ -251,3 +249,63 @@ msgstr ""
 #: src/Service/Mailer.php:90
 msgid "there"
 msgstr "Hola"
+
+#: src/Admin/ProUpsell.php:78
+msgid "Wkrótce"
+msgstr "Próximamente"
+
+#: src/Admin/ProUpsell.php:78
+msgid "Coming soon"
+msgstr "Próximamente"
+
+#. translators: %d: yearly price in PLN
+#: src/Admin/ProUpsell.php:83
+#, php-format
+msgid "od %d zł/rok"
+msgstr "desde %d zł/año"
+
+#. translators: 1: currency symbol, 2: yearly price
+#: src/Admin/ProUpsell.php:88
+#, php-format
+msgid "from %1$s%2$d/yr"
+msgstr "desde %1$s%2$d/año"
+
+#: src/Admin/ProUpsell.php:97
+msgid "Upgrade to PRO"
+msgstr "Mejora a PRO"
+
+#: src/Admin/ProUpsell.php:98
+msgid "Powiadom mnie"
+msgstr "Avísame"
+
+#: src/Admin/ProUpsell.php:98
+msgid "Get notified"
+msgstr "Avísame"
+
+#: src/Admin/ProUpsell.php:128
+msgid "Permission denied."
+msgstr "Permiso denegado."
+
+#. translators: %s: PRO edition name
+#: src/Admin/ProUpsell.php:158
+#, php-format
+msgid "Do more with %s"
+msgstr "Haz más con %s"
+
+#: src/Admin/ProUpsell.php:165
+msgid "Dismiss this notice"
+msgstr "Descartar este aviso"
+
+#: src/Admin/ProUpsell.php:182
+msgid "Unlock every PRO feature"
+msgstr "Desbloquea todas las funciones PRO"
+
+#: src/Admin/ProUpsell.php:195
+msgid "one licence, every PRO feature"
+msgstr "una licencia, todas las funciones PRO"
+
+#. translators: %s: PRO edition name
+#: src/Admin/ProUpsell.php:214
+#, php-format
+msgid "What %s adds"
+msgstr "Lo que añade %s"

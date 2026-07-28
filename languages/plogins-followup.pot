@@ -26,7 +26,9 @@ msgstr ""
 
 #. Description of the plugin
 #: followup.php
-msgid "Send automated post-purchase emails to WooCommerce customers: thank-you and review requests, a set number of days after an order."
+msgid ""
+"Send automated post-purchase emails to WooCommerce customers: thank-you and "
+"review requests, a set number of days after an order."
 msgstr ""
 
 #. Author of the plugin
@@ -40,7 +42,9 @@ msgid "https://plogins.com/"
 msgstr ""
 
 #: followup.php:65
-msgid "Followup - Order Follow-Up Emails for WooCommerce requires WooCommerce to be active."
+msgid ""
+"Followup - Order Follow-Up Emails for WooCommerce requires WooCommerce to be "
+"active."
 msgstr ""
 
 #: src/Admin/SettingsPage.php:40
@@ -64,7 +68,10 @@ msgid "Automated post-purchase emails"
 msgstr ""
 
 #: src/Admin/SettingsPage.php:117
-msgid "Each enabled email is sent once per order, a set number of days after the order reaches the chosen status. A daily background task finds due orders and sends them. The same email is never sent twice for the same order."
+msgid ""
+"Each enabled email is sent once per order, a set number of days after the "
+"order reaches the chosen status. A daily background task finds due orders "
+"and sends them. The same email is never sent twice for the same order."
 msgstr ""
 
 #: src/Admin/SettingsPage.php:125
@@ -72,7 +79,9 @@ msgid "Sender"
 msgstr ""
 
 #: src/Admin/SettingsPage.php:126
-msgid "Who follow-up emails appear to come from. Leave blank to use your store name and admin email."
+msgid ""
+"Who follow-up emails appear to come from. Leave blank to use your store name "
+"and admin email."
 msgstr ""
 
 #: src/Admin/SettingsPage.php:131
@@ -81,7 +90,8 @@ msgstr ""
 
 #. translators: %s: the store name used as the fall-back sender.
 #: src/Admin/SettingsPage.php:141
-msgid "Shown as the sender in the customer inbox. Left blank, emails come from %s."
+msgid ""
+"Shown as the sender in the customer inbox. Left blank, emails come from %s."
 msgstr ""
 
 #: src/Admin/SettingsPage.php:148
@@ -129,8 +139,7 @@ msgstr[1] ""
 msgid "next daily run"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:207
-#: src/Admin/SettingsPage.php:213
+#: src/Admin/SettingsPage.php:207 src/Admin/SettingsPage.php:213
 msgid "day"
 msgid_plural "days"
 msgstr[0] ""
@@ -140,8 +149,7 @@ msgstr[1] ""
 msgid "days"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:208
-#: src/Admin/SettingsPage.php:213
+#: src/Admin/SettingsPage.php:208 src/Admin/SettingsPage.php:213
 msgid "soon"
 msgstr ""
 
@@ -174,7 +182,9 @@ msgid "Subject"
 msgstr ""
 
 #: src/Admin/SettingsPage.php:260
-msgid "The inbox subject line. Tokens above work here too, a name in the subject lifts open rates."
+msgid ""
+"The inbox subject line. Tokens above work here too, a name in the subject "
+"lifts open rates."
 msgstr ""
 
 #: src/Admin/SettingsPage.php:265
@@ -202,9 +212,70 @@ msgid "Review request"
 msgstr ""
 
 #: src/FollowupTypes.php:27
-msgid "Asks the customer to leave a review once they have had time with the product."
+msgid ""
+"Asks the customer to leave a review once they have had time with the product."
 msgstr ""
 
 #: src/Service/Mailer.php:90
 msgid "there"
+msgstr ""
+
+#: src/Admin/ProUpsell.php:78
+msgid "Wkrótce"
+msgstr ""
+
+#: src/Admin/ProUpsell.php:78
+msgid "Coming soon"
+msgstr ""
+
+#. translators: %d: yearly price in PLN
+#: src/Admin/ProUpsell.php:83
+#, php-format
+msgid "od %d zł/rok"
+msgstr ""
+
+#. translators: 1: currency symbol, 2: yearly price
+#: src/Admin/ProUpsell.php:88
+#, php-format
+msgid "from %1$s%2$d/yr"
+msgstr ""
+
+#: src/Admin/ProUpsell.php:97
+msgid "Upgrade to PRO"
+msgstr ""
+
+#: src/Admin/ProUpsell.php:98
+msgid "Powiadom mnie"
+msgstr ""
+
+#: src/Admin/ProUpsell.php:98
+msgid "Get notified"
+msgstr ""
+
+#: src/Admin/ProUpsell.php:128
+msgid "Permission denied."
+msgstr ""
+
+#. translators: %s: PRO edition name
+#: src/Admin/ProUpsell.php:158
+#, php-format
+msgid "Do more with %s"
+msgstr ""
+
+#: src/Admin/ProUpsell.php:165
+msgid "Dismiss this notice"
+msgstr ""
+
+#: src/Admin/ProUpsell.php:182
+msgid "Unlock every PRO feature"
+msgstr ""
+
+#: src/Admin/ProUpsell.php:195
+msgid "one licence, every PRO feature"
+msgstr ""
+
+#. translators: %s: PRO edition name
+#: src/Admin/ProUpsell.php:214
+#, php-format
+msgid "What %s adds"
 msgstr ""

@@ -12,7 +12,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 "
+"|| n%100>14) ? 1 : 2);\n"
 "X-Domain: plogins-followup\n"
 "X-Generator: WP-CLI 2.12.0\n"
 
@@ -33,8 +34,7 @@ msgid ""
 "review requests, a set number of days after an order."
 msgstr ""
 "Wysyłaj automatyczne wiadomości posprzedażowe do klientów WooCommerce: "
-"podziękowania i prośby o opinię, określoną liczbę dni po złożeniu "
-"zamówienia."
+"podziękowania i prośby o opinię, określoną liczbę dni po złożeniu zamówienia."
 
 #. Author of the plugin
 #: followup.php
@@ -48,8 +48,8 @@ msgstr "https://plogins.com/"
 
 #: followup.php:65
 msgid ""
-"Followup - Order Follow-Up Emails for WooCommerce requires WooCommerce to be"
-" active."
+"Followup - Order Follow-Up Emails for WooCommerce requires WooCommerce to be "
+"active."
 msgstr ""
 "Followup - Wiadomości posprzedażowe dla WooCommerce wymaga aktywnej wtyczki "
 "WooCommerce."
@@ -82,8 +82,8 @@ msgid ""
 msgstr ""
 "Każda włączona wiadomość jest wysyłana raz na zamówienie, określoną liczbę "
 "dni po osiągnięciu przez zamówienie wybranego statusu. Codzienne zadanie w "
-"tle wyszukuje zamówienia gotowe do wysyłki i realizuje ją. Ta sama wiadomość"
-" nigdy nie zostanie wysłana dwa razy dla tego samego zamówienia."
+"tle wyszukuje zamówienia gotowe do wysyłki i realizuje ją. Ta sama wiadomość "
+"nigdy nie zostanie wysłana dwa razy dla tego samego zamówienia."
 
 #: src/Admin/SettingsPage.php:125
 msgid "Sender"
@@ -91,8 +91,8 @@ msgstr "Nadawca"
 
 #: src/Admin/SettingsPage.php:126
 msgid ""
-"Who follow-up emails appear to come from. Leave blank to use your store name"
-" and admin email."
+"Who follow-up emails appear to come from. Leave blank to use your store name "
+"and admin email."
 msgstr ""
 "Od kogo mają pochodzić wiadomości posprzedażowe. Pozostaw puste, aby użyć "
 "nazwy sklepu i adresu e-mail administratora."
@@ -236,14 +236,73 @@ msgstr "Prośba o opinię"
 
 #: src/FollowupTypes.php:27
 msgid ""
-"Asks the customer to leave a review once they have had time with the "
-"product."
+"Asks the customer to leave a review once they have had time with the product."
 msgstr ""
 "Prosi klienta o wystawienie opinii, gdy zdąży już zapoznać się z produktem."
 
 #: src/Service/Mailer.php:90
 msgid "there"
 msgstr "Drogi Kliencie"
+
+#: src/Admin/ProUpsell.php:78
+msgid "Wkrótce"
+msgstr "Wkrótce"
+
+#: src/Admin/ProUpsell.php:78
+msgid "Coming soon"
+msgstr "Wkrótce"
+
+#. translators: %d: yearly price in PLN
+#: src/Admin/ProUpsell.php:83
+#, php-format
+msgid "od %d zł/rok"
+msgstr "od %d zł/rok"
+
+#. translators: 1: currency symbol, 2: yearly price
+#: src/Admin/ProUpsell.php:88
+#, php-format
+msgid "from %1$s%2$d/yr"
+msgstr "od %1$s%2$d/rok"
+
+#: src/Admin/ProUpsell.php:97
+msgid "Upgrade to PRO"
+msgstr "Przejdź na PRO"
+
+#: src/Admin/ProUpsell.php:98
+msgid "Powiadom mnie"
+msgstr "Powiadom mnie"
+
+#: src/Admin/ProUpsell.php:98
+msgid "Get notified"
+msgstr "Powiadom mnie"
+
+#: src/Admin/ProUpsell.php:128
+msgid "Permission denied."
+msgstr "Brak uprawnień."
+
+#. translators: %s: PRO edition name
+#: src/Admin/ProUpsell.php:158
+#, php-format
+msgid "Do more with %s"
+msgstr "Zrób więcej dzięki %s"
+
+#: src/Admin/ProUpsell.php:165
+msgid "Dismiss this notice"
+msgstr "Odrzuć to powiadomienie"
+
+#: src/Admin/ProUpsell.php:182
+msgid "Unlock every PRO feature"
+msgstr "Odblokuj wszystkie funkcje PRO"
+
+#: src/Admin/ProUpsell.php:195
+msgid "one licence, every PRO feature"
+msgstr "jedna licencja, wszystkie funkcje PRO"
+
+#. translators: %s: PRO edition name
+#: src/Admin/ProUpsell.php:214
+#, php-format
+msgid "What %s adds"
+msgstr "Co dodaje %s"
 
 #~ msgid ""
 #~ "The sender name shown in the customer's inbox. Defaults to your site name."
@@ -255,8 +314,8 @@ msgstr "Drogi Kliencie"
 #~ "The sender address. Defaults to your site admin email. Use an address on "
 #~ "your own domain for the best deliverability."
 #~ msgstr ""
-#~ "Adres nadawcy. Domyślnie adres e-mail administratora witryny. Aby zapewnić "
-#~ "najlepszą dostarczalność, użyj adresu we własnej domenie."
+#~ "Adres nadawcy. Domyślnie adres e-mail administratora witryny. Aby "
+#~ "zapewnić najlepszą dostarczalność, użyj adresu we własnej domenie."
 
 #~ msgid "Enabled"
 #~ msgstr "Włączone"

@@ -48,8 +48,8 @@ msgstr "https://plogins.com/"
 
 #: followup.php:65
 msgid ""
-"Followup - Order Follow-Up Emails for WooCommerce requires WooCommerce to be"
-" active."
+"Followup - Order Follow-Up Emails for WooCommerce requires WooCommerce to be "
+"active."
 msgstr ""
 "Follow-up – Bestell-Folge-E-Mails für WooCommerce erfordern, dass "
 "WooCommerce aktiv ist."
@@ -80,8 +80,8 @@ msgid ""
 "order reaches the chosen status. A daily background task finds due orders "
 "and sends them. The same email is never sent twice for the same order."
 msgstr ""
-"Jede aktivierte E-Mail wird einmal pro Bestellung gesendet, eine festgelegte"
-" Anzahl von Tagen, nachdem die Bestellung den ausgewählten Status erreicht "
+"Jede aktivierte E-Mail wird einmal pro Bestellung gesendet, eine festgelegte "
+"Anzahl von Tagen, nachdem die Bestellung den ausgewählten Status erreicht "
 "hat. Eine tägliche Hintergrundaufgabe findet fällige Bestellungen und "
 "versendet sie. Dieselbe E-Mail wird nie zweimal für dieselbe Bestellung "
 "gesendet."
@@ -92,8 +92,8 @@ msgstr "Absender"
 
 #: src/Admin/SettingsPage.php:126
 msgid ""
-"Who follow-up emails appear to come from. Leave blank to use your store name"
-" and admin email."
+"Who follow-up emails appear to come from. Leave blank to use your store name "
+"and admin email."
 msgstr ""
 "Von wem Folge-E-Mails zu stammen scheinen. Lass das Feld leer, um deinen "
 "Shopnamen und deine Administrator-E-Mail-Adresse zu verwenden."
@@ -107,8 +107,8 @@ msgstr "Vom Namen"
 msgid ""
 "Shown as the sender in the customer inbox. Left blank, emails come from %s."
 msgstr ""
-"Wird im Posteingang des Kunden als Absender angezeigt. Wenn du das Feld leer"
-" lassen, stammen die E-Mails von %s."
+"Wird im Posteingang des Kunden als Absender angezeigt. Wenn du das Feld leer "
+"lassen, stammen die E-Mails von %s."
 
 #: src/Admin/SettingsPage.php:148
 msgid "From email"
@@ -118,8 +118,7 @@ msgstr "Von E-Mail"
 #: src/Admin/SettingsPage.php:158
 msgid "Reply-to address for these emails. Left blank, they send from %s."
 msgstr ""
-"Antwortadresse für diese E-Mails. Bleibt das Feld leer, wird von %s "
-"gesendet."
+"Antwortadresse für diese E-Mails. Bleibt das Feld leer, wird von %s gesendet."
 
 #: src/Admin/SettingsPage.php:160
 msgid "An address on your own domain delivers most reliably."
@@ -240,8 +239,7 @@ msgstr "Überprüfungsanfrage"
 
 #: src/FollowupTypes.php:27
 msgid ""
-"Asks the customer to leave a review once they have had time with the "
-"product."
+"Asks the customer to leave a review once they have had time with the product."
 msgstr ""
 "Fordert den Kunden auf, eine Bewertung abzugeben, sobald er Zeit mit dem "
 "Produkt hatte."
@@ -249,3 +247,63 @@ msgstr ""
 #: src/Service/Mailer.php:90
 msgid "there"
 msgstr "Hallo"
+
+#: src/Admin/ProUpsell.php:78
+msgid "Wkrótce"
+msgstr "Demnächst"
+
+#: src/Admin/ProUpsell.php:78
+msgid "Coming soon"
+msgstr "Demnächst"
+
+#. translators: %d: yearly price in PLN
+#: src/Admin/ProUpsell.php:83
+#, php-format
+msgid "od %d zł/rok"
+msgstr "ab %d zł/Jahr"
+
+#. translators: 1: currency symbol, 2: yearly price
+#: src/Admin/ProUpsell.php:88
+#, php-format
+msgid "from %1$s%2$d/yr"
+msgstr "ab %1$s%2$d/Jahr"
+
+#: src/Admin/ProUpsell.php:97
+msgid "Upgrade to PRO"
+msgstr "Auf PRO upgraden"
+
+#: src/Admin/ProUpsell.php:98
+msgid "Powiadom mnie"
+msgstr "Benachrichtige mich"
+
+#: src/Admin/ProUpsell.php:98
+msgid "Get notified"
+msgstr "Benachrichtige mich"
+
+#: src/Admin/ProUpsell.php:128
+msgid "Permission denied."
+msgstr "Zugriff verweigert."
+
+#. translators: %s: PRO edition name
+#: src/Admin/ProUpsell.php:158
+#, php-format
+msgid "Do more with %s"
+msgstr "Mehr erreichen mit %s"
+
+#: src/Admin/ProUpsell.php:165
+msgid "Dismiss this notice"
+msgstr "Diesen Hinweis ausblenden"
+
+#: src/Admin/ProUpsell.php:182
+msgid "Unlock every PRO feature"
+msgstr "Alle PRO-Funktionen freischalten"
+
+#: src/Admin/ProUpsell.php:195
+msgid "one licence, every PRO feature"
+msgstr "eine Lizenz, alle PRO-Funktionen"
+
+#. translators: %s: PRO edition name
+#: src/Admin/ProUpsell.php:214
+#, php-format
+msgid "What %s adds"
+msgstr "Was %s ergänzt"
