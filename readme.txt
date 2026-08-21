@@ -26,7 +26,7 @@ A daily wp-cron event picks up orders that are due and sends the emails with `wp
 
 Developers can extend the sequence through the `followup/sequence_steps` filter. Each custom step can provide its own trigger status, delay, subject and body while reusing Followup's idempotent scheduler.
 
-The plugin is not on the WordPress.org directory yet. Source code and issue tracker live at https://github.com/wppoland/plogins-followup.
+The plugin is not on the WordPress.org directory yet. Source code and issue tracker live at [github.com/wppoland/plogins-followup](https://github.com/wppoland/plogins-followup).
 
 == Installation ==
 
@@ -38,10 +38,10 @@ The plugin is not on the WordPress.org directory yet. Source code and issue trac
 
 = Documentation and links =
 
-* **Documentation** - https://plogins.com/plogins-followup/docs/
-* **Plugin page** - https://plogins.com/plogins-followup/
-* **Source code** - https://github.com/wppoland/plogins-followup
-* **Bug reports and feature requests** - https://github.com/wppoland/plogins-followup/issues
+* **Documentation**: [plogins.com/plogins-followup/docs/](https://plogins.com/plogins-followup/docs/)
+* **Plugin page**: [plogins.com/plogins-followup/](https://plogins.com/plogins-followup/)
+* **Source code**: [github.com/wppoland/plogins-followup](https://github.com/wppoland/plogins-followup)
+* **Bug reports and feature requests**: [github.com/wppoland/plogins-followup/issues](https://github.com/wppoland/plogins-followup/issues)
 
 
 = Does it require WooCommerce? =
