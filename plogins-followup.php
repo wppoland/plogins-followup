@@ -3,7 +3,7 @@
  * Plugin Name:       Followup - Follow-Up Emails for WooCommerce
  * Plugin URI:        https://plogins.com/plogins-followup/
  * Description:        Send automated post-purchase emails to WooCommerce customers: thank-you and review requests, a set number of days after an order.
- * Version:           1.0.5
+ * Version:           1.0.6
  * Requires at least: 6.5
  * Requires PHP:      8.1
  * Requires Plugins:  woocommerce

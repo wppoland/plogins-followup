@@ -15,7 +15,6 @@ return [
     'sellable'   => true,
     'price_from' => 29,
     'currency'   => 'EUR',
-    'price_pln'  => 129,
     'lead'       => [
         'en' => 'Branded HTML, custom sequences, coupons, reporting, scheduling and open/click tracking are available today.',
         'pl' => 'Markowe HTML, własne sekwencje, kupony, raporty, harmonogram i śledzenie otwarć/kliknięć są już dostępne.',
