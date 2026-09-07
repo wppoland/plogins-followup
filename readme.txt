@@ -1,11 +1,11 @@
-=== Followup - Follow-Up Emails for WooCommerce ===
+=== Plogins Followup - Follow-Up Emails for WooCommerce ===
 Contributors: motylanogha
 Tags: woocommerce, email, follow-up, post-purchase, review request
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.1
 Requires Plugins: woocommerce
-Stable tag: 1.0.8
+Stable tag: 1.0.9
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -82,6 +82,9 @@ Followup does not connect to any external services. It has no API keys, sends no
 Plogins Followup is fully translatable and ships the `plogins-followup.pot` template. Translations are delivered by WordPress.org language packs from translate.wordpress.org, which is where Polish, German and Spanish are being contributed; the package itself carries no compiled translation files.
 
 == Changelog ==
+
+= 1.0.9 =
+* Renamed to Plogins Followup - Follow-Up Emails for WooCommerce so the name leads with the brand rather than a generic word, which is what the WordPress.org plugin review team asks for. The plugin slug is unchanged.
 
 = 1.0.8 =
 * Removed the "Tested up to" header from the main PHP file. It belongs in readme.txt only, where it is already declared; present in both, the header can override the readme and show a compatibility version that was never intended.
