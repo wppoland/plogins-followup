@@ -6,6 +6,7 @@ namespace Followup\Admin;
 
 use Followup\Contract\HasHooks;
 use Followup\FollowupTypes;
+use Followup\Service\Texts;
 use Followup\Settings;
 
 defined('ABSPATH') || exit;
@@ -98,7 +99,12 @@ final class SettingsPage implements HasHooks
             return;
         }
 
-        $settings = $this->settings->all();
+        // Raw, never Texts::apply(): the fields edit what is stored. Rendering the
+        // resolved default into the input would save that one language back into
+        // the option on the next save, which is the bug this avoids. The
+        // translated default is shown as a placeholder instead.
+        $settings = $this->settings->raw();
+        $texts    = Texts::defaults();
         $option   = Settings::OPTION;
         $types    = FollowupTypes::all();
         $statuses = $this->orderStatuses();
@@ -266,8 +272,10 @@ final class SettingsPage implements HasHooks
                                     <td>
                                         <input type="text" id="<?php echo esc_attr($id . '_subject'); ?>" class="large-text"
                                             name="<?php echo esc_attr($base); ?>[subject]"
+                                            placeholder="<?php echo esc_attr((string) ($texts[ 'emails.' . $type . '.subject' ] ?? '')); ?>"
                                             value="<?php echo esc_attr((string) ($email['subject'] ?? '')); ?>" />
                                         <p class="description"><?php esc_html_e('The inbox subject line. Tokens above work here too, a name in the subject lifts open rates.', 'plogins-followup'); ?></p>
+                                        <p class="description"><?php esc_html_e('Leave blank to use the wording shown in grey, which is translated into your store language.', 'plogins-followup'); ?></p>
                                     </td>
                                 </tr>
                                 <tr>
@@ -276,8 +284,10 @@ final class SettingsPage implements HasHooks
                                     </th>
                                     <td>
                                         <textarea id="<?php echo esc_attr($id . '_body'); ?>" rows="6" class="large-text"
-                                            name="<?php echo esc_attr($base); ?>[body]"><?php echo esc_textarea((string) ($email['body'] ?? '')); ?></textarea>
+                                            name="<?php echo esc_attr($base); ?>[body]"
+                                            placeholder="<?php echo esc_attr((string) ($texts[ 'emails.' . $type . '.body' ] ?? '')); ?>"><?php echo esc_textarea((string) ($email['body'] ?? '')); ?></textarea>
                                         <p class="description"><?php esc_html_e('Plain text. Tokens above are replaced when the email is sent.', 'plogins-followup'); ?></p>
+                                        <p class="description"><?php esc_html_e('Leave blank to use the wording shown in grey, which is translated into your store language.', 'plogins-followup'); ?></p>
                                     </td>
                                 </tr>
                             </tbody>
@@ -329,6 +339,9 @@ final class SettingsPage implements HasHooks
                 $status = (string) $defaultEmail['status'];
             }
 
+            // A blank field is stored blank. Substituting the packaged English
+            // here is what used to freeze one language into the option; blank
+            // means "use the translated default" and is resolved on send.
             $subject = isset($in['subject']) ? sanitize_text_field((string) $in['subject']) : '';
             $body    = isset($in['body']) ? sanitize_textarea_field((string) $in['body']) : '';
 
@@ -336,8 +349,8 @@ final class SettingsPage implements HasHooks
                 'enabled' => ! empty($in['enabled']),
                 'status'  => $status,
                 'delay'   => min(3650, absint($in['delay'] ?? $defaultEmail['delay'])),
-                'subject' => '' !== $subject ? $subject : (string) $defaultEmail['subject'],
-                'body'    => '' !== $body ? $body : (string) $defaultEmail['body'],
+                'subject' => $subject,
+                'body'    => $body,
             ];
         }
 
