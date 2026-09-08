@@ -5,7 +5,7 @@ Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.1
 Requires Plugins: woocommerce
-Stable tag: 1.0.9
+Stable tag: 1.0.10
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -82,6 +82,10 @@ Followup does not connect to any external services. It has no API keys, sends no
 Plogins Followup is fully translatable and ships the `plogins-followup.pot` template. Translations are delivered by WordPress.org language packs from translate.wordpress.org, which is where Polish, German and Spanish are being contributed; the package itself carries no compiled translation files.
 
 == Changelog ==
+
+= 1.0.10 =
+* Fixed the follow-up email subjects and bodies being stuck in English. The packaged wording lived in a config file rather than in a translatable string, so it never reached the translation files, and the settings screen wrote that English back into the database whenever a field was left blank. A store running in Polish, German or Spanish mailed its customers in English no matter how complete the language pack was.
+* The subject and body fields now ship empty and show the translated default in grey. Leave a field blank and the wording follows your store language as soon as a translation for it exists; type your own and it is used exactly as typed. Translations are delivered by WordPress.org language packs rather than bundled in this download, so a blank field stays English until a pack is published. Wording you had already customised is left alone. A stored template that is still word for word the old English default is cleared on update, so it starts following your store language.
 
 = 1.0.9 =
 * Renamed to Plogins Followup - Follow-Up Emails for WooCommerce so the name leads with the brand rather than a generic word, which is what the WordPress.org plugin review team asks for. The plugin slug is unchanged.
