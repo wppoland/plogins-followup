@@ -25,24 +25,24 @@ return [
             'pl' => ['title' => 'Markowe e-maile HTML', 'desc' => 'Owijaj wiadomości Followup w szablon HTML z nagłówkiem, intro, stopką i kolorem akcentu.'],
         ],
         [
-            'en' => ['title' => 'Custom post-purchase sequences', 'desc' => 'Build up to eight post-purchase email steps with their own status, delay, subject and body on WooCommerce → Followup Sequence.'],
-            'pl' => ['title' => 'Własne sekwencje po zakupie', 'desc' => 'Zbuduj do ośmiu kroków e-mail z własnym statusem, opóźnieniem, tematem i treścią na WooCommerce → Followup Sequence.'],
+            'en' => ['title' => 'Custom post-purchase sequences', 'desc' => 'Build up to eight post-purchase email steps with their own status, delay, subject and body on WooCommerce > Followup Sequence.'],
+            'pl' => ['title' => 'Własne sekwencje po zakupie', 'desc' => 'Zbuduj do ośmiu kroków e-mail z własnym statusem, opóźnieniem, tematem i treścią na WooCommerce > Followup Sequence.'],
         ],
         [
             'en' => ['title' => 'Coupon blocks', 'desc' => 'Create single-use WooCommerce coupons per order. Use the {coupon} placeholder or auto-append the offer to every email.'],
             'pl' => ['title' => 'Bloki kuponów', 'desc' => 'Twórz jednorazowe kupony WooCommerce per zamówienie. Użyj placeholdera {coupon} lub auto-dopisz ofertę w każdym e-mailu.'],
         ],
         [
-            'en' => ['title' => 'Send reporting', 'desc' => 'Track how many follow-ups were sent per sequence step on WooCommerce → Followup Reports.'],
-            'pl' => ['title' => 'Raporty wysyłek', 'desc' => 'Śledź liczbę wysłanych follow-upów per krok sekwencji na WooCommerce → Followup Reports.'],
+            'en' => ['title' => 'Send reporting', 'desc' => 'Track how many follow-ups were sent per sequence step on WooCommerce > Followup Reports.'],
+            'pl' => ['title' => 'Raporty wysyłek', 'desc' => 'Śledź liczbę wysłanych follow-upów per krok sekwencji na WooCommerce > Followup Reports.'],
         ],
         [
-            'en' => ['title' => 'Send-time scheduling', 'desc' => 'Send at a chosen store-timezone hour or on chosen weekdays via WooCommerce → Followup Schedule.'],
+            'en' => ['title' => 'Send-time scheduling', 'desc' => 'Send at a chosen store-timezone hour or on chosen weekdays via WooCommerce > Followup Schedule.'],
             'pl' => ['title' => 'Harmonogram godzin wysyłki', 'desc' => 'Wysyłka o wybranej godzinie lub w wybrane dni tygodnia w strefie czasowej sklepu.'],
         ],
         [
-            'en' => ['title' => 'Open and click reporting', 'desc' => 'Track aggregate opens and link clicks per sequence step on WooCommerce → Followup Reports.'],
-            'pl' => ['title' => 'Raporty otwarć i kliknięć', 'desc' => 'Zliczaj otwarcia i kliknięcia per krok follow-up na WooCommerce → Followup Reports.'],
+            'en' => ['title' => 'Open and click reporting', 'desc' => 'Track aggregate opens and link clicks per sequence step on WooCommerce > Followup Reports.'],
+            'pl' => ['title' => 'Raporty otwarć i kliknięć', 'desc' => 'Zliczaj otwarcia i kliknięcia per krok follow-up na WooCommerce > Followup Reports.'],
         ],
     ],
 ];
