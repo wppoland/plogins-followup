@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Plogins Followup - Follow-Up Emails for WooCommerce 1.0.10\n"
+"Project-Id-Version: Plogins Followup - Follow-Up Emails for WooCommerce 1.0.12\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/plogins-followup\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-08T13:42:56+00:00\n"
+"POT-Creation-Date: 2026-09-12T16:10:49+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: plogins-followup\n"
@@ -39,216 +39,228 @@ msgstr ""
 msgid "https://wppoland.com"
 msgstr ""
 
-#: plogins-followup.php:64
+#: plogins-followup.php:70
 msgid "Followup - Order Follow-Up Emails for WooCommerce requires WooCommerce to be active."
 msgstr ""
 
-#: src/Admin/ProUpsell.php:78
+#: src/Admin/ProUpsell.php:85
 msgid "Wkrótce"
 msgstr ""
 
-#: src/Admin/ProUpsell.php:78
+#: src/Admin/ProUpsell.php:85
 msgid "Coming soon"
 msgstr ""
 
 #. translators: 1: currency symbol, 2: yearly price
-#: src/Admin/ProUpsell.php:84
+#: src/Admin/ProUpsell.php:91
 #, php-format
 msgid "from %1$s%2$d/yr"
 msgstr ""
 
-#: src/Admin/ProUpsell.php:93
+#: src/Admin/ProUpsell.php:100
 msgid "Upgrade to PRO"
 msgstr ""
 
-#: src/Admin/ProUpsell.php:94
+#: src/Admin/ProUpsell.php:101
 msgid "Powiadom mnie"
 msgstr ""
 
-#: src/Admin/ProUpsell.php:94
+#: src/Admin/ProUpsell.php:101
 msgid "Get notified"
 msgstr ""
 
-#: src/Admin/ProUpsell.php:124
+#: src/Admin/ProUpsell.php:131
 msgid "Permission denied."
 msgstr ""
 
 #. translators: %s: PRO edition name
-#: src/Admin/ProUpsell.php:154
+#: src/Admin/ProUpsell.php:161
 #, php-format
 msgid "Do more with %s"
 msgstr ""
 
-#: src/Admin/ProUpsell.php:161
+#: src/Admin/ProUpsell.php:168
 msgid "Dismiss this notice"
 msgstr ""
 
-#: src/Admin/ProUpsell.php:178
+#: src/Admin/ProUpsell.php:185
 msgid "Unlock every PRO feature"
 msgstr ""
 
-#: src/Admin/ProUpsell.php:191
+#: src/Admin/ProUpsell.php:198
 msgid "one licence, every PRO feature"
 msgstr ""
 
 #. translators: %s: PRO edition name
-#: src/Admin/ProUpsell.php:210
+#: src/Admin/ProUpsell.php:217
 #, php-format
 msgid "What %s adds"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:49
+#: src/Admin/SettingsPage.php:50
 msgid "Follow-up Emails"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:50
+#: src/Admin/SettingsPage.php:51
 msgid "Follow-ups"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:121
+#: src/Admin/SettingsPage.php:129
 msgid "Active"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:123
+#: src/Admin/SettingsPage.php:131
 msgid "No emails enabled"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:132
+#: src/Admin/SettingsPage.php:140
 msgid "Automated post-purchase emails"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:133
+#: src/Admin/SettingsPage.php:141
 msgid "Each enabled email is sent once per order, a set number of days after the order reaches the chosen status. A daily background task finds due orders and sends them. The same email is never sent twice for the same order."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:141
+#. translators: %1$s: date the plugin was activated. %2$s: maximum emails per type per run.
+#: src/Admin/SettingsPage.php:147
+#, php-format
+msgid "Orders placed before %1$s, when this plugin was switched on, are never followed up, so your existing customers were not mailed. Each daily run sends at most %2$s emails per type, oldest orders first."
+msgstr ""
+
+#. translators: %s: maximum emails per type per run.
+#: src/Admin/SettingsPage.php:154
+#, php-format
+msgid "Orders placed before this plugin was switched on are never followed up, so your existing customers were not mailed. Each daily run sends at most %s emails per type, oldest orders first."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:167
 msgid "Sender"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:142
+#: src/Admin/SettingsPage.php:168
 msgid "Who follow-up emails appear to come from. Leave blank to use your store name and admin email."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:147
+#: src/Admin/SettingsPage.php:173
 msgid "From name"
 msgstr ""
 
 #. translators: %s: the store name used as the fall-back sender.
-#: src/Admin/SettingsPage.php:157
+#: src/Admin/SettingsPage.php:183
 #, php-format
 msgid "Shown as the sender in the customer inbox. Left blank, emails come from %s."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:164
+#: src/Admin/SettingsPage.php:190
 msgid "From email"
 msgstr ""
 
 #. translators: %s: the admin email used as the fall-back sender address.
-#: src/Admin/SettingsPage.php:174
+#: src/Admin/SettingsPage.php:200
 #, php-format
 msgid "Reply-to address for these emails. Left blank, they send from %s."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:176
+#: src/Admin/SettingsPage.php:202
 msgid "An address on your own domain delivers most reliably."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:184
+#: src/Admin/SettingsPage.php:210
 msgid "Available template tokens"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:185
+#: src/Admin/SettingsPage.php:211
 msgid "Tokens you can use in subjects and bodies:"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:204
+#: src/Admin/SettingsPage.php:230
 msgid "When off, this email is never scheduled or sent."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:208
+#: src/Admin/SettingsPage.php:234
 msgid "Send this email"
 msgstr ""
 
 #. translators: %s: order status name, e.g. Completed.
-#: src/Admin/SettingsPage.php:215
+#: src/Admin/SettingsPage.php:241
 #, php-format
 msgid "Order reaches %s"
 msgstr ""
 
 #. translators: %d: number of days.
-#: src/Admin/SettingsPage.php:217
+#: src/Admin/SettingsPage.php:243
 #, php-format
 msgid "wait %d day"
 msgid_plural "wait %d days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Admin/SettingsPage.php:219
+#: src/Admin/SettingsPage.php:245
 msgid "next daily run"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:223
-#: src/Admin/SettingsPage.php:229
+#: src/Admin/SettingsPage.php:249
+#: src/Admin/SettingsPage.php:255
 msgid "day"
 msgid_plural "days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Admin/SettingsPage.php:223
+#: src/Admin/SettingsPage.php:249
 msgid "days"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:224
-#: src/Admin/SettingsPage.php:229
+#: src/Admin/SettingsPage.php:250
+#: src/Admin/SettingsPage.php:255
 msgid "soon"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:232
+#: src/Admin/SettingsPage.php:258
 msgid "Email sent"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:239
+#: src/Admin/SettingsPage.php:265
 msgid "Trigger status"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:250
+#: src/Admin/SettingsPage.php:276
 msgid "The email is scheduled once an order reaches this status."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:255
+#: src/Admin/SettingsPage.php:281
 msgid "Delay (days)"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:264
+#: src/Admin/SettingsPage.php:290
 msgid "days after the order reaches the status above"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:265
+#: src/Admin/SettingsPage.php:291
 msgid "Use 0 to send on the next daily run."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:270
+#: src/Admin/SettingsPage.php:296
 msgid "Subject"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:277
+#: src/Admin/SettingsPage.php:303
 msgid "The inbox subject line. Tokens above work here too, a name in the subject lifts open rates."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:278
-#: src/Admin/SettingsPage.php:290
+#: src/Admin/SettingsPage.php:304
+#: src/Admin/SettingsPage.php:316
 msgid "Leave blank to use the wording shown in grey, which is translated into your store language."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:283
+#: src/Admin/SettingsPage.php:309
 msgid "Body"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:289
+#: src/Admin/SettingsPage.php:315
 msgid "Plain text. Tokens above are replaced when the email is sent."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:375
+#: src/Admin/SettingsPage.php:401
 msgid "Completed"
 msgstr ""
 

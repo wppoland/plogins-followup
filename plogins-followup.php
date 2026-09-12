@@ -3,7 +3,7 @@
  * Plugin Name:       Plogins Followup - Follow-Up Emails for WooCommerce
  * Plugin URI:        https://plogins.com/plogins-followup/
  * Description:        Send automated post-purchase emails to WooCommerce customers: thank-you and review requests, a set number of days after an order.
- * Version:           1.0.11
+ * Version:           1.0.12
  * Requires at least: 6.5
  * Requires PHP:      8.1
  * Requires Plugins:  woocommerce
@@ -25,7 +25,7 @@ namespace Followup;
 
 defined('ABSPATH') || exit;
 
-const VERSION     = '1.0.11';
+const VERSION     = '1.0.12';
 const PLUGIN_FILE = __FILE__;
 
 define('FOLLOWUP_DIR', plugin_dir_path(__FILE__));
@@ -36,6 +36,12 @@ require_once __DIR__ . '/autoload.php';
 // Schedule (and tear down) the daily follow-up cron. Activation hooks must work
 // without the full container, so we touch the schedule directly here.
 register_activation_hook(__FILE__, static function (): void {
+    // Record the install moment as the floor for the sender. Without it the
+    // first run would treat the shop's entire order history as due and start
+    // mailing customers who ordered years ago. add_option, so re-activating
+    // does not move the floor over follow-ups that are still due.
+    add_option(Service\Scheduler::FLOOR_OPTION, (string) time(), '', false);
+
     if (! wp_next_scheduled(Service\Scheduler::CRON_HOOK)) {
         wp_schedule_event(time() + HOUR_IN_SECONDS, 'daily', Service\Scheduler::CRON_HOOK);
     }

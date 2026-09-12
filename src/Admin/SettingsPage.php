@@ -6,6 +6,7 @@ namespace Followup\Admin;
 
 use Followup\Contract\HasHooks;
 use Followup\FollowupTypes;
+use Followup\Service\Scheduler;
 use Followup\Service\Texts;
 use Followup\Settings;
 
@@ -113,6 +114,13 @@ final class SettingsPage implements HasHooks
         // Concrete fall-backs so "leave blank" shows what it actually resolves to.
         $defaultName  = (string) get_bloginfo('name');
         $defaultEmail = (string) get_option('admin_email', '');
+
+        // The cut-off the sender will not reach back past. Absent until the
+        // plugin is activated or the first daily run seeds it.
+        $floor      = get_option(Scheduler::FLOOR_OPTION, '');
+        $floorLabel = is_numeric($floor)
+            ? wp_date((string) get_option('date_format', 'Y-m-d'), (int) $floor)
+            : '';
         ?>
         <div class="wrap followup-admin">
             <h1>
@@ -131,6 +139,24 @@ final class SettingsPage implements HasHooks
                 <div>
                     <h2><?php esc_html_e('Automated post-purchase emails', 'plogins-followup'); ?></h2>
                     <p><?php esc_html_e('Each enabled email is sent once per order, a set number of days after the order reaches the chosen status. A daily background task finds due orders and sends them. The same email is never sent twice for the same order.', 'plogins-followup'); ?></p>
+                    <p>
+                        <?php
+                        if ('' !== $floorLabel) {
+                            printf(
+                                /* translators: %1$s: date the plugin was activated. %2$s: maximum emails per type per run. */
+                                esc_html__('Orders placed before %1$s, when this plugin was switched on, are never followed up, so your existing customers were not mailed. Each daily run sends at most %2$s emails per type, oldest orders first.', 'plogins-followup'),
+                                '<strong>' . esc_html($floorLabel) . '</strong>',
+                                '<strong>' . esc_html(number_format_i18n(Scheduler::BATCH_LIMIT)) . '</strong>'
+                            );
+                        } else {
+                            printf(
+                                /* translators: %s: maximum emails per type per run. */
+                                esc_html__('Orders placed before this plugin was switched on are never followed up, so your existing customers were not mailed. Each daily run sends at most %s emails per type, oldest orders first.', 'plogins-followup'),
+                                '<strong>' . esc_html(number_format_i18n(Scheduler::BATCH_LIMIT)) . '</strong>'
+                            );
+                        }
+                        ?>
+                    </p>
                 </div>
             </div>
 
