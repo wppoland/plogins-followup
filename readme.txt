@@ -5,7 +5,7 @@ Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.1
 Requires Plugins: woocommerce
-Stable tag: 1.0.11
+Stable tag: 1.0.12
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -23,6 +23,8 @@ Two email types come ready to use:
 For each type you set whether it is enabled, which order status triggers it, how many days to wait, and the subject and body. Subjects and bodies support `{customer}` (first name), `{order}` (order number) and `{site}` (site name).
 
 A daily wp-cron event picks up orders that are due and sends the emails with `wp_mail`, so they use whatever mail setup the site already has. Each follow-up is recorded against the order as soon as it sends, so the same one is never sent twice, even if two cron runs overlap.
+
+Only orders placed after you activate the plugin are followed up, so switching it on in a shop with years of orders behind it does not mail those customers. Each run sends at most 200 emails per follow-up type, oldest orders first, so a large shop catches up over several days rather than in one burst.
 
 Developers can extend the sequence through the `followup/sequence_steps` filter. Each custom step can provide its own trigger status, delay, subject and body while reusing Followup's idempotent scheduler.
 
@@ -50,11 +52,19 @@ Yes. WooCommerce must be installed and active.
 
 = When are emails actually sent? =
 
-A daily wp-cron event checks for orders that have been in the configured status for at least the configured number of days, and sends any that have not been sent yet.
+A daily wp-cron event checks for orders that have been in the configured status for at least the configured number of days, and sends any that have not been sent yet. It is wp-cron, so it runs on site traffic; if your site defines `DISABLE_WP_CRON` without a system cron job calling `wp-cron.php`, nothing is sent at all.
+
+= Will it email my existing customers when I activate it? =
+
+No. Activation records the moment you switched the plugin on, and orders placed before that are never followed up. Deactivating and activating again does not move that moment, so follow-ups that are still due are not lost.
+
+= How many emails can one run send? =
+
+At most 200 per follow-up type, per daily run, oldest orders first. The rest wait for the following run.
 
 = Will a customer ever get the same email twice? =
 
-No. Each follow-up type is recorded against the order once it is sent, so it is never sent again for that order.
+Practically no. The order is marked before the email is handed to `wp_mail`, so overlapping cron runs cannot both send it. The one exception is a send that never finishes, a PHP fatal error or a script timeout in the middle of `wp_mail`: the plugin cannot tell whether the message went out, so it retries that one order exactly once and then leaves it alone.
 
 = Which placeholders can I use? =
 
@@ -75,13 +85,19 @@ Yes. This plugin is compatible with WordPress Multisite. Network activate it or 
 
 == External Services ==
 
-Followup does not connect to any external services. It has no API keys, sends no data off-site, and loads nothing from a remote URL or CDN. Everything runs on your own WordPress install: settings are stored in the `followup_settings` and `followup_db_version` options, and each sent follow-up is recorded as `_followup_sent_{type}` order meta so it is never sent twice. Emails go out through your site's own `wp_mail()` using your WooCommerce store sender, so they travel by whatever mail setup you already have.
+Followup does not connect to any external services. It has no API keys, sends no data off-site, and loads nothing from a remote URL or CDN. Everything runs on your own WordPress install: settings are stored in the `followup_settings`, `followup_db_version` and `followup_install_floor` options, and each sent follow-up is recorded as `_followup_sent_{type}` order meta so it is never sent twice. Emails go out through your site's own `wp_mail()` using your WooCommerce store sender, so they travel by whatever mail setup you already have.
 
 == Translations ==
 
 Plogins Followup is fully translatable and ships the `plogins-followup.pot` template. Translations are delivered by WordPress.org language packs from translate.wordpress.org, which is where Polish, German and Spanish are being contributed; the package itself carries no compiled translation files.
 
 == Changelog ==
+
+= 1.0.12 =
+* Fixed the worst thing this plugin could do: on a shop that already had orders, the first daily run after activation treated the entire order history as due and started mailing customers who had ordered months or years earlier, 200 per follow-up type per day until the backlog drained. Activation now records the moment you switched the plugin on, and orders placed before it are never followed up. Sites updating from an earlier version get that floor set at their longest configured delay, which keeps the follow-ups still legitimately pending and leaves the rest of the history alone.
+* Fixed follow-ups being dropped for good when a send died mid-flight. The order is marked before the email is handed to `wp_mail` so an overlapping run cannot send it twice, but a PHP fatal error or a script timeout inside `wp_mail` left that mark behind with no email sent and nothing to undo it. An unfinished send is now recognised as unfinished and retried once, then left alone, so one crash can neither lose a follow-up silently nor mail the same customer every day.
+* The delay is now counted to the second rather than to the day. WooCommerce reads a plain date as a whole day, so a follow-up could go out up to a day earlier than the delay you set. It now never goes out early, which means the first send after this update can land up to a day later than you are used to.
+* The settings screen and the listing now state the ceiling: at most 200 emails per follow-up type per daily run.
 
 = 1.0.11 =
 * Fixed: the PRO upgrade promo kept selling to people who had already bought the paid edition. Only the banner could be dismissed, so the sidebar promo and the locked feature cards followed a paying customer around for good. The promo now checks whether the paid edition is active and steps aside when it is.
