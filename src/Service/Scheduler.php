@@ -36,9 +36,23 @@ defined('ABSPATH') || exit;
  * That second ceiling counts emails, not orders read. An order that is read
  * and cannot send, because an add-on holds it back or wp_mail refuses it,
  * spends none of it: the step reads on past that order in the same run, up to
- * SCAN_LIMIT orders. A run that ends still inside a stretch of orders it
- * cannot send to records where it stopped, so the next one starts there
- * instead of reading the same wall again and sending nothing, for ever.
+ * SCAN_LIMIT orders. A run the read ceiling cuts short records where it
+ * stopped, so the next one starts there instead of reading the same wall again
+ * and sending nothing, for ever. A run that instead reaches the end of the
+ * step's queue records nothing and the next one starts at the top, which is
+ * what offers an order held back earlier another chance.
+ *
+ * All of that assumes High-Performance Order Storage. On the legacy posts
+ * table wc_get_orders drops 'meta_query' (WC_Data_Store_WP::get_wp_query_args
+ * skips the key, and WooCommerce says so through wc_doing_it_wrong), so both
+ * meta filters below are no-ops there and every query returns plain due
+ * orders, already-sent ones included. Nothing is mailed twice, because the
+ * claim is re-read per order in deliver(), and nothing is lost. The cost is
+ * latency: the paging has to walk the shop's history, about 800 orders a run,
+ * before it reaches the orders that are actually due. Measured against the
+ * fake store in tests/: 3,000 already-sent orders plus one due order mails the
+ * due one on the fourth run, 30,000 on the thirty-eighth. Enabling HPOS
+ * removes it.
  */
 final class Scheduler implements HasHooks
 {
@@ -83,9 +97,13 @@ final class Scheduler implements HasHooks
     public const REACTIVATED_OPTION = 'followup_reactivated_at';
 
     /**
-     * Option holding, per step id, how far into that step's due orders the last
-     * run got without being able to send. Absent on a site where every order
-     * that came up was sent, which is the ordinary case.
+     * Option holding, per step id, how far into that step's due orders a run
+     * got before the read ceiling stopped it. Only a run cut short that way
+     * writes one. A run that reads the step's queue to its end clears it
+     * instead, whether or not it managed to send anything, so the next run
+     * starts at the top and the orders it could not send are offered again.
+     * Absent on a site where every order that came up was sent, which is the
+     * ordinary case.
      */
     public const SCAN_OPTION = 'followup_scan_offset';
 
@@ -233,7 +251,14 @@ final class Scheduler implements HasHooks
         // mailed just because a crash left a claim behind on it.
         $due = [
             'status'        => $status,
-            'orderby'       => 'modified',
+            // Paging by row number needs a total order, not just a sort. Orders
+            // that share a modified second, which a bulk status change gives a
+            // whole screen of them at once, have no guaranteed order between
+            // two queries, so a page boundary inside such a group can hand out
+            // one order twice and skip another. The id breaks every tie: HPOS
+            // maps both keys to columns, and on the posts table WP_Query reads
+            // the same space-separated list.
+            'orderby'       => 'modified ID',
             'order'         => 'ASC',
             'date_created'  => '>=' . $floor,
             'date_modified' => '<=' . $before,
@@ -294,16 +319,11 @@ final class Scheduler implements HasHooks
                 continue;
             }
 
-            // Short page: the end of this step's queue. A stale offset left by
-            // a queue that has since shrunk reads as an empty page, so try once
-            // from the top before giving the run up.
-            if ([] === $page && $offset > 0) {
-                $offset = 0;
-                continue;
-            }
-
-            // Start the next run at the top, so an order held back earlier in
-            // this pass is offered again rather than skipped for good.
+            // Short page: the end of this step's queue, including the empty one
+            // a stale offset reads when the queue has since shrunk. Start the
+            // next run at the top, so an order held back earlier in this pass
+            // is offered again rather than skipped for good, and so a stale
+            // offset costs one run rather than standing for ever.
             $offset = 0;
             break;
         }
