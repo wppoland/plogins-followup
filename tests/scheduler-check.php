@@ -36,6 +36,8 @@ namespace {
     /** @var array<int, array<string, mixed>> $GLOBALS['test_mail'] */
     $GLOBALS['test_mail'] = [];
     $GLOBALS['test_mail_fails'] = false;
+    /** @var array<int, string> $GLOBALS['test_mail_fails_to'] */
+    $GLOBALS['test_mail_fails_to'] = [];
     $GLOBALS['test_claim_at_send'] = [];
     /** @var array<int, int> $GLOBALS['test_veto'] */
     $GLOBALS['test_veto'] = [];
@@ -123,6 +125,11 @@ namespace {
     }
     function wp_mail(string $to, string $subject, string $body, array $headers = []): bool
     {
+        // A transport that refuses some addresses and takes others, which is
+        // what a shop with a population of dead addresses actually looks like.
+        if (in_array($to, $GLOBALS['test_mail_fails_to'], true)) {
+            return false;
+        }
         $GLOBALS['test_mail'][] = ['to' => $to, 'subject' => $subject];
         return ! $GLOBALS['test_mail_fails'];
     }
@@ -204,6 +211,11 @@ namespace {
 
         if (($args['orderby'] ?? '') === 'modified') {
             usort($out, static fn (WC_Order $a, WC_Order $b): int => $a->modified <=> $b->modified);
+        }
+
+        $offset = max(0, (int) ($args['offset'] ?? 0));
+        if ($offset > 0) {
+            $out = array_slice($out, $offset);
         }
 
         $limit = (int) ($args['limit'] ?? -1);
@@ -301,6 +313,7 @@ namespace {
         $GLOBALS['test_orders']        = [];
         $GLOBALS['test_mail']          = [];
         $GLOBALS['test_mail_fails']    = false;
+        $GLOBALS['test_mail_fails_to'] = [];
         $GLOBALS['test_claim_at_send'] = [];
         $GLOBALS['test_veto']          = [];
 
@@ -314,7 +327,14 @@ namespace {
 
     $now  = time();
     $day  = 86400;
+    $hour = 3600;
     $meta = '_followup_sent_thank_you';
+
+    /** How many emails went to one address. */
+    $mailedTo = static fn (string $address): int => count(array_filter(
+        $GLOBALS['test_mail'],
+        static fn (array $mail): bool => $address === $mail['to'],
+    ));
 
     echo "install floor\n";
     $scheduler = reset_world(['followup_install_floor' => (string) $now]);
@@ -403,31 +423,51 @@ namespace {
     check('not even one inside the longest delay', [] === $GLOBALS['test_orders'][1]->meta);
 
     echo "re-activation after a gap\n";
-    // Installed a year ago, switched off, switched on today. Nothing went out
-    // while it was off, and the deactivation hook cleared the cron event, so a
-    // floor pinned to the first install hands the first run a year of orders.
+    // Installed a year ago, switched off, switched on 12 hours ago. Nothing
+    // went out while it was off, and the deactivation hook cleared the cron
+    // event, so a floor pinned to the first install hands the first run a year
+    // of orders. The thank-you waits one day, so its window after the gap is
+    // the 24 hours of orders before the moment it was switched back on.
     $scheduler = reset_world([
         'followup_install_floor'  => (string) ($now - (400 * $day)),
-        'followup_reactivated_at' => (string) $now,
+        'followup_reactivated_at' => (string) ($now - (12 * $hour)),
     ]);
     $GLOBALS['test_orders'] = [
-        new WC_Order(10, 'completed', $now - (300 * $day), $now - (300 * $day)),
-        new WC_Order(11, 'completed', $now - (2 * $day), $now - (2 * $day)),
+        new WC_Order(10, 'completed', $now - (300 * $day), $now - (300 * $day), 'year-old@example.test'),
+        new WC_Order(11, 'completed', $now - (30 * $hour), $now - (30 * $hour), 'inside@example.test'),
+        new WC_Order(12, 'completed', $now - (40 * $hour), $now - (40 * $hour), 'outside@example.test'),
     ];
     $scheduler->run();
-    check('the floor moves up to the longest window', (int) ($GLOBALS['test_options']['followup_install_floor'] ?? 0) === $now - (7 * $day));
-    check('the year of orders that piled up is not mailed', [] === $GLOBALS['test_orders'][0]->meta);
-    check('an order still inside its window is', $GLOBALS['test_orders'][1]->meta[ $meta ] !== '');
-    check('and the activation moment is spent, not re-applied', ! isset($GLOBALS['test_options']['followup_reactivated_at']));
+    check('the year of orders that piled up is not mailed', $mailedTo('year-old@example.test') === 0);
+    check('an order still inside the thank-you window is', $mailedTo('inside@example.test') === 1);
+    check('one older than that window is not', $mailedTo('outside@example.test') === 0);
+    check('the install floor is left where it was', $GLOBALS['test_options']['followup_install_floor'] === (string) ($now - (400 * $day)));
+    check('and the activation moment is kept, because every step applies its own delay to it', $GLOBALS['test_options']['followup_reactivated_at'] === (string) ($now - (12 * $hour)));
+
+    echo "the longest delay does not widen the shortest one's reach-back\n";
+    // One window per step, not one window for the plugin. The review waits 7
+    // days, and while that window was shared this order was thanked as well:
+    // a customer who ordered a week ago got "thanks for your order" today. A
+    // PRO step waiting 30 days made it a month of them.
+    $scheduler = reset_world([
+        'followup_install_floor'  => (string) ($now - (400 * $day)),
+        'followup_reactivated_at' => (string) ($now - (12 * $hour)),
+    ]);
+    $GLOBALS['test_orders'] = [
+        new WC_Order(14, 'completed', $now - (7 * $day) - (3 * $hour), $now - (7 * $day) - (3 * $hour), 'week@example.test'),
+    ];
+    $scheduler->run();
+    check('the review goes out, because the order is inside the review window', $mailedTo('week@example.test') === 1);
+    check('and it is the review, not a thank-you for a week-old order', str_contains($GLOBALS['test_mail'][0]['subject'] ?? '', 'How did we do'));
 
     echo "re-activation on a young install\n";
-    // Switched off and on again two days after installing. The floor may only
-    // ever move forward, or a toggle would widen it back over the history.
+    // Switched off and on again two days after installing. No step may reach
+    // back past the install, however long its delay.
     $scheduler = reset_world([
         'followup_install_floor'  => (string) ($now - (2 * $day)),
         'followup_reactivated_at' => (string) $now,
     ]);
-    $GLOBALS['test_orders'] = [new WC_Order(12, 'completed', $now - (5 * $day), $now - (5 * $day))];
+    $GLOBALS['test_orders'] = [new WC_Order(15, 'completed', $now - (5 * $day), $now - (5 * $day))];
     $scheduler->run();
     check('the floor is not pulled backwards', (int) ($GLOBALS['test_options']['followup_install_floor'] ?? 0) === $now - (2 * $day));
     check('so an order from before the install stays unmailed', [] === $GLOBALS['test_orders'][0]->meta);
@@ -442,13 +482,12 @@ namespace {
     check('and its claim is left alone', $refunded->meta[ $meta ] === 'pending');
 
     echo "a claim the should_send filter vetoes\n";
-    // A veto is "not now". Left standing, a vetoed claim is re-read out of the
-    // same batch budget on every run: fill the budget with them and the due
-    // query never runs again, so the type stops sending anything at all.
+    // A veto is "not now". Left standing, a vetoed claim is re-read on every
+    // run out of a set that nothing drains.
     $scheduler = reset_world(['followup_install_floor' => (string) ($now - (100 * $day))]);
     $vetoed    = [];
     for ($i = 0; $i < 200; $i++) {
-        $order = new WC_Order(2000 + $i, 'completed', $now - (8 * $day), $now - (8 * $day));
+        $order = new WC_Order(2000 + $i, 'completed', $now - (8 * $day), $now - (8 * $day), 'held@example.test');
         $order->meta[ $meta ]           = 'pending';
         $order->meta['_followup_sent_review'] = 'pending';
         $vetoed[]                       = $order->id;
@@ -460,13 +499,64 @@ namespace {
     $GLOBALS['test_veto']     = $vetoed;
     $scheduler->run();
     check('a vetoed claim is released, not left standing', ! isset($GLOBALS['test_orders'][0]->meta[ $meta ]));
-    check('and nothing is mailed to a vetoed order', [] === $GLOBALS['test_mail']);
+    check('and nothing is mailed to a vetoed order', $mailedTo('held@example.test') === 0);
+    check('an order that is due is reached in the same run, not blocked by them', $mailedTo('fresh@example.test') === 2);
     $scheduler->run();
-    $toFresh = count(array_filter(
-        $GLOBALS['test_mail'],
-        static fn (array $mail): bool => 'fresh@example.test' === $mail['to'],
-    ));
-    check('so the next run reaches an order that is actually due', $toFresh === 2);
+    check('and the run after that does not mail it again', $mailedTo('fresh@example.test') === 2);
+
+    echo "a vetoed population that was never claimed\n";
+    // The same wall of held-back orders, with no claim on any of them, so
+    // nothing is released and nothing leaves the query. The order that is due
+    // sits behind all 200 of them. While the ceiling counted orders read, this
+    // sent nothing, on this run and on every run after it.
+    $scheduler = reset_world(['followup_install_floor' => (string) ($now - (100 * $day))]);
+    $vetoed    = [];
+    for ($i = 0; $i < 200; $i++) {
+        $order = new WC_Order(3000 + $i, 'completed', $now - (9 * $day), $now - (9 * $day), 'held@example.test');
+        $vetoed[]                 = $order->id;
+        $GLOBALS['test_orders'][] = $order;
+    }
+    $GLOBALS['test_orders'][] = new WC_Order(3999, 'completed', $now - (8 * $day), $now - (8 * $day), 'due@example.test');
+    $GLOBALS['test_veto']     = $vetoed;
+    $scheduler->run();
+    check('the held-back orders are still not mailed', $mailedTo('held@example.test') === 0);
+    check('and the one behind them is, on the first run', $mailedTo('due@example.test') === 2);
+    $scheduler->run();
+    check('a second run does not mail it twice', $mailedTo('due@example.test') === 2);
+
+    echo "a population wp_mail refuses\n";
+    // Dead addresses, not a veto: wp_mail says no, the claim is rolled back and
+    // the order stays exactly where it was in the queue. Same starvation, a
+    // shop can reach it without any add-on installed.
+    $scheduler = reset_world(['followup_install_floor' => (string) ($now - (100 * $day))]);
+    for ($i = 0; $i < 200; $i++) {
+        $GLOBALS['test_orders'][] = new WC_Order(4000 + $i, 'completed', $now - (9 * $day), $now - (9 * $day), 'dead@example.test');
+    }
+    $GLOBALS['test_orders'][]      = new WC_Order(4999, 'completed', $now - (8 * $day), $now - (8 * $day), 'live@example.test');
+    $GLOBALS['test_mail_fails_to'] = ['dead@example.test'];
+    $scheduler->run();
+    check('an undeliverable order does not spend the ceiling', $mailedTo('live@example.test') === 2);
+    check('and nothing was recorded as sent for it', ! isset($GLOBALS['test_orders'][0]->meta[ $meta ]));
+
+    echo "more held-back orders than one run may read\n";
+    // 1200 of them, past the 1000-order read ceiling, so one run cannot get to
+    // the end. Where it stopped is remembered, and the next run starts there
+    // rather than reading the same first 1000 again for ever.
+    $scheduler = reset_world(['followup_install_floor' => (string) ($now - (100 * $day))]);
+    $vetoed    = [];
+    for ($i = 0; $i < 1200; $i++) {
+        $order = new WC_Order(5000 + $i, 'completed', $now - (9 * $day), $now - (9 * $day), 'held@example.test');
+        $vetoed[]                 = $order->id;
+        $GLOBALS['test_orders'][] = $order;
+    }
+    $GLOBALS['test_orders'][] = new WC_Order(6999, 'completed', $now - (8 * $day), $now - (8 * $day), 'patient@example.test');
+    $GLOBALS['test_veto']     = $vetoed;
+    $scheduler->run();
+    check('the first run cannot reach the order behind them', $mailedTo('patient@example.test') === 0);
+    check('and it records how far it read', ($GLOBALS['test_options']['followup_scan_offset']['thank_you'] ?? 0) === 1000);
+    $scheduler->run();
+    check('the next run carries on from there and sends it', $mailedTo('patient@example.test') === 2);
+    check('and clears the mark once it has read to the end', ! isset($GLOBALS['test_options']['followup_scan_offset']['thank_you']));
 
     echo "the delay is honoured to the second\n";
     $scheduler = reset_world(['followup_install_floor' => (string) ($now - (10 * $day))]);
@@ -483,7 +573,7 @@ namespace {
     }
     $GLOBALS['test_orders'] = $orders;
     $scheduler->run();
-    check('at most 200 orders per type per run', count($GLOBALS['test_mail']) === 400);
+    check('at most 200 emails per type per run', count($GLOBALS['test_mail']) === 400);
 
     if ($failures > 0) {
         echo "\nscheduler-check: FAIL ({$failures})\n";

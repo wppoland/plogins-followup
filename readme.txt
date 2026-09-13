@@ -5,7 +5,7 @@ Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.1
 Requires Plugins: woocommerce
-Stable tag: 1.0.13
+Stable tag: 1.0.14
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -58,13 +58,15 @@ A daily wp-cron event checks for orders that have been in the configured status 
 
 No. Activation records the moment you switched the plugin on, and orders placed before that are never followed up.
 
-Switch the plugin off and on again and that cut-off moves forward, because nothing is sent while it is off. After the gap, follow-ups go out for orders placed within the longest delay you have configured of the moment you switched it back on, and the orders that piled up before that are left alone. On a shop with the packaged settings that window is 7 days.
+Switch the plugin off and on again and that cut-off moves forward, because nothing is sent while it is off. Each email type then reaches back by its own delay and no further: with the packaged settings the thank-you covers orders from the last day and the review request orders from the last 7 days, counted from the moment you switched it back on. Everything that piled up before that is left alone.
 
 On a site with no cut-off recorded at all, it is the first time the daily task runs there. That covers a site in a multisite network you did not activate on directly, and a site updating from version 1.0.11 or earlier.
 
 = How many emails can one run send? =
 
 At most 200 per follow-up type, per daily run, oldest orders first. The rest wait for the following run.
+
+That 200 counts emails that went out. An order that is read and cannot be sent, because an add-on holds it back or your mail server refuses the address, spends none of it: the run reads on past it, up to 1,000 orders per type. A run that ends still inside a stretch of orders it cannot send to records where it stopped, and the next one starts there.
 
 = Will a customer ever get the same email twice? =
 
@@ -91,13 +93,17 @@ Yes. This plugin is compatible with WordPress Multisite. Network activate it or 
 
 == External Services ==
 
-Followup does not connect to any external services. It has no API keys, sends no data off-site, and loads nothing from a remote URL or CDN. Everything runs on your own WordPress install: settings are stored in the `followup_settings`, `followup_db_version`, `followup_install_floor` and `followup_reactivated_at` options, and each follow-up is recorded as `_followup_sent_{type}` order meta, first as a claim while it is being sent and then as the date it went out. Emails go out through your site's own `wp_mail()` using your WooCommerce store sender, so they travel by whatever mail setup you already have.
+Followup does not connect to any external services. It has no API keys, sends no data off-site, and loads nothing from a remote URL or CDN. Everything runs on your own WordPress install: settings are stored in the `followup_settings`, `followup_db_version`, `followup_install_floor`, `followup_reactivated_at` and `followup_scan_offset` options, and each follow-up is recorded as `_followup_sent_{type}` order meta, first as a claim while it is being sent and then as the date it went out. Emails go out through your site's own `wp_mail()` using your WooCommerce store sender, so they travel by whatever mail setup you already have.
 
 == Translations ==
 
 Plogins Followup is fully translatable and ships the `plogins-followup.pot` template. Translations are delivered by WordPress.org language packs from translate.wordpress.org, which is where Polish, German and Spanish are being contributed; the package itself carries no compiled translation files.
 
 == Changelog ==
+
+= 1.0.14 =
+* Fixed re-activation handing the short follow-ups the longest delay's reach-back. Switching the plugin back on moved the cut-off forward by the longest delay configured anywhere in the sequence, and that one cut-off applied to every email type, so with the packaged settings the 7 day review request gave the thank-you a week of orders to thank people for, and a 30 day step added by Plogins Followup Pro gave it a month. Each type now reaches back by its own delay: on the packaged settings the thank-you covers the last day, the review request the last 7 days.
+* Fixed a shop that cannot deliver stopping its follow-ups for good. The 200-per-run ceiling counted orders read rather than emails sent, so 200 orders that could not be sent, held back by an add-on or refused by the mail server, filled it every day and the orders behind them were never reached. The ceiling now counts emails: an order that cannot be sent costs nothing, the run reads on past it up to 1,000 orders per type, and a run that ends inside such a stretch records where it stopped so the next one carries on from there.
 
 = 1.0.13 =
 * Fixed the cut-off staying pinned to your very first install. Switching the plugin off stops every follow-up, because deactivating removes the daily task, but the cut-off did not move, so switching it back on months later handed the first run every order taken in between. A shop that installed the plugin, turned it off the next day and turned it on a year later mailed 200 thank-yous a day until that year of orders ran out. Re-activating now moves the cut-off forward to the longest delay you have configured, 7 days on the packaged settings: orders still inside that window are followed up, the rest are left alone.
