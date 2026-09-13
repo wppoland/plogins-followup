@@ -3,7 +3,7 @@
  * Plugin Name:       Plogins Followup - Follow-Up Emails for WooCommerce
  * Plugin URI:        https://plogins.com/plogins-followup/
  * Description:        Send automated post-purchase emails to WooCommerce customers: thank-you and review requests, a set number of days after an order.
- * Version:           1.0.13
+ * Version:           1.0.14
  * Requires at least: 6.5
  * Requires PHP:      8.1
  * Requires Plugins:  woocommerce
@@ -25,7 +25,7 @@ namespace Followup;
 
 defined('ABSPATH') || exit;
 
-const VERSION     = '1.0.13';
+const VERSION     = '1.0.14';
 const PLUGIN_FILE = __FILE__;
 
 define('FOLLOWUP_DIR', plugin_dir_path(__FILE__));
@@ -42,11 +42,12 @@ register_activation_hook(__FILE__, static function (): void {
     //
     // add_option tells us which activation this is. When it reports the floor
     // was already there, the plugin has been switched on before and switched
-    // off since, and nothing went out while it was off. The floor has to move
-    // forward or the first run mails everything that piled up, but not past the
-    // orders still inside their window, so the moment is recorded here and the
-    // sender applies it on its next run, where the configured delays (including
-    // any a PRO step adds) are known.
+    // off since, and nothing went out while it was off. The reach-back has to
+    // move forward or the first run mails everything that piled up, but not
+    // past the orders still inside their window, and that window is per step.
+    // So the moment is recorded here and every run after it measures each
+    // step's own delay back from it, where the configured delays (including any
+    // a PRO step adds) are known.
     if (! add_option(Service\Scheduler::FLOOR_OPTION, (string) time(), '', false)) {
         update_option(Service\Scheduler::REACTIVATED_OPTION, (string) time(), false);
     }

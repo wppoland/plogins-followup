@@ -32,6 +32,13 @@ defined('ABSPATH') || exit;
  * running on this site are never followed up, so switching it on in a shop
  * with years of orders behind it does not mail those customers; and each type
  * sends at most BATCH_LIMIT emails per run.
+ *
+ * That second ceiling counts emails, not orders read. An order that is read
+ * and cannot send, because an add-on holds it back or wp_mail refuses it,
+ * spends none of it: the step reads on past that order in the same run, up to
+ * SCAN_LIMIT orders. A run that ends still inside a stretch of orders it
+ * cannot send to records where it stopped, so the next one starts there
+ * instead of reading the same wall again and sending nothing, for ever.
  */
 final class Scheduler implements HasHooks
 {
@@ -41,11 +48,19 @@ final class Scheduler implements HasHooks
     private const META_PREFIX = '_followup_sent_';
 
     /**
-     * Maximum orders processed per type per run, to keep cron bounded. Public
+     * Maximum emails sent per type per run, to keep cron bounded. Public
      * because the settings screen states the ceiling to the merchant, and a
      * number stated in two places drifts.
      */
     public const BATCH_LIMIT = 200;
+
+    /**
+     * Maximum orders read per type per run. The send ceiling cannot bound the
+     * work on its own, because an order that is read and not sent costs a row
+     * and buys nothing: without this, a step in front of ten thousand orders
+     * it may not send would read all ten thousand looking for one it may.
+     */
+    private const SCAN_LIMIT = 1000;
 
     /**
      * Option holding the UTC timestamp before which an order is never followed
@@ -55,11 +70,24 @@ final class Scheduler implements HasHooks
     public const FLOOR_OPTION = 'followup_install_floor';
 
     /**
-     * Option holding the UTC timestamp of an activation that was not the first
-     * one on this site. Written by the activation hook and consumed by the next
-     * run, which is where the configured delays are known.
+     * Option holding the UTC timestamp of the most recent activation that was
+     * not the first one on this site. Written by the activation hook and read
+     * by every run after it, which is where the configured delays are known.
+     *
+     * It is kept rather than spent, because the reach-back it buys is per step.
+     * Folding it into the stored floor means picking one delay for every step,
+     * and the only safe pick is the longest, which is how a 30 day review step
+     * used to hand the thank-you 30 days of orders to thank people for. A
+     * later activation overwrites it, so it only ever moves forward.
      */
     public const REACTIVATED_OPTION = 'followup_reactivated_at';
+
+    /**
+     * Option holding, per step id, how far into that step's due orders the last
+     * run got without being able to send. Absent on a site where every order
+     * that came up was sent, which is the ordinary case.
+     */
+    public const SCAN_OPTION = 'followup_scan_offset';
 
     /** Meta value written while a send is in flight, before wp_mail returns. */
     private const CLAIM_PENDING = 'pending';
@@ -105,22 +133,24 @@ final class Scheduler implements HasHooks
             return;
         }
 
-        $steps = $this->sequenceSteps->resolve();
-        $floor = $this->floor($steps);
+        $steps   = $this->sequenceSteps->resolve();
+        $floor   = $this->floor();
+        $resumed = $this->resumedAt();
 
         foreach ($steps as $step) {
             if (empty($step['enabled'])) {
                 continue;
             }
 
-            $this->processStep($step, $floor);
+            $this->processStep($step, $floor, $resumed);
         }
     }
 
     /**
-     * The timestamp before which an order is never followed up.
+     * The install floor: the timestamp before which no step ever reaches,
+     * whatever its delay.
      *
-     * Three ways a site gets one, and the floor only ever moves forward:
+     * Two ways a site gets one, and it only ever moves forward:
      *
      *  - First activation records the install moment, in the activation hook.
      *  - A site with no floor at all has never run the sender. Core fires the
@@ -128,16 +158,11 @@ final class Scheduler implements HasHooks
      *    network activation that is every other site. Its floor is this moment,
      *    which is the only value that cannot reach back over orders the shop
      *    took before the plugin arrived.
-     *  - A re-activation moves the floor up to the start of the longest window
-     *    any step configures. Nothing sent while the plugin was off, so without
-     *    this the first run after a year away mails a year of orders; with it,
-     *    the orders still inside their window are kept and the rest are not.
-     *    Anything older than that window had already been mailed, or missed its
-     *    moment by more than the delay the merchant chose.
      *
-     * @param array<int, array{id: string, enabled: bool, status: string, delay: int, subject: string, body: string}> $steps
+     * A re-activation raises it further, per step and not here: see
+     * {@see self::REACTIVATED_OPTION} and {@see self::processStep()}.
      */
-    private function floor(array $steps): int
+    private function floor(): int
     {
         $stored = get_option(self::FLOOR_OPTION, '');
         $floor  = is_numeric($stored) ? (int) $stored : 0;
@@ -145,22 +170,9 @@ final class Scheduler implements HasHooks
         if ($floor <= 0) {
             $floor = time();
             add_option(self::FLOOR_OPTION, (string) $floor, '', false);
-            delete_option(self::REACTIVATED_OPTION);
 
-            return $floor;
-        }
-
-        $reactivated = get_option(self::REACTIVATED_OPTION, '');
-
-        if (is_numeric($reactivated) && (int) $reactivated > 0) {
-            $window = 0;
-            foreach ($steps as $step) {
-                $window = max($window, max(0, absint($step['delay'] ?? 0)));
-            }
-
-            $floor = max($floor, (int) $reactivated - ($window * DAY_IN_SECONDS));
-
-            update_option(self::FLOOR_OPTION, (string) $floor, false);
+            // This moment is already stricter than anything a re-activation
+            // could ask for, so there is nothing left for one to say.
             delete_option(self::REACTIVATED_OPTION);
         }
 
@@ -168,12 +180,24 @@ final class Scheduler implements HasHooks
     }
 
     /**
+     * The moment the plugin was last switched back on, or 0 if it never was.
+     */
+    private function resumedAt(): int
+    {
+        $stored = get_option(self::REACTIVATED_OPTION, '');
+
+        return is_numeric($stored) ? max(0, (int) $stored) : 0;
+    }
+
+    /**
      * Find and send one sequence step to all currently-due orders.
      *
      * @param array{id: string, enabled: bool, status: string, delay: int, subject: string, body: string} $step
-     * @param int $floor Orders created before this timestamp are never followed up.
+     * @param int $floor   Orders created before this timestamp are never followed up.
+     * @param int $resumed The last re-activation, or 0 if the plugin was never switched back on.
+     * @return int Emails sent.
      */
-    private function processStep(array $step, int $floor): int
+    private function processStep(array $step, int $floor, int $resumed): int
     {
         $type   = sanitize_key((string) ($step['id'] ?? ''));
         $status = sanitize_key((string) ($step['status'] ?? 'completed'));
@@ -181,6 +205,16 @@ final class Scheduler implements HasHooks
 
         if ('' === $type) {
             return 0;
+        }
+
+        // A re-activation reaches back by this step's own delay. Nothing went
+        // out while the plugin was off, so an order still inside this step's
+        // window is followed up and everything older is left alone. Taking the
+        // longest delay any step configures instead, which is what a single
+        // stored floor forces, thanks people for month-old orders as soon as a
+        // month-long step exists anywhere in the sequence.
+        if ($resumed > 0) {
+            $floor = max($floor, $resumed - ($delay * DAY_IN_SECONDS));
         }
 
         // Only orders modified on/before this cutoff are old enough. We use the
@@ -207,8 +241,10 @@ final class Scheduler implements HasHooks
 
         // Claims whose send never returned (a fatal or max_execution_time
         // mid-wp_mail). They are picked up first and retried once; without this
-        // the claim written before the send would bury them for good.
-        $orders = $this->query(array_merge($due, [
+        // the claim written before the send would bury them for good. They
+        // cannot pile up the way unclaimed orders can: every path out of a
+        // claim either finishes it or drops it, so this set drains itself.
+        $claimed = $this->query(array_merge($due, [
             // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- an equality match on an indexed meta key, bounded by status, date and the batch limit.
             'meta_query' => [
                 [
@@ -219,25 +255,74 @@ final class Scheduler implements HasHooks
             'limit' => self::BATCH_LIMIT,
         ]));
 
-        $remaining = self::BATCH_LIMIT - count($orders);
+        $sent = $this->deliver($claimed, $step, $metaKey);
+        $read = count($claimed);
 
-        if ($remaining > 0) {
-            $orders = array_merge($orders, $this->query(array_merge($due, [
-                // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- bounded by status + date + batch limit; the "not sent" flag must be queried.
+        // Where the last run stopped reading. Orders that were read and could
+        // not be sent are still sitting in front of everything behind them, so
+        // without this a step whose queue opens with a wall of held-back or
+        // undeliverable orders reads that same wall on every run and never gets
+        // past it, however many orders behind it are due.
+        $offset = $this->scanOffset($type);
+
+        while ($sent < self::BATCH_LIMIT && $read < self::SCAN_LIMIT) {
+            $limit = min(self::BATCH_LIMIT - $sent, self::SCAN_LIMIT - $read);
+
+            $page = $this->query(array_merge($due, [
+                // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- bounded by status + date + the page limit; the "not sent" flag must be queried.
                 'meta_query' => [
                     [
                         'key'     => $metaKey,
                         'compare' => 'NOT EXISTS',
                     ],
                 ],
-                'limit' => $remaining,
-            ])));
+                'limit'  => $limit,
+                'offset' => $offset,
+            ]));
+
+            $read     += count($page);
+            $delivered = $this->deliver($page, $step, $metaKey);
+            $sent     += $delivered;
+
+            if (count($page) === $limit) {
+                // Paging by row number over a set the sending mutates, which
+                // holds only because of what the mutation is: an order that was
+                // sent leaves this query, since it now has the meta key, and an
+                // order that could not be sent stays. So what is still in front
+                // of the next page is exactly what this page could not send.
+                $offset += count($page) - $delivered;
+                continue;
+            }
+
+            // Short page: the end of this step's queue. A stale offset left by
+            // a queue that has since shrunk reads as an empty page, so try once
+            // from the top before giving the run up.
+            if ([] === $page && $offset > 0) {
+                $offset = 0;
+                continue;
+            }
+
+            // Start the next run at the top, so an order held back earlier in
+            // this pass is offered again rather than skipped for good.
+            $offset = 0;
+            break;
         }
 
-        if ([] === $orders) {
-            return 0;
-        }
+        $this->rememberScanOffset($type, $offset);
 
+        return $sent;
+    }
+
+    /**
+     * Send one page of candidate orders and report how many went out.
+     *
+     * @param array<int, \WC_Order> $orders  Candidates, oldest first.
+     * @param array{id: string, enabled: bool, status: string, delay: int, subject: string, body: string} $step
+     * @param string $metaKey Per-order meta key recording this step's send.
+     * @return int Emails sent.
+     */
+    private function deliver(array $orders, array $step, string $metaKey): int
+    {
         $sent = 0;
         foreach ($orders as $order) {
             // Re-read rather than trust the query: a batch is minutes old by
@@ -264,9 +349,8 @@ final class Scheduler implements HasHooks
             if (! apply_filters('followup/should_send', true, $order, $step)) {
                 // A veto is "not now", not "never", so an unfinished claim is
                 // released rather than left standing. Nothing else ages a claim
-                // out: a vetoed one that stayed would be re-read out of the
-                // same batch budget on every run, and enough of them would fill
-                // it, so no order that is actually due would ever be reached.
+                // out, and a vetoed claim that stayed would be read again on
+                // every run for ever, out of a set that nothing drains.
                 if ('' !== $claim) {
                     $order->delete_meta_data($metaKey);
                     $order->save_meta_data();
@@ -300,6 +384,48 @@ final class Scheduler implements HasHooks
         }
 
         return $sent;
+    }
+
+    /**
+     * How far into this step's due orders the last run got without sending.
+     */
+    private function scanOffset(string $type): int
+    {
+        $stored = get_option(self::SCAN_OPTION, []);
+
+        if (! is_array($stored) || ! isset($stored[ $type ])) {
+            return 0;
+        }
+
+        return max(0, (int) $stored[ $type ]);
+    }
+
+    /**
+     * Record where this run stopped, or clear the record when the step read its
+     * queue to the end.
+     *
+     * Two cron runs overlapping can both read the same starting offset and both
+     * write, and the later write wins. That costs a page read twice, or skipped
+     * until the next pass over the queue; it cannot send anything twice,
+     * because what may be sent is claimed on the order itself, not decided here.
+     */
+    private function rememberScanOffset(string $type, int $offset): void
+    {
+        $stored  = get_option(self::SCAN_OPTION, []);
+        $stored  = is_array($stored) ? $stored : [];
+        $current = isset($stored[ $type ]) ? (int) $stored[ $type ] : 0;
+
+        if ($current === $offset) {
+            return;
+        }
+
+        if ($offset > 0) {
+            $stored[ $type ] = $offset;
+        } else {
+            unset($stored[ $type ]);
+        }
+
+        update_option(self::SCAN_OPTION, $stored, false);
     }
 
     /**
