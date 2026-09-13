@@ -3,7 +3,7 @@
  * Plugin Name:       Plogins Followup - Follow-Up Emails for WooCommerce
  * Plugin URI:        https://plogins.com/plogins-followup/
  * Description:        Send automated post-purchase emails to WooCommerce customers: thank-you and review requests, a set number of days after an order.
- * Version:           1.0.12
+ * Version:           1.0.13
  * Requires at least: 6.5
  * Requires PHP:      8.1
  * Requires Plugins:  woocommerce
@@ -25,7 +25,7 @@ namespace Followup;
 
 defined('ABSPATH') || exit;
 
-const VERSION     = '1.0.12';
+const VERSION     = '1.0.13';
 const PLUGIN_FILE = __FILE__;
 
 define('FOLLOWUP_DIR', plugin_dir_path(__FILE__));
@@ -38,9 +38,18 @@ require_once __DIR__ . '/autoload.php';
 register_activation_hook(__FILE__, static function (): void {
     // Record the install moment as the floor for the sender. Without it the
     // first run would treat the shop's entire order history as due and start
-    // mailing customers who ordered years ago. add_option, so re-activating
-    // does not move the floor over follow-ups that are still due.
-    add_option(Service\Scheduler::FLOOR_OPTION, (string) time(), '', false);
+    // mailing customers who ordered years ago.
+    //
+    // add_option tells us which activation this is. When it reports the floor
+    // was already there, the plugin has been switched on before and switched
+    // off since, and nothing went out while it was off. The floor has to move
+    // forward or the first run mails everything that piled up, but not past the
+    // orders still inside their window, so the moment is recorded here and the
+    // sender applies it on its next run, where the configured delays (including
+    // any a PRO step adds) are known.
+    if (! add_option(Service\Scheduler::FLOOR_OPTION, (string) time(), '', false)) {
+        update_option(Service\Scheduler::REACTIVATED_OPTION, (string) time(), false);
+    }
 
     if (! wp_next_scheduled(Service\Scheduler::CRON_HOOK)) {
         wp_schedule_event(time() + HOUR_IN_SECONDS, 'daily', Service\Scheduler::CRON_HOOK);

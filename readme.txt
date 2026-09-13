@@ -5,7 +5,7 @@ Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.1
 Requires Plugins: woocommerce
-Stable tag: 1.0.12
+Stable tag: 1.0.13
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,11 +22,11 @@ Two email types come ready to use:
 
 For each type you set whether it is enabled, which order status triggers it, how many days to wait, and the subject and body. Subjects and bodies support `{customer}` (first name), `{order}` (order number) and `{site}` (site name).
 
-A daily wp-cron event picks up orders that are due and sends the emails with `wp_mail`, so they use whatever mail setup the site already has. Each follow-up is recorded against the order as soon as it sends, so the same one is never sent twice, even if two cron runs overlap.
+A daily wp-cron event picks up orders that are due and sends the emails with `wp_mail`, so they use whatever mail setup the site already has. The order is marked before the message is handed over rather than after, so a send that dies halfway through cannot leave the follow-up looking unsent and mail it again every day.
 
-Only orders placed after you activate the plugin are followed up, so switching it on in a shop with years of orders behind it does not mail those customers. Each run sends at most 200 emails per follow-up type, oldest orders first, so a large shop catches up over several days rather than in one burst.
+Only orders placed after the plugin started running on your site are followed up, so switching it on in a shop with years of orders behind it does not mail those customers. Each run sends at most 200 emails per follow-up type, oldest orders first, so a large shop catches up over several days rather than in one burst.
 
-Developers can extend the sequence through the `followup/sequence_steps` filter. Each custom step can provide its own trigger status, delay, subject and body while reusing Followup's idempotent scheduler.
+Developers can extend the sequence through the `followup/sequence_steps` filter. Each custom step can provide its own trigger status, delay, subject and body while reusing Followup's send-once scheduler.
 
 The plugin is not on the WordPress.org directory yet. Source code and issue tracker live at [github.com/wppoland/plogins-followup](https://github.com/wppoland/plogins-followup).
 
@@ -56,7 +56,11 @@ A daily wp-cron event checks for orders that have been in the configured status 
 
 = Will it email my existing customers when I activate it? =
 
-No. Activation records the moment you switched the plugin on, and orders placed before that are never followed up. Deactivating and activating again does not move that moment, so follow-ups that are still due are not lost.
+No. Activation records the moment you switched the plugin on, and orders placed before that are never followed up.
+
+Switch the plugin off and on again and that cut-off moves forward, because nothing is sent while it is off. After the gap, follow-ups go out for orders placed within the longest delay you have configured of the moment you switched it back on, and the orders that piled up before that are left alone. On a shop with the packaged settings that window is 7 days.
+
+On a site with no cut-off recorded at all, it is the first time the daily task runs there. That covers a site in a multisite network you did not activate on directly, and a site updating from version 1.0.11 or earlier.
 
 = How many emails can one run send? =
 
@@ -64,7 +68,9 @@ At most 200 per follow-up type, per daily run, oldest orders first. The rest wai
 
 = Will a customer ever get the same email twice? =
 
-Practically no. The order is marked before the email is handed to `wp_mail`, so overlapping cron runs cannot both send it. The one exception is a send that never finishes, a PHP fatal error or a script timeout in the middle of `wp_mail`: the plugin cannot tell whether the message went out, so it retries that one order exactly once and then leaves it alone.
+Practically no, and both of the ways it can happen need a send to die after your mail server has already taken the message. The order is marked before the email is handed to `wp_mail`, so an ordinary refusal or failure is never mistaken for a send. A PHP fatal error or a script timeout in the middle of `wp_mail` is different: the plugin cannot tell whether the message went out, so it retries that one order exactly once and then leaves it alone, and that retry is a second copy if the first one did arrive. The other way is two cron runs overlapping in the moment between one of them marking an order and the other one reading it.
+
+We chose it that way round on purpose. Marking the order afterwards instead would turn the same crash into a follow-up that is silently never sent, and a missing email you never hear about is worse than a duplicate you do.
 
 = Which placeholders can I use? =
 
@@ -77,7 +83,7 @@ You choose the trigger status per email type (for example processing or complete
 
 = Does this plugin work on WordPress Multisite? =
 
-Yes. This plugin is compatible with WordPress Multisite. Network activate it or activate it on individual sites; each site keeps its own settings and data.
+Yes. This plugin is compatible with WordPress Multisite. Network activate it or activate it on individual sites; each site keeps its own settings, its own data and its own cut-off date. WordPress only runs an activation step on the site you were on when you clicked, so on the other sites the cut-off is the first time the daily task runs there, and no order placed before that is followed up.
 
 == Screenshots ==
 
@@ -85,13 +91,22 @@ Yes. This plugin is compatible with WordPress Multisite. Network activate it or 
 
 == External Services ==
 
-Followup does not connect to any external services. It has no API keys, sends no data off-site, and loads nothing from a remote URL or CDN. Everything runs on your own WordPress install: settings are stored in the `followup_settings`, `followup_db_version` and `followup_install_floor` options, and each sent follow-up is recorded as `_followup_sent_{type}` order meta so it is never sent twice. Emails go out through your site's own `wp_mail()` using your WooCommerce store sender, so they travel by whatever mail setup you already have.
+Followup does not connect to any external services. It has no API keys, sends no data off-site, and loads nothing from a remote URL or CDN. Everything runs on your own WordPress install: settings are stored in the `followup_settings`, `followup_db_version`, `followup_install_floor` and `followup_reactivated_at` options, and each follow-up is recorded as `_followup_sent_{type}` order meta, first as a claim while it is being sent and then as the date it went out. Emails go out through your site's own `wp_mail()` using your WooCommerce store sender, so they travel by whatever mail setup you already have.
 
 == Translations ==
 
 Plogins Followup is fully translatable and ships the `plogins-followup.pot` template. Translations are delivered by WordPress.org language packs from translate.wordpress.org, which is where Polish, German and Spanish are being contributed; the package itself carries no compiled translation files.
 
 == Changelog ==
+
+= 1.0.13 =
+* Fixed the cut-off staying pinned to your very first install. Switching the plugin off stops every follow-up, because deactivating removes the daily task, but the cut-off did not move, so switching it back on months later handed the first run every order taken in between. A shop that installed the plugin, turned it off the next day and turned it on a year later mailed 200 thank-yous a day until that year of orders ran out. Re-activating now moves the cut-off forward to the longest delay you have configured, 7 days on the packaged settings: orders still inside that window are followed up, the rest are left alone.
+* Fixed network activation on multisite mailing old orders. WordPress runs the activation step only on the site you were on when you clicked, so every other site in the network had no cut-off and took one that reached a week into the past, then mailed those customers. A site with no cut-off recorded, which is any site the activation step never reached and any site updating from 1.0.11 or earlier, now takes the moment the sender first runs there, and follows up nothing older. On a site updating from 1.0.11 that is stricter than 1.0.12 promised: a follow-up that was due in the last few days is skipped rather than sent late, which is the side we would rather be wrong on.
+* Fixed a follow-up going out for an order that had left the status that triggers it. A send interrupted by a crash is retried the next day, and that retry was not checking the status again, so an order refunded or cancelled in between was still thanked for its purchase.
+* Fixed the sender jamming when an add-on holds sends back. Plogins Followup Pro can defer a send to a chosen hour or day. An order that was held back after a crash had claimed it was counted against the 200-per-run ceiling every day without ever being resolved, and 200 of them filled the ceiling, at which point the shop stopped sending follow-ups entirely and said nothing. A held-back order now gives its claim back and is picked up again when it is allowed to send.
+* Fixed one mail failure burying a follow-up for good. If a send crashed and the retry the next day then hit an ordinary failure, a mail server refusing the message or being down for a minute, the follow-up was marked spent even though nothing had been sent, and it was never tried again. A refusal is now what it is, a message that did not go out, so the next run tries again.
+* Corrected the claim that a follow-up is "never sent twice". It is sent once per order, and the two ways a customer can see it twice both need a send to die after the mail server has already taken the message. The FAQ now says which trade-off this plugin makes and why: the order is marked before the email is handed over, which turns a crash into a possible duplicate rather than into a follow-up that is silently never sent.
+* On the settings screen, the cut-off date no longer describes itself as the day you switched the plugin on. On a site that inherited the plugin, or one updating from an older version, it is the day the sender first ran there.
 
 = 1.0.12 =
 * Fixed the worst thing this plugin could do: on a shop that already had orders, the first daily run after activation treated the entire order history as due and started mailing customers who had ordered months or years earlier, 200 per follow-up type per day until the backlog drained. Activation now records the moment you switched the plugin on, and orders placed before it are never followed up. Sites updating from an earlier version get that floor set at their longest configured delay, which keeps the follow-ups still legitimately pending and leaves the rest of the history alone.

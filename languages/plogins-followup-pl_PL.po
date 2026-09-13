@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Followup - Order Follow-Up Emails for WooCommerce 0.1.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/followup\n"
-"POT-Creation-Date: 2026-06-17T15:07:34+00:00\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/plogins-followup\n"
+"POT-Creation-Date: 2026-09-13T07:22:41+00:00\n"
 "PO-Revision-Date: 2026-06-15 00:00+0000\n"
 "Last-Translator: motylanogha <szatkowski.mariusz@gmail.com>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -18,17 +18,17 @@ msgstr ""
 "X-Generator: WP-CLI 2.12.0\n"
 
 #. Plugin Name of the plugin
-#: followup.php
-msgid "Followup - Order Follow-Up Emails for WooCommerce"
-msgstr "Followup - Wiadomości posprzedażowe dla WooCommerce"
+#: plogins-followup.php
+msgid "Plogins Followup - Follow-Up Emails for WooCommerce"
+msgstr ""
 
 #. Plugin URI of the plugin
-#: followup.php
-msgid "https://plogins.com/followup/"
-msgstr "https://plogins.com/followup/"
+#: plogins-followup.php
+msgid "https://plogins.com/plogins-followup/"
+msgstr ""
 
 #. Description of the plugin
-#: followup.php
+#: plogins-followup.php
 msgid ""
 "Send automated post-purchase emails to WooCommerce customers: thank-you and "
 "review requests, a set number of days after an order."
@@ -37,16 +37,16 @@ msgstr ""
 "podziękowania i prośby o opinię, określoną liczbę dni po złożeniu zamówienia."
 
 #. Author of the plugin
-#: followup.php
-msgid "WPPoland"
-msgstr "WPPoland"
+#: plogins-followup.php
+msgid "WPPoland.com"
+msgstr ""
 
 #. Author URI of the plugin
-#: followup.php
-msgid "https://plogins.com/"
-msgstr "https://plogins.com/"
+#: plogins-followup.php
+msgid "https://wppoland.com"
+msgstr ""
 
-#: followup.php:65
+#: plogins-followup.php:79
 msgid ""
 "Followup - Order Follow-Up Emails for WooCommerce requires WooCommerce to be "
 "active."
@@ -54,42 +54,111 @@ msgstr ""
 "Followup - Wiadomości posprzedażowe dla WooCommerce wymaga aktywnej wtyczki "
 "WooCommerce."
 
-#: src/Admin/SettingsPage.php:40
+#: src/Admin/ProUpsell.php:85
+msgid "Wkrótce"
+msgstr "Wkrótce"
+
+#: src/Admin/ProUpsell.php:85
+msgid "Coming soon"
+msgstr "Wkrótce"
+
+#. translators: 1: currency symbol, 2: yearly price
+#: src/Admin/ProUpsell.php:91
+#, php-format
+msgid "from %1$s%2$d/yr"
+msgstr "od %1$s%2$d/rok"
+
+#: src/Admin/ProUpsell.php:100
+msgid "Upgrade to PRO"
+msgstr "Przejdź na PRO"
+
+#: src/Admin/ProUpsell.php:101
+msgid "Powiadom mnie"
+msgstr "Powiadom mnie"
+
+#: src/Admin/ProUpsell.php:101
+msgid "Get notified"
+msgstr "Powiadom mnie"
+
+#: src/Admin/ProUpsell.php:131
+msgid "Permission denied."
+msgstr "Brak uprawnień."
+
+#. translators: %s: PRO edition name
+#: src/Admin/ProUpsell.php:161
+#, php-format
+msgid "Do more with %s"
+msgstr "Zrób więcej dzięki %s"
+
+#: src/Admin/ProUpsell.php:168
+msgid "Dismiss this notice"
+msgstr "Odrzuć to powiadomienie"
+
+#: src/Admin/ProUpsell.php:185
+msgid "Unlock every PRO feature"
+msgstr "Odblokuj wszystkie funkcje PRO"
+
+#: src/Admin/ProUpsell.php:198
+msgid "one licence, every PRO feature"
+msgstr "jedna licencja, wszystkie funkcje PRO"
+
+#. translators: %s: PRO edition name
+#: src/Admin/ProUpsell.php:217
+#, php-format
+msgid "What %s adds"
+msgstr "Co dodaje %s"
+
+#: src/Admin/SettingsPage.php:50
 msgid "Follow-up Emails"
 msgstr "Wiadomości posprzedażowe"
 
-#: src/Admin/SettingsPage.php:41
+#: src/Admin/SettingsPage.php:51
 msgid "Follow-ups"
 msgstr "Wiadomości posprzedażowe"
 
-#: src/Admin/SettingsPage.php:107
+#: src/Admin/SettingsPage.php:129
 msgid "Active"
 msgstr "Aktywne"
 
-#: src/Admin/SettingsPage.php:109
+#: src/Admin/SettingsPage.php:131
 msgid "No emails enabled"
 msgstr "Brak włączonych wiadomości"
 
-#: src/Admin/SettingsPage.php:116
+#: src/Admin/SettingsPage.php:140
 msgid "Automated post-purchase emails"
 msgstr "Automatyczne wiadomości posprzedażowe"
 
-#: src/Admin/SettingsPage.php:117
+#: src/Admin/SettingsPage.php:141
 msgid ""
 "Each enabled email is sent once per order, a set number of days after the "
 "order reaches the chosen status. A daily background task finds due orders "
-"and sends them. The same email is never sent twice for the same order."
+"and sends them. The order is marked before the email is handed over, so a "
+"run that dies halfway through cannot quietly send it again every day."
 msgstr ""
-"Każda włączona wiadomość jest wysyłana raz na zamówienie, określoną liczbę "
-"dni po osiągnięciu przez zamówienie wybranego statusu. Codzienne zadanie w "
-"tle wyszukuje zamówienia gotowe do wysyłki i realizuje ją. Ta sama wiadomość "
-"nigdy nie zostanie wysłana dwa razy dla tego samego zamówienia."
 
-#: src/Admin/SettingsPage.php:125
+#. translators: %1$s: date of the cut-off before which orders are never followed up. %2$s: maximum emails per type per run.
+#: src/Admin/SettingsPage.php:147
+#, php-format
+msgid ""
+"Orders placed before %1$s are never followed up, so the customers who "
+"ordered before then were not mailed. Each daily run sends at most %2$s "
+"emails per type, oldest orders first."
+msgstr ""
+
+#. translators: %s: maximum emails per type per run.
+#: src/Admin/SettingsPage.php:154
+#, php-format
+msgid ""
+"Orders placed before this plugin started running here are never followed up, "
+"so the customers who ordered before then were not mailed. Each daily run "
+"sends at most %s emails per type, oldest orders first."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:167
 msgid "Sender"
 msgstr "Nadawca"
 
-#: src/Admin/SettingsPage.php:126
+#: src/Admin/SettingsPage.php:168
 msgid ""
 "Who follow-up emails appear to come from. Leave blank to use your store name "
 "and admin email."
@@ -97,110 +166,114 @@ msgstr ""
 "Od kogo mają pochodzić wiadomości posprzedażowe. Pozostaw puste, aby użyć "
 "nazwy sklepu i adresu e-mail administratora."
 
-#: src/Admin/SettingsPage.php:131
+#: src/Admin/SettingsPage.php:173
 msgid "From name"
 msgstr "Nazwa nadawcy"
 
 #. translators: %s: the store name used as the fall-back sender.
-#: src/Admin/SettingsPage.php:141
+#: src/Admin/SettingsPage.php:183
+#, php-format
 msgid ""
 "Shown as the sender in the customer inbox. Left blank, emails come from %s."
 msgstr ""
 "Wyświetlany jako nadawca w skrzynce odbiorczej klienta. Pozostawione puste, "
 "e-maile pochodzą z %s."
 
-#: src/Admin/SettingsPage.php:148
+#: src/Admin/SettingsPage.php:190
 msgid "From email"
 msgstr "Adres e-mail nadawcy"
 
 #. translators: %s: the admin email used as the fall-back sender address.
-#: src/Admin/SettingsPage.php:158
+#: src/Admin/SettingsPage.php:200
+#, php-format
 msgid "Reply-to address for these emails. Left blank, they send from %s."
 msgstr "Adres zwrotny dla tych e-maili. Pozostawione puste, wysyłają z %s."
 
-#: src/Admin/SettingsPage.php:160
+#: src/Admin/SettingsPage.php:202
 msgid "An address on your own domain delivers most reliably."
 msgstr "Najbardziej niezawodny jest adres we własnej domenie."
 
-#: src/Admin/SettingsPage.php:168
+#: src/Admin/SettingsPage.php:210
 msgid "Available template tokens"
 msgstr "Dostępne symbole zastępcze szablonu"
 
-#: src/Admin/SettingsPage.php:169
+#: src/Admin/SettingsPage.php:211
 msgid "Tokens you can use in subjects and bodies:"
 msgstr "Symbole zastępcze, których możesz użyć w tematach i treściach:"
 
-#: src/Admin/SettingsPage.php:188
+#: src/Admin/SettingsPage.php:230
 msgid "When off, this email is never scheduled or sent."
 msgstr ""
 "Gdy ta opcja jest wyłączona, ten e-mail nie jest nigdy planowany ani "
 "wysyłany."
 
-#: src/Admin/SettingsPage.php:192
+#: src/Admin/SettingsPage.php:234
 msgid "Send this email"
 msgstr "Wyślij tego e-maila"
 
 #. translators: %s: order status name, e.g. Completed.
-#: src/Admin/SettingsPage.php:199
+#: src/Admin/SettingsPage.php:241
+#, php-format
 msgid "Order reaches %s"
 msgstr "Zamówienie dociera do %s"
 
 #. translators: %d: number of days.
-#: src/Admin/SettingsPage.php:201
+#: src/Admin/SettingsPage.php:243
+#, php-format
 msgid "wait %d day"
 msgid_plural "wait %d days"
 msgstr[0] "poczekaj %d dzień"
 msgstr[1] "poczekaj %d dni"
 msgstr[2] "poczekaj %d dni"
 
-#: src/Admin/SettingsPage.php:203
+#: src/Admin/SettingsPage.php:245
 msgid "next daily run"
 msgstr "następne codzienne uruchomienie"
 
-#: src/Admin/SettingsPage.php:207 src/Admin/SettingsPage.php:213
+#: src/Admin/SettingsPage.php:249 src/Admin/SettingsPage.php:255
 msgid "day"
 msgid_plural "days"
 msgstr[0] "dzień"
 msgstr[1] "dni"
 msgstr[2] "dni"
 
-#: src/Admin/SettingsPage.php:207
+#: src/Admin/SettingsPage.php:249
 msgid "days"
 msgstr "dni"
 
-#: src/Admin/SettingsPage.php:208 src/Admin/SettingsPage.php:213
+#: src/Admin/SettingsPage.php:250 src/Admin/SettingsPage.php:255
 msgid "soon"
 msgstr "wkrótce"
 
-#: src/Admin/SettingsPage.php:216
+#: src/Admin/SettingsPage.php:258
 msgid "Email sent"
 msgstr "E-mail wysłany"
 
-#: src/Admin/SettingsPage.php:223
+#: src/Admin/SettingsPage.php:265
 msgid "Trigger status"
 msgstr "Stan wyzwalający"
 
-#: src/Admin/SettingsPage.php:234
+#: src/Admin/SettingsPage.php:276
 msgid "The email is scheduled once an order reaches this status."
 msgstr "Wiadomość zostaje zaplanowana, gdy zamówienie osiągnie ten status."
 
-#: src/Admin/SettingsPage.php:239
+#: src/Admin/SettingsPage.php:281
 msgid "Delay (days)"
 msgstr "Opóźnienie (dni)"
 
-#: src/Admin/SettingsPage.php:248
+#: src/Admin/SettingsPage.php:290
 msgid "days after the order reaches the status above"
 msgstr "dni po osiągnięciu przez zamówienie powyższego statusu"
 
-#: src/Admin/SettingsPage.php:249
+#: src/Admin/SettingsPage.php:291
 msgid "Use 0 to send on the next daily run."
 msgstr "Ustaw 0, aby wysłać przy następnym codziennym uruchomieniu."
 
-#: src/Admin/SettingsPage.php:254
+#: src/Admin/SettingsPage.php:296
 msgid "Subject"
 msgstr "Temat"
 
-#: src/Admin/SettingsPage.php:260
+#: src/Admin/SettingsPage.php:303
 msgid ""
 "The inbox subject line. Tokens above work here too, a name in the subject "
 "lifts open rates."
@@ -208,17 +281,23 @@ msgstr ""
 "Temat skrzynki odbiorczej. Tokeny powyżej działają również tutaj, nazwa w "
 "temacie podnosi stawki otwarć."
 
-#: src/Admin/SettingsPage.php:265
+#: src/Admin/SettingsPage.php:304 src/Admin/SettingsPage.php:316
+msgid ""
+"Leave blank to use the wording shown in grey, which is translated into your "
+"store language."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:309
 msgid "Body"
 msgstr "Treść"
 
-#: src/Admin/SettingsPage.php:270
+#: src/Admin/SettingsPage.php:315
 msgid "Plain text. Tokens above are replaced when the email is sent."
 msgstr ""
 "Zwykły tekst. Powyższe symbole zastępcze są podstawiane przy wysyłce "
 "wiadomości."
 
-#: src/Admin/SettingsPage.php:350
+#: src/Admin/SettingsPage.php:401
 msgid "Completed"
 msgstr "Zrealizowane"
 
@@ -240,82 +319,37 @@ msgid ""
 msgstr ""
 "Prosi klienta o wystawienie opinii, gdy zdąży już zapoznać się z produktem."
 
-#: src/Service/Mailer.php:90
+#: src/Service/Mailer.php:119
 msgid "there"
 msgstr "Drogi Kliencie"
 
-#: src/Admin/ProUpsell.php:78
-msgid "Wkrótce"
-msgstr "Wkrótce"
+#: src/Service/Texts.php:38
+msgid "Thanks for your order, {customer}!"
+msgstr ""
 
-#: src/Admin/ProUpsell.php:78
-msgid "Coming soon"
-msgstr "Wkrótce"
+#: src/Service/Texts.php:39
+msgid ""
+"Hi {customer},\n"
+"\n"
+"Thank you for shopping with {site}. We hope you love order {order}.\n"
+"\n"
+"If you need anything at all, just reply to this email.\n"
+"\n"
+"Warm regards,\n"
+"{site}"
+msgstr ""
 
-#. translators: %d: yearly price in PLN
-#: src/Admin/ProUpsell.php:83
-#, php-format
-msgid "od %d zł/rok"
-msgstr "od %d zł/rok"
+#: src/Service/Texts.php:40
+msgid "How did we do, {customer}?"
+msgstr ""
 
-#. translators: 1: currency symbol, 2: yearly price
-#: src/Admin/ProUpsell.php:88
-#, php-format
-msgid "from %1$s%2$d/yr"
-msgstr "od %1$s%2$d/rok"
-
-#: src/Admin/ProUpsell.php:97
-msgid "Upgrade to PRO"
-msgstr "Przejdź na PRO"
-
-#: src/Admin/ProUpsell.php:98
-msgid "Powiadom mnie"
-msgstr "Powiadom mnie"
-
-#: src/Admin/ProUpsell.php:98
-msgid "Get notified"
-msgstr "Powiadom mnie"
-
-#: src/Admin/ProUpsell.php:128
-msgid "Permission denied."
-msgstr "Brak uprawnień."
-
-#. translators: %s: PRO edition name
-#: src/Admin/ProUpsell.php:158
-#, php-format
-msgid "Do more with %s"
-msgstr "Zrób więcej dzięki %s"
-
-#: src/Admin/ProUpsell.php:165
-msgid "Dismiss this notice"
-msgstr "Odrzuć to powiadomienie"
-
-#: src/Admin/ProUpsell.php:182
-msgid "Unlock every PRO feature"
-msgstr "Odblokuj wszystkie funkcje PRO"
-
-#: src/Admin/ProUpsell.php:195
-msgid "one licence, every PRO feature"
-msgstr "jedna licencja, wszystkie funkcje PRO"
-
-#. translators: %s: PRO edition name
-#: src/Admin/ProUpsell.php:214
-#, php-format
-msgid "What %s adds"
-msgstr "Co dodaje %s"
-
-#~ msgid ""
-#~ "The sender name shown in the customer's inbox. Defaults to your site name."
-#~ msgstr ""
-#~ "Nazwa nadawcy wyświetlana w skrzynce odbiorczej klienta. Domyślnie nazwa "
-#~ "Twojej witryny."
-
-#~ msgid ""
-#~ "The sender address. Defaults to your site admin email. Use an address on "
-#~ "your own domain for the best deliverability."
-#~ msgstr ""
-#~ "Adres nadawcy. Domyślnie adres e-mail administratora witryny. Aby "
-#~ "zapewnić najlepszą dostarczalność, użyj adresu we własnej domenie."
-
-#~ msgid "Enabled"
-#~ msgstr "Włączone"
+#: src/Service/Texts.php:41
+msgid ""
+"Hi {customer},\n"
+"\n"
+"You received order {order} a little while ago. Would you take a moment to "
+"leave a review? It helps us a lot and helps other shoppers too.\n"
+"\n"
+"Thank you,\n"
+"{site}"
+msgstr ""

@@ -16,14 +16,22 @@ defined('ABSPATH') || exit;
  *  2. have been in (or past) that status for at least `delay` days, and
  *  3. have not already been sent this follow-up,
  *
- * then sends one email per order via {@see Mailer}. Idempotency is tracked with
- * a per-order meta flag (`_followup_sent_{type}`) so the same follow-up is never
- * sent twice, even across overlapping cron runs.
+ * then sends one email per order via {@see Mailer}.
  *
- * Two bounds keep the mailing sane. Orders placed before the plugin was
- * installed are never followed up, so activating on a shop with years of orders
- * behind it does not mail those customers; and each type sends at most
- * BATCH_LIMIT emails per run.
+ * The order is claimed before the message is handed to wp_mail, not after, so
+ * a run that dies mid-send cannot leave an order looking unsent. That choice
+ * trades silent loss for the possibility of a duplicate, and the duplicate is
+ * bounded: a claim that no run ever finished is retried exactly once and then
+ * left alone. So a follow-up is sent once per order, with two ways a customer
+ * can see it twice, both of which need a send to die after the mail server has
+ * already taken the message: the one retry that claim gets, and two cron runs
+ * overlapping in the moment between one claiming an order and the other
+ * reading it.
+ *
+ * Two bounds keep the mailing sane. Orders placed before the sender started
+ * running on this site are never followed up, so switching it on in a shop
+ * with years of orders behind it does not mail those customers; and each type
+ * sends at most BATCH_LIMIT emails per run.
  */
 final class Scheduler implements HasHooks
 {
@@ -45,6 +53,13 @@ final class Scheduler implements HasHooks
      * orders placed from then on and not the shop's entire order history.
      */
     public const FLOOR_OPTION = 'followup_install_floor';
+
+    /**
+     * Option holding the UTC timestamp of an activation that was not the first
+     * one on this site. Written by the activation hook and consumed by the next
+     * run, which is where the configured delays are known.
+     */
+    public const REACTIVATED_OPTION = 'followup_reactivated_at';
 
     /** Meta value written while a send is in flight, before wp_mail returns. */
     private const CLAIM_PENDING = 'pending';
@@ -105,33 +120,49 @@ final class Scheduler implements HasHooks
     /**
      * The timestamp before which an order is never followed up.
      *
-     * Activation records the install moment. An install that predates the
-     * option seeds it here instead, at the longest delay any step configures,
-     * which keeps the follow-ups that are still legitimately pending and leaves
-     * the rest of the order history alone. Seeding it lazily also covers the
-     * site whose activation hook never ran, which on a multisite network is
-     * every site but the one activation happened on.
+     * Three ways a site gets one, and the floor only ever moves forward:
+     *
+     *  - First activation records the install moment, in the activation hook.
+     *  - A site with no floor at all has never run the sender. Core fires the
+     *    activation hook once, on the blog the click happened on, so on a
+     *    network activation that is every other site. Its floor is this moment,
+     *    which is the only value that cannot reach back over orders the shop
+     *    took before the plugin arrived.
+     *  - A re-activation moves the floor up to the start of the longest window
+     *    any step configures. Nothing sent while the plugin was off, so without
+     *    this the first run after a year away mails a year of orders; with it,
+     *    the orders still inside their window are kept and the rest are not.
+     *    Anything older than that window had already been mailed, or missed its
+     *    moment by more than the delay the merchant chose.
      *
      * @param array<int, array{id: string, enabled: bool, status: string, delay: int, subject: string, body: string}> $steps
      */
     private function floor(array $steps): int
     {
         $stored = get_option(self::FLOOR_OPTION, '');
+        $floor  = is_numeric($stored) ? (int) $stored : 0;
 
-        if (is_numeric($stored) && (int) $stored > 0) {
-            return (int) $stored;
+        if ($floor <= 0) {
+            $floor = time();
+            add_option(self::FLOOR_OPTION, (string) $floor, '', false);
+            delete_option(self::REACTIVATED_OPTION);
+
+            return $floor;
         }
 
-        $delays = [0];
-        foreach ($steps as $step) {
-            $delays[] = max(0, absint($step['delay'] ?? 0));
+        $reactivated = get_option(self::REACTIVATED_OPTION, '');
+
+        if (is_numeric($reactivated) && (int) $reactivated > 0) {
+            $window = 0;
+            foreach ($steps as $step) {
+                $window = max($window, max(0, absint($step['delay'] ?? 0)));
+            }
+
+            $floor = max($floor, (int) $reactivated - ($window * DAY_IN_SECONDS));
+
+            update_option(self::FLOOR_OPTION, (string) $floor, false);
+            delete_option(self::REACTIVATED_OPTION);
         }
-
-        $floor = time() - (max($delays) * DAY_IN_SECONDS);
-
-        // add_option, not update_option: a re-activation must never move the
-        // floor forward over follow-ups that are still due.
-        add_option(self::FLOOR_OPTION, (string) $floor, '', false);
 
         return $floor;
     }
@@ -161,11 +192,24 @@ final class Scheduler implements HasHooks
 
         $metaKey = self::META_PREFIX . sanitize_key($type);
 
+        // What makes an order due, whether or not a claim is already on it. A
+        // retry is the same order this step would pick today, so it is bounded
+        // by exactly the same things: an order that has left the trigger status
+        // since it was claimed, or that sits below the install floor, is not
+        // mailed just because a crash left a claim behind on it.
+        $due = [
+            'status'        => $status,
+            'orderby'       => 'modified',
+            'order'         => 'ASC',
+            'date_created'  => '>=' . $floor,
+            'date_modified' => '<=' . $before,
+        ];
+
         // Claims whose send never returned (a fatal or max_execution_time
         // mid-wp_mail). They are picked up first and retried once; without this
         // the claim written before the send would bury them for good.
-        $orders = $this->query([
-            // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- an equality match on an indexed meta key, bounded by the batch limit.
+        $orders = $this->query(array_merge($due, [
+            // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- an equality match on an indexed meta key, bounded by status, date and the batch limit.
             'meta_query' => [
                 [
                     'key'   => $metaKey,
@@ -173,26 +217,21 @@ final class Scheduler implements HasHooks
                 ],
             ],
             'limit' => self::BATCH_LIMIT,
-        ]);
+        ]));
 
         $remaining = self::BATCH_LIMIT - count($orders);
 
         if ($remaining > 0) {
-            $orders = array_merge($orders, $this->query([
-                'status'        => $status,
-                'orderby'       => 'modified',
-                'order'         => 'ASC',
-                'date_created'  => '>=' . $floor,
-                'date_modified' => '<=' . $before,
+            $orders = array_merge($orders, $this->query(array_merge($due, [
                 // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- bounded by status + date + batch limit; the "not sent" flag must be queried.
-                'meta_query'    => [
+                'meta_query' => [
                     [
                         'key'     => $metaKey,
                         'compare' => 'NOT EXISTS',
                     ],
                 ],
                 'limit' => $remaining,
-            ]));
+            ])));
         }
 
         if ([] === $orders) {
@@ -201,6 +240,20 @@ final class Scheduler implements HasHooks
 
         $sent = 0;
         foreach ($orders as $order) {
+            // Re-read rather than trust the query: a batch is minutes old by
+            // the time it is walked, and an order in it may have been finished
+            // since. This does not make two overlapping runs safe. Reading a
+            // claim and writing one are two statements, so a run that reads an
+            // order before another run claims it still sends.
+            $claim = (string) $order->get_meta($metaKey);
+
+            // Anything other than an unfinished claim means this order is done
+            // with: it was sent, or it was retried once and still did not
+            // finish.
+            if ('' !== $claim && self::CLAIM_PENDING !== $claim) {
+                continue;
+            }
+
             /**
              * Gate whether a follow-up should send on this cron run.
              *
@@ -209,23 +262,23 @@ final class Scheduler implements HasHooks
              * @param array{id: string, enabled: bool, status: string, delay: int, subject: string, body: string} $step The sequence step.
              */
             if (! apply_filters('followup/should_send', true, $order, $step)) {
-                continue;
-            }
-
-            $claim = (string) $order->get_meta($metaKey);
-
-            // Anything other than an unfinished claim means this order is done
-            // with: it was sent, or it was retried once and still did not
-            // finish. Re-read rather than trust the query, to avoid a race with
-            // a parallel run.
-            if ('' !== $claim && self::CLAIM_PENDING !== $claim) {
+                // A veto is "not now", not "never", so an unfinished claim is
+                // released rather than left standing. Nothing else ages a claim
+                // out: a vetoed one that stayed would be re-read out of the
+                // same batch budget on every run, and enough of them would fill
+                // it, so no order that is actually due would ever be reached.
+                if ('' !== $claim) {
+                    $order->delete_meta_data($metaKey);
+                    $order->save_meta_data();
+                }
                 continue;
             }
 
             // Claim the order before sending, so a crash mid-send cannot mail
-            // the same customer twice. The claim records which attempt this is,
-            // so an attempt that never returns is retried exactly once and then
-            // left alone; the send timestamp is written once wp_mail accepts it.
+            // the same customer again on every run that follows. The claim
+            // records which attempt this is, so an attempt that never returns
+            // is retried exactly once and then left alone; the send timestamp
+            // is written once wp_mail accepts it.
             $order->update_meta_data($metaKey, '' === $claim ? self::CLAIM_PENDING : self::CLAIM_GAVE_UP);
             $order->save_meta_data();
 
@@ -236,12 +289,14 @@ final class Scheduler implements HasHooks
                 continue;
             }
 
-            if ('' === $claim) {
-                // wp_mail refused the message (no address, empty template).
-                // Roll the claim back so a transient failure can retry tomorrow.
-                $order->delete_meta_data($metaKey);
-                $order->save_meta_data();
-            }
+            // wp_mail returned false: it refused the message (no address, empty
+            // template) or the transport did (SMTP down). Either way nothing
+            // was sent, on this attempt or the one before it, so the claim is
+            // rolled back and the next run tries again. Only a send that never
+            // returns at all leaves a claim standing, and that is the one the
+            // retry above is for.
+            $order->delete_meta_data($metaKey);
+            $order->save_meta_data();
         }
 
         return $sent;
