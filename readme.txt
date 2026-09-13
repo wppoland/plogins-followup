@@ -5,7 +5,7 @@ Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.1
 Requires Plugins: woocommerce
-Stable tag: 1.0.14
+Stable tag: 1.0.15
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -66,7 +66,11 @@ On a site with no cut-off recorded at all, it is the first time the daily task r
 
 At most 200 per follow-up type, per daily run, oldest orders first. The rest wait for the following run.
 
-That 200 counts emails that went out. An order that is read and cannot be sent, because an add-on holds it back or your mail server refuses the address, spends none of it: the run reads on past it, up to 1,000 orders per type. A run that ends still inside a stretch of orders it cannot send to records where it stopped, and the next one starts there.
+That 200 counts emails that went out. An order that is read and cannot be sent, because an add-on holds it back or your mail server refuses the address, spends none of it: the run reads on past it, up to 1,000 orders per type. A run stopped by that 1,000-order ceiling records where it stopped and the next one carries on from there, so a long wall of orders that cannot be sent is not read from the top every day. A run that instead reaches the end of a type's queue records nothing, and the next one starts at the top: that is what gives an order held back earlier another chance.
+
+= Does it need High-Performance Order Storage? =
+
+It works on both order storages and no customer is mailed twice on either, but on HPOS it is far quicker to reach a new order. WooCommerce can only filter orders by the plugin's "already sent" marker on HPOS; on the legacy storage (the posts table) it drops that filter, so each daily run walks about 800 of your past orders before it gets to the ones that are due. Measured against a test store: with 3,000 followed-up orders behind it a new order is mailed on the fourth daily run, with 30,000 behind it on the thirty-eighth. Turning HPOS on under WooCommerce > Settings > Advanced > Features sends each run straight to the orders that are due.
 
 = Will a customer ever get the same email twice? =
 
@@ -100,6 +104,13 @@ Followup does not connect to any external services. It has no API keys, sends no
 Plogins Followup is fully translatable and ships the `plogins-followup.pot` template. Translations are delivered by WordPress.org language packs from translate.wordpress.org, which is where Polish, German and Spanish are being contributed; the package itself carries no compiled translation files.
 
 == Changelog ==
+
+= 1.0.15 =
+* Fixed a wall of orders that cannot be sent being read over and over inside a single run. When the run reached the end of such a queue it treated the empty page that follows as a stale position and started again from the top, up to the 1,000-order read ceiling. Measured on a queue of exactly 200 held-back orders: 20 queries and 2,000 rows read every day for 200 orders, against 6 queries and 400 rows now. The same run also recorded a position it had already read past, so the next run started in the middle of a queue it had finished.
+* Fixed orders that share a last-modified second, which is what a bulk status change gives a whole screen of them, having no fixed order between two queries. A page boundary inside such a group could offer one order twice and skip another. Orders are now read oldest first and by order number within the same second.
+* Corrected the FAQ on how far a run reads. Only a run stopped by the 1,000-order ceiling records where it stopped; a run that reaches the end of a type's queue starts the next one at the top, which is what gives a held-back order another chance.
+* Documented that WooCommerce only filters orders by the "already sent" marker on High-Performance Order Storage. On the legacy posts table that filter is dropped, so each run walks about 800 past orders before reaching the due ones: with 3,000 followed-up orders behind it a new order is mailed on the fourth run, with 30,000 on the thirty-eighth. Nothing is sent twice and nothing is lost either way.
+* On the settings screen, the cut-off date no longer reads as a promise that every order after it is followed up. When the plugin has been switched back on, the screen now also names that moment and says each email reaches back only by its own delay from it.
 
 = 1.0.14 =
 * Fixed re-activation handing the short follow-ups the longest delay's reach-back. Switching the plugin back on moved the cut-off forward by the longest delay configured anywhere in the sequence, and that one cut-off applied to every email type, so with the packaged settings the 7 day review request gave the thank-you a week of orders to thank people for, and a 30 day step added by Plogins Followup Pro gave it a month. Each type now reaches back by its own delay: on the packaged settings the thank-you covers the last day, the review request the last 7 days.

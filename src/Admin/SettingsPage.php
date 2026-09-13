@@ -118,8 +118,18 @@ final class SettingsPage implements HasHooks
         // The cut-off the sender will not reach back past. Absent until the
         // plugin is activated or the first daily run seeds it.
         $floor      = get_option(Scheduler::FLOOR_OPTION, '');
+        $dateFormat = (string) get_option('date_format', 'Y-m-d');
         $floorLabel = is_numeric($floor)
-            ? wp_date((string) get_option('date_format', 'Y-m-d'), (int) $floor)
+            ? wp_date($dateFormat, (int) $floor)
+            : '';
+
+        // The last time the plugin was switched back on, read exactly as the
+        // sender reads it. While one is recorded the cut-off above is not the
+        // whole story: each step also measures its own delay back from this
+        // moment, so there is a stretch after the cut-off that is never mailed.
+        $resumed      = get_option(Scheduler::REACTIVATED_OPTION, '');
+        $resumedLabel = is_numeric($resumed)
+            ? wp_date($dateFormat, (int) $resumed)
             : '';
         ?>
         <div class="wrap followup-admin">
@@ -144,15 +154,24 @@ final class SettingsPage implements HasHooks
                         if ('' !== $floorLabel) {
                             printf(
                                 /* translators: %1$s: date of the cut-off before which orders are never followed up. %2$s: maximum emails per type per run. */
-                                esc_html__('Orders placed before %1$s are never followed up, so the customers who ordered before then were not mailed. Each daily run sends at most %2$s emails per type, oldest orders first.', 'plogins-followup'),
+                                esc_html__('No order placed before %1$s is ever followed up, so the customers who ordered before then were not mailed. That date is as far back as the sender reaches, not a promise about every order after it. Each daily run sends at most %2$s emails per type, oldest orders first.', 'plogins-followup'),
                                 '<strong>' . esc_html($floorLabel) . '</strong>',
                                 '<strong>' . esc_html(number_format_i18n(Scheduler::BATCH_LIMIT)) . '</strong>'
                             );
                         } else {
                             printf(
                                 /* translators: %s: maximum emails per type per run. */
-                                esc_html__('Orders placed before this plugin started running here are never followed up, so the customers who ordered before then were not mailed. Each daily run sends at most %s emails per type, oldest orders first.', 'plogins-followup'),
+                                esc_html__('No order placed before this plugin started running here is ever followed up, so the customers who ordered before then were not mailed. That moment is as far back as the sender reaches, not a promise about every order after it. Each daily run sends at most %s emails per type, oldest orders first.', 'plogins-followup'),
                                 '<strong>' . esc_html(number_format_i18n(Scheduler::BATCH_LIMIT)) . '</strong>'
+                            );
+                        }
+
+                        if ('' !== $resumedLabel) {
+                            echo ' ';
+                            printf(
+                                /* translators: %s: date the plugin was last switched back on. */
+                                esc_html__('The plugin was last switched back on %s, and from that moment each email reaches back by its own delay and no further, so orders that passed their delay while it was off are left alone as well.', 'plogins-followup'),
+                                '<strong>' . esc_html($resumedLabel) . '</strong>'
                             );
                         }
                         ?>

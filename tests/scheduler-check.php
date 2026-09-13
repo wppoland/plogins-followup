@@ -41,6 +41,10 @@ namespace {
     $GLOBALS['test_claim_at_send'] = [];
     /** @var array<int, int> $GLOBALS['test_veto'] */
     $GLOBALS['test_veto'] = [];
+    /** @var array<int, int> $GLOBALS['test_offered'] Order ids the sender considered. */
+    $GLOBALS['test_offered'] = [];
+    $GLOBALS['test_queries'] = 0;
+    $GLOBALS['test_rows_read'] = 0;
 
     function get_option(string $name, $default = false)
     {
@@ -104,9 +108,14 @@ namespace {
     function apply_filters(string $hook, $value, ...$args)
     {
         // Stands in for a PRO add-on vetoing a send, which is the only thing
-        // that hooks this filter. Vetoed orders are named by id.
-        if ('followup/should_send' === $hook && [] !== $GLOBALS['test_veto']) {
+        // that hooks this filter. Vetoed orders are named by id. Every order
+        // the filter is asked about is recorded, because that is the only way
+        // to see which orders a run actually reached.
+        if ('followup/should_send' === $hook) {
             $order = $args[0] ?? null;
+            if ($order instanceof WC_Order) {
+                $GLOBALS['test_offered'][] = $order->id;
+            }
             if ($order instanceof WC_Order && in_array($order->id, $GLOBALS['test_veto'], true)) {
                 return false;
             }
@@ -191,6 +200,7 @@ namespace {
      */
     function wc_get_orders(array $args): array
     {
+        ++$GLOBALS['test_queries'];
         $out = [];
 
         foreach ($GLOBALS['test_orders'] as $order) {
@@ -209,9 +219,20 @@ namespace {
             $out[] = $order;
         }
 
-        if (($args['orderby'] ?? '') === 'modified') {
-            usort($out, static fn (WC_Order $a, WC_Order $b): int => $a->modified <=> $b->modified);
-        }
+        // A database gives rows that tie on the sort key no order at all, and
+        // it need not give the same one twice, so the stub shuffles before
+        // sorting. Whatever the sender does not name as a sort key it does not
+        // get, which is what makes the paging check below mean something.
+        shuffle($out);
+        usort($out, static function (WC_Order $a, WC_Order $b) use ($args): int {
+            foreach (order_keys((string) ($args['orderby'] ?? '')) as $key) {
+                $cmp = 'ID' === $key ? $a->id <=> $b->id : $a->modified <=> $b->modified;
+                if (0 !== $cmp) {
+                    return $cmp;
+                }
+            }
+            return 0;
+        });
 
         $offset = max(0, (int) ($args['offset'] ?? 0));
         if ($offset > 0) {
@@ -219,8 +240,36 @@ namespace {
         }
 
         $limit = (int) ($args['limit'] ?? -1);
+        $out   = $limit >= 0 ? array_slice($out, 0, $limit) : $out;
 
-        return $limit >= 0 ? array_slice($out, 0, $limit) : $out;
+        $GLOBALS['test_rows_read'] += count($out);
+
+        return $out;
+    }
+
+    /**
+     * The sort keys of an `orderby` argument, in order. Unknown keys throw
+     * rather than sort by nothing: a stub that quietly stops sorting when the
+     * sender changes the argument would pass every check while the real query
+     * pages over an unordered set.
+     *
+     * @return array<int, string>
+     */
+    function order_keys(string $orderby): array
+    {
+        $keys = [];
+
+        foreach (preg_split('/\s+/', trim($orderby)) ?: [] as $key) {
+            if ('' === $key) {
+                continue;
+            }
+            if (! in_array($key, ['modified', 'ID'], true)) {
+                throw new RuntimeException("unsupported orderby: {$orderby}");
+            }
+            $keys[] = $key;
+        }
+
+        return $keys;
     }
 
     /**
@@ -316,6 +365,9 @@ namespace {
         $GLOBALS['test_mail_fails_to'] = [];
         $GLOBALS['test_claim_at_send'] = [];
         $GLOBALS['test_veto']          = [];
+        $GLOBALS['test_offered']       = [];
+        $GLOBALS['test_queries']       = 0;
+        $GLOBALS['test_rows_read']     = 0;
 
         $settings = new Followup\Settings();
 
@@ -557,6 +609,46 @@ namespace {
     $scheduler->run();
     check('the next run carries on from there and sends it', $mailedTo('patient@example.test') === 2);
     check('and clears the mark once it has read to the end', ! isset($GLOBALS['test_options']['followup_scan_offset']['thank_you']));
+
+    echo "a held-back queue that ends on a page boundary\n";
+    // Exactly as many as one page holds, so the page after the last of them is
+    // empty. Treating that empty page as a stale offset and starting over cost
+    // 20 queries and 2000 rows read for 200 orders, on every run for ever, and
+    // still recorded an offset the run had already read past.
+    $scheduler = reset_world(['followup_install_floor' => (string) ($now - (100 * $day))]);
+    $vetoed    = [];
+    for ($i = 0; $i < 200; $i++) {
+        $order = new WC_Order(7000 + $i, 'completed', $now - (9 * $day) - $i, $now - (9 * $day) - $i, 'held@example.test');
+        $vetoed[]                 = $order->id;
+        $GLOBALS['test_orders'][] = $order;
+    }
+    $GLOBALS['test_veto'] = $vetoed;
+    $scheduler->run();
+    check('the wall is read once, not once per read ceiling', $GLOBALS['test_queries'] === 6);
+    check('which is 400 rows for 200 orders, not 2000', $GLOBALS['test_rows_read'] === 400);
+    check(
+        'and a queue read to its end records no offset',
+        ! isset($GLOBALS['test_options']['followup_scan_offset']['thank_you'])
+    );
+
+    echo "orders that share one modified second\n";
+    // Twice a page of them, all stamped the same second, which is what a bulk
+    // status change does to a screen of orders at once. The page boundary
+    // falls inside the tie, and a tie the query does not break is handed out
+    // in whatever order the database feels like, differently per query: some
+    // orders then come up twice and others never.
+    $scheduler = reset_world(['followup_install_floor' => (string) ($now - (100 * $day))]);
+    $vetoed    = [];
+    for ($i = 0; $i < 400; $i++) {
+        $order = new WC_Order(8000 + $i, 'completed', $now - (9 * $day), $now - (9 * $day), 'held@example.test');
+        $vetoed[]                 = $order->id;
+        $GLOBALS['test_orders'][] = $order;
+    }
+    $GLOBALS['test_veto'] = $vetoed;
+    $scheduler->run();
+    $offered = array_count_values($GLOBALS['test_offered']);
+    check('every order in the tie is reached', count($offered) === 400);
+    check('exactly once per follow-up type', [] === array_filter($offered, static fn (int $n): bool => 2 !== $n));
 
     echo "the delay is honoured to the second\n";
     $scheduler = reset_world(['followup_install_floor' => (string) ($now - (10 * $day))]);
