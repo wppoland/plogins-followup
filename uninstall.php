@@ -14,8 +14,10 @@ defined('WP_UNINSTALL_PLUGIN') || exit;
 
 delete_option('followup_settings');
 delete_option('followup_db_version');
-// The install floor: the timestamp the sender refuses to reach back past.
+// The install floor: the timestamp the sender refuses to reach back past,
+// and the activation moment waiting to be folded into it.
 delete_option('followup_install_floor');
+delete_option('followup_reactivated_at');
 
 // The PRO banner's dismissal is stored per user, so it belongs to the
 // plugin rather than to the site content. User meta is global, not

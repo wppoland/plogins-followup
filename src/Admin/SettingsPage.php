@@ -138,20 +138,20 @@ final class SettingsPage implements HasHooks
                 <span class="followup-admin__intro-icon" aria-hidden="true">&#9993;</span>
                 <div>
                     <h2><?php esc_html_e('Automated post-purchase emails', 'plogins-followup'); ?></h2>
-                    <p><?php esc_html_e('Each enabled email is sent once per order, a set number of days after the order reaches the chosen status. A daily background task finds due orders and sends them. The same email is never sent twice for the same order.', 'plogins-followup'); ?></p>
+                    <p><?php esc_html_e('Each enabled email is sent once per order, a set number of days after the order reaches the chosen status. A daily background task finds due orders and sends them. The order is marked before the email is handed over, so a run that dies halfway through cannot quietly send it again every day.', 'plogins-followup'); ?></p>
                     <p>
                         <?php
                         if ('' !== $floorLabel) {
                             printf(
-                                /* translators: %1$s: date the plugin was activated. %2$s: maximum emails per type per run. */
-                                esc_html__('Orders placed before %1$s, when this plugin was switched on, are never followed up, so your existing customers were not mailed. Each daily run sends at most %2$s emails per type, oldest orders first.', 'plogins-followup'),
+                                /* translators: %1$s: date of the cut-off before which orders are never followed up. %2$s: maximum emails per type per run. */
+                                esc_html__('Orders placed before %1$s are never followed up, so the customers who ordered before then were not mailed. Each daily run sends at most %2$s emails per type, oldest orders first.', 'plogins-followup'),
                                 '<strong>' . esc_html($floorLabel) . '</strong>',
                                 '<strong>' . esc_html(number_format_i18n(Scheduler::BATCH_LIMIT)) . '</strong>'
                             );
                         } else {
                             printf(
                                 /* translators: %s: maximum emails per type per run. */
-                                esc_html__('Orders placed before this plugin was switched on are never followed up, so your existing customers were not mailed. Each daily run sends at most %s emails per type, oldest orders first.', 'plogins-followup'),
+                                esc_html__('Orders placed before this plugin started running here are never followed up, so the customers who ordered before then were not mailed. Each daily run sends at most %s emails per type, oldest orders first.', 'plogins-followup'),
                                 '<strong>' . esc_html(number_format_i18n(Scheduler::BATCH_LIMIT)) . '</strong>'
                             );
                         }

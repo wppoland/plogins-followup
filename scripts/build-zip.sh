@@ -15,6 +15,17 @@ NAME="${NAME:-$(basename "$ROOT_DIR")}"
 OUT_DIR="${1:-/tmp/${NAME}-build}"
 STAGE="${OUT_DIR}/${NAME}"
 
+# Run the plugin's own self-checks before anything is packaged. The release
+# script globs tests/*-check.php too, but only for plugins already on wp.org,
+# and this one is not there yet: until it is, a build is the only path a
+# release takes, so this is where the check has to sit. Without it the install
+# floor could be deleted and every automated check would still be green.
+for chk in "$ROOT_DIR"/tests/*-check.php; do
+    [ -f "$chk" ] || continue
+    echo "Running $(basename "$chk")"
+    ( cd "$ROOT_DIR" && php "$chk" )
+done
+
 rm -rf "${OUT_DIR}"
 mkdir -p "${STAGE}"
 
