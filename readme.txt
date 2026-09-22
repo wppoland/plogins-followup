@@ -1,11 +1,11 @@
-=== Plogins Followup - Follow-Up Emails for WooCommerce ===
+=== Sekvo - Follow-Up Emails for WooCommerce ===
 Contributors: motylanogha
 Tags: woocommerce, email, follow-up, post-purchase, review request
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.1
 Requires Plugins: woocommerce
-Stable tag: 1.0.15
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,7 +13,7 @@ Send automated post-purchase emails for WooCommerce: thank-you and review reques
 
 == Description ==
 
-Followup sends automated post-purchase emails to your WooCommerce customers, a configurable number of days after an order reaches a status such as Completed.
+Sekvo sends automated post-purchase emails to your WooCommerce customers, a configurable number of days after an order reaches a status such as Completed.
 
 Two email types come ready to use:
 
@@ -32,7 +32,7 @@ The plugin is not on the WordPress.org directory yet. Source code and issue trac
 
 == Installation ==
 
-1. Upload the plugin to `/wp-content/plugins/followup`, or install via Plugins -> Add New.
+1. Upload the plugin to `/wp-content/plugins/sekvo`, or install via Plugins -> Add New.
 2. Activate it. WooCommerce must be active.
 3. Go to WooCommerce -> Follow-ups to enable email types and edit the templates.
 
@@ -97,13 +97,16 @@ Yes. This plugin is compatible with WordPress Multisite. Network activate it or 
 
 == External Services ==
 
-Followup does not connect to any external services. It has no API keys, sends no data off-site, and loads nothing from a remote URL or CDN. Everything runs on your own WordPress install: settings are stored in the `followup_settings`, `followup_db_version`, `followup_install_floor`, `followup_reactivated_at` and `followup_scan_offset` options, and each follow-up is recorded as `_followup_sent_{type}` order meta, first as a claim while it is being sent and then as the date it went out. Emails go out through your site's own `wp_mail()` using your WooCommerce store sender, so they travel by whatever mail setup you already have.
+Sekvo does not connect to any external services. It has no API keys, sends no data off-site, and loads nothing from a remote URL or CDN. Everything runs on your own WordPress install: settings are stored in the `followup_settings`, `followup_db_version`, `followup_install_floor`, `followup_reactivated_at` and `followup_scan_offset` options, and each follow-up is recorded as `_followup_sent_{type}` order meta, first as a claim while it is being sent and then as the date it went out. Emails go out through your site's own `wp_mail()` using your WooCommerce store sender, so they travel by whatever mail setup you already have.
 
 == Translations ==
 
-Plogins Followup is fully translatable and ships the `plogins-followup.pot` template. Translations are delivered by WordPress.org language packs from translate.wordpress.org, which is where Polish, German and Spanish are being contributed; the package itself carries no compiled translation files.
+Sekvo is fully translatable and ships the `sekvo.pot` template. Translations are delivered by WordPress.org language packs from translate.wordpress.org, which is where Polish, German and Spanish are being contributed; the package itself carries no compiled translation files.
 
 == Changelog ==
+
+= 1.1.0 =
+* Renamed to Sekvo. The WordPress.org review team asks a plugin name to lead with a distinctive, coined identifier rather than a generic descriptive word. Sekvo is Esperanto for a following. The text domain follows the name; the stored data, the settings and every hook are unchanged.
 
 = 1.0.15 =
 * Fixed a wall of orders that cannot be sent being read over and over inside a single run. When the run reached the end of such a queue it treated the empty page that follows as a stale position and started again from the top, up to the 1,000-order read ceiling. Measured on a queue of exactly 200 held-back orders: 20 queries and 2,000 rows read every day for 200 orders, against 6 queries and 400 rows now. The same run also recorded a position it had already read past, so the next run started in the middle of a queue it had finished.

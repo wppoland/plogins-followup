@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Followup - Order Follow-Up Emails for WooCommerce 0.1.1\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/plogins-followup\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sekvo\n"
 "POT-Creation-Date: 2026-09-13T07:22:41+00:00\n"
 "PO-Revision-Date: 2026-06-17T15:07:34+00:00\n"
 "Last-Translator: motylanogha <szatkowski.mariusz@gmail.com>\n"
@@ -13,21 +13,21 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Domain: plogins-followup\n"
+"X-Domain: sekvo\n"
 "X-Generator: WP-CLI 2.11.0\n"
 
 #. Plugin Name of the plugin
-#: plogins-followup.php
+#: sekvo.php
 msgid "Plogins Followup - Follow-Up Emails for WooCommerce"
 msgstr ""
 
 #. Plugin URI of the plugin
-#: plogins-followup.php
-msgid "https://plogins.com/plogins-followup/"
+#: sekvo.php
+msgid "https://plogins.com/sekvo/"
 msgstr ""
 
 #. Description of the plugin
-#: plogins-followup.php
+#: sekvo.php
 msgid ""
 "Send automated post-purchase emails to WooCommerce customers: thank-you and "
 "review requests, a set number of days after an order."
@@ -37,16 +37,16 @@ msgstr ""
 "einer Bestellung."
 
 #. Author of the plugin
-#: plogins-followup.php
+#: sekvo.php
 msgid "WPPoland.com"
 msgstr ""
 
 #. Author URI of the plugin
-#: plogins-followup.php
+#: sekvo.php
 msgid "https://wppoland.com"
 msgstr ""
 
-#: plogins-followup.php:79
+#: sekvo.php:79
 msgid ""
 "Followup - Order Follow-Up Emails for WooCommerce requires WooCommerce to be "
 "active."
