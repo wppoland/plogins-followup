@@ -15,7 +15,7 @@ defined('ABSPATH') || exit;
  *  - {customer} the customer's first name (falls back to "there")
  *  - {order}    the order number (e.g. #1234)
  *  - {site}     the site/blog name
- *  - {coupon}   replaced by Followup Pro when coupon blocks are enabled
+ *  - {coupon}   replaced by Sekvo Pro when coupon blocks are enabled
  *
  * Sending is intentionally simple: plain-text messages via wp_mail, so they
  * inherit whatever mail configuration the site already uses.
@@ -62,7 +62,7 @@ final class Mailer
         /**
          * Filters the follow-up email arguments just before sending.
          *
-         * Add-ons (e.g. Followup Pro) use this to transform the plain-text body
+         * Add-ons (e.g. Sekvo Pro) use this to transform the plain-text body
          * into branded HTML and adjust the Content-Type header. By default the
          * arguments are sent unchanged as a plain-text message via wp_mail.
          *
@@ -116,7 +116,7 @@ final class Mailer
     {
         $first = trim((string) $order->get_billing_first_name());
         if ('' === $first) {
-            $first = __('there', 'plogins-followup');
+            $first = __('there', 'sekvo');
         }
 
         $replacements = [

@@ -47,8 +47,8 @@ final class SettingsPage implements HasHooks
     {
         add_submenu_page(
             'woocommerce',
-            __('Follow-up Emails', 'plogins-followup'),
-            __('Follow-ups', 'plogins-followup'),
+            __('Sekvo: follow-up emails', 'sekvo'),
+            __('Follow-ups', 'sekvo'),
             'manage_woocommerce',
             self::PAGE,
             [$this, 'renderPage'],
@@ -136,9 +136,9 @@ final class SettingsPage implements HasHooks
             <h1>
                 <?php echo esc_html(get_admin_page_title()); ?>
                 <?php if ($anyOn) : ?>
-                    <span class="followup-admin__status followup-admin__status--on"><?php esc_html_e('Active', 'plogins-followup'); ?></span>
+                    <span class="followup-admin__status followup-admin__status--on"><?php esc_html_e('Active', 'sekvo'); ?></span>
                 <?php else : ?>
-                    <span class="followup-admin__status followup-admin__status--off"><?php esc_html_e('No emails enabled', 'plogins-followup'); ?></span>
+                    <span class="followup-admin__status followup-admin__status--off"><?php esc_html_e('No emails enabled', 'sekvo'); ?></span>
                 <?php endif; ?>
             </h1>
 
@@ -147,21 +147,21 @@ final class SettingsPage implements HasHooks
             <div class="followup-admin__intro">
                 <span class="followup-admin__intro-icon" aria-hidden="true">&#9993;</span>
                 <div>
-                    <h2><?php esc_html_e('Automated post-purchase emails', 'plogins-followup'); ?></h2>
-                    <p><?php esc_html_e('Each enabled email is sent once per order, a set number of days after the order reaches the chosen status. A daily background task finds due orders and sends them. The order is marked before the email is handed over, so a run that dies halfway through cannot quietly send it again every day.', 'plogins-followup'); ?></p>
+                    <h2><?php esc_html_e('Automated post-purchase emails', 'sekvo'); ?></h2>
+                    <p><?php esc_html_e('Each enabled email is sent once per order, a set number of days after the order reaches the chosen status. A daily background task finds due orders and sends them. The order is marked before the email is handed over, so a run that dies halfway through cannot quietly send it again every day.', 'sekvo'); ?></p>
                     <p>
                         <?php
                         if ('' !== $floorLabel) {
                             printf(
                                 /* translators: %1$s: date of the cut-off before which orders are never followed up. %2$s: maximum emails per type per run. */
-                                esc_html__('No order placed before %1$s is ever followed up, so the customers who ordered before then were not mailed. That date is as far back as the sender reaches, not a promise about every order after it. Each daily run sends at most %2$s emails per type, oldest orders first.', 'plogins-followup'),
+                                esc_html__('No order placed before %1$s is ever followed up, so the customers who ordered before then were not mailed. That date is as far back as the sender reaches, not a promise about every order after it. Each daily run sends at most %2$s emails per type, oldest orders first.', 'sekvo'),
                                 '<strong>' . esc_html($floorLabel) . '</strong>',
                                 '<strong>' . esc_html(number_format_i18n(Scheduler::BATCH_LIMIT)) . '</strong>'
                             );
                         } else {
                             printf(
                                 /* translators: %s: maximum emails per type per run. */
-                                esc_html__('No order placed before this plugin started running here is ever followed up, so the customers who ordered before then were not mailed. That moment is as far back as the sender reaches, not a promise about every order after it. Each daily run sends at most %s emails per type, oldest orders first.', 'plogins-followup'),
+                                esc_html__('No order placed before this plugin started running here is ever followed up, so the customers who ordered before then were not mailed. That moment is as far back as the sender reaches, not a promise about every order after it. Each daily run sends at most %s emails per type, oldest orders first.', 'sekvo'),
                                 '<strong>' . esc_html(number_format_i18n(Scheduler::BATCH_LIMIT)) . '</strong>'
                             );
                         }
@@ -170,7 +170,7 @@ final class SettingsPage implements HasHooks
                             echo ' ';
                             printf(
                                 /* translators: %s: date the plugin was last switched back on. */
-                                esc_html__('The plugin was last switched back on %s, and from that moment each email reaches back by its own delay and no further, so orders that passed their delay while it was off are left alone as well.', 'plogins-followup'),
+                                esc_html__('The plugin was last switched back on %s, and from that moment each email reaches back by its own delay and no further, so orders that passed their delay while it was off are left alone as well.', 'sekvo'),
                                 '<strong>' . esc_html($resumedLabel) . '</strong>'
                             );
                         }
@@ -183,13 +183,13 @@ final class SettingsPage implements HasHooks
                 <?php settings_fields(self::PAGE); ?>
 
                 <div class="followup-admin__card">
-                    <h2><?php esc_html_e('Sender', 'plogins-followup'); ?></h2>
-                    <p class="followup-admin__card-hint"><?php esc_html_e('Who follow-up emails appear to come from. Leave blank to use your store name and admin email.', 'plogins-followup'); ?></p>
+                    <h2><?php esc_html_e('Sender', 'sekvo'); ?></h2>
+                    <p class="followup-admin__card-hint"><?php esc_html_e('Who follow-up emails appear to come from. Leave blank to use your store name and admin email.', 'sekvo'); ?></p>
                     <table class="form-table" role="presentation">
                         <tbody>
                             <tr>
                                 <th scope="row">
-                                    <label for="followup_from_name"><?php esc_html_e('From name', 'plogins-followup'); ?></label>
+                                    <label for="followup_from_name"><?php esc_html_e('From name', 'sekvo'); ?></label>
                                 </th>
                                 <td>
                                     <input type="text" id="followup_from_name" class="regular-text"
@@ -199,14 +199,14 @@ final class SettingsPage implements HasHooks
                                     <p class="description">
                                         <?php
                                         /* translators: %s: the store name used as the fall-back sender. */
-                                        printf(esc_html__('Shown as the sender in the customer inbox. Left blank, emails come from %s.', 'plogins-followup'), '<strong>' . esc_html($defaultName) . '</strong>');
+                                        printf(esc_html__('Shown as the sender in the customer inbox. Left blank, emails come from %s.', 'sekvo'), '<strong>' . esc_html($defaultName) . '</strong>');
                                         ?>
                                     </p>
                                 </td>
                             </tr>
                             <tr>
                                 <th scope="row">
-                                    <label for="followup_from_email"><?php esc_html_e('From email', 'plogins-followup'); ?></label>
+                                    <label for="followup_from_email"><?php esc_html_e('From email', 'sekvo'); ?></label>
                                 </th>
                                 <td>
                                     <input type="email" id="followup_from_email" class="regular-text"
@@ -216,9 +216,9 @@ final class SettingsPage implements HasHooks
                                     <p class="description">
                                         <?php
                                         /* translators: %s: the admin email used as the fall-back sender address. */
-                                        printf(esc_html__('Reply-to address for these emails. Left blank, they send from %s.', 'plogins-followup'), '<strong>' . esc_html($defaultEmail) . '</strong>');
+                                        printf(esc_html__('Reply-to address for these emails. Left blank, they send from %s.', 'sekvo'), '<strong>' . esc_html($defaultEmail) . '</strong>');
                                         ?>
-                                        <?php esc_html_e('An address on your own domain delivers most reliably.', 'plogins-followup'); ?>
+                                        <?php esc_html_e('An address on your own domain delivers most reliably.', 'sekvo'); ?>
                                     </p>
                                 </td>
                             </tr>
@@ -226,8 +226,8 @@ final class SettingsPage implements HasHooks
                     </table>
                 </div>
 
-                <div class="followup-tokens" role="group" aria-label="<?php esc_attr_e('Available template tokens', 'plogins-followup'); ?>">
-                    <span class="followup-tokens__label"><?php esc_html_e('Tokens you can use in subjects and bodies:', 'plogins-followup'); ?></span>
+                <div class="followup-tokens" role="group" aria-label="<?php esc_attr_e('Available template tokens', 'sekvo'); ?>">
+                    <span class="followup-tokens__label"><?php esc_html_e('Tokens you can use in subjects and bodies:', 'sekvo'); ?></span>
                     <code>{customer}</code> <code>{order}</code> <code>{site}</code>
                 </div>
 
@@ -246,42 +246,42 @@ final class SettingsPage implements HasHooks
                         <div class="followup-email__head">
                             <h2><?php echo esc_html((string) $meta['label']); ?></h2>
                             <label class="followup-switch" for="<?php echo esc_attr($id . '_enabled'); ?>"
-                                title="<?php esc_attr_e('When off, this email is never scheduled or sent.', 'plogins-followup'); ?>">
+                                title="<?php esc_attr_e('When off, this email is never scheduled or sent.', 'sekvo'); ?>">
                                 <input type="checkbox" id="<?php echo esc_attr($id . '_enabled'); ?>"
                                     class="followup-email__toggle"
                                     name="<?php echo esc_attr($base); ?>[enabled]" value="1" <?php checked($enabled, true); ?> />
-                                <span class="followup-switch__text"><?php esc_html_e('Send this email', 'plogins-followup'); ?></span>
+                                <span class="followup-switch__text"><?php esc_html_e('Send this email', 'sekvo'); ?></span>
                             </label>
                         </div>
                         <p class="followup-admin__card-hint"><?php echo esc_html((string) $meta['description']); ?></p>
 
                         <?php
                         /* translators: %s: order status name, e.g. Completed. */
-                        $dropLine = sprintf(__('Order reaches %s', 'plogins-followup'), $sendLabel);
+                        $dropLine = sprintf(__('Order reaches %s', 'sekvo'), $sendLabel);
                         /* translators: %d: number of days. */
-                        $waitLine = sprintf(_n('wait %d day', 'wait %d days', $curDelay, 'plogins-followup'), $curDelay);
+                        $waitLine = sprintf(_n('wait %d day', 'wait %d days', $curDelay, 'sekvo'), $curDelay);
                         if (0 === $curDelay) {
-                            $waitLine = __('next daily run', 'plogins-followup');
+                            $waitLine = __('next daily run', 'sekvo');
                         }
                         ?>
                         <div class="followup-postmark" aria-hidden="true"
-                            data-fu-units="<?php echo esc_attr(__('day', 'plogins-followup') . '|' . __('days', 'plogins-followup')); ?>"
-                            data-fu-soon="<?php echo esc_attr__('soon', 'plogins-followup'); ?>">
+                            data-fu-units="<?php echo esc_attr(__('day', 'sekvo') . '|' . __('days', 'sekvo')); ?>"
+                            data-fu-soon="<?php echo esc_attr__('soon', 'sekvo'); ?>">
                             <span class="followup-postmark__drop"><?php echo esc_html($dropLine); ?></span>
                             <span class="followup-postmark__line"></span>
                             <span class="followup-postmark__stamp" data-fu-stamp>
                                 <span class="followup-postmark__days"><?php echo esc_html((string) $curDelay); ?></span>
-                                <span class="followup-postmark__days-unit"><?php echo esc_html(0 === $curDelay ? __('soon', 'plogins-followup') : _n('day', 'days', $curDelay, 'plogins-followup')); ?></span>
+                                <span class="followup-postmark__days-unit"><?php echo esc_html(0 === $curDelay ? __('soon', 'sekvo') : _n('day', 'days', $curDelay, 'sekvo')); ?></span>
                             </span>
                             <span class="followup-postmark__line"></span>
-                            <span class="followup-postmark__send"><?php esc_html_e('Email sent', 'plogins-followup'); ?></span>
+                            <span class="followup-postmark__send"><?php esc_html_e('Email sent', 'sekvo'); ?></span>
                         </div>
 
                         <table class="form-table" role="presentation">
                             <tbody>
                                 <tr>
                                     <th scope="row">
-                                        <label for="<?php echo esc_attr($id . '_status'); ?>"><?php esc_html_e('Trigger status', 'plogins-followup'); ?></label>
+                                        <label for="<?php echo esc_attr($id . '_status'); ?>"><?php esc_html_e('Trigger status', 'sekvo'); ?></label>
                                     </th>
                                     <td>
                                         <select id="<?php echo esc_attr($id . '_status'); ?>" name="<?php echo esc_attr($base); ?>[status]">
@@ -292,12 +292,12 @@ final class SettingsPage implements HasHooks
                                                 <option value="<?php echo esc_attr($slug); ?>" <?php selected($current, $slug); ?>><?php echo esc_html($label); ?></option>
                                             <?php endforeach; ?>
                                         </select>
-                                        <p class="description"><?php esc_html_e('The email is scheduled once an order reaches this status.', 'plogins-followup'); ?></p>
+                                        <p class="description"><?php esc_html_e('The email is scheduled once an order reaches this status.', 'sekvo'); ?></p>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row">
-                                        <label for="<?php echo esc_attr($id . '_delay'); ?>"><?php esc_html_e('Delay (days)', 'plogins-followup'); ?></label>
+                                        <label for="<?php echo esc_attr($id . '_delay'); ?>"><?php esc_html_e('Delay (days)', 'sekvo'); ?></label>
                                     </th>
                                     <td>
                                         <input type="number" min="0" max="3650" step="1"
@@ -306,33 +306,33 @@ final class SettingsPage implements HasHooks
                                             value="<?php echo esc_attr((string) absint($email['delay'] ?? 0)); ?>"
                                             data-fu-delay
                                             class="small-text" />
-                                        <span class="description"><?php esc_html_e('days after the order reaches the status above', 'plogins-followup'); ?></span>
-                                        <p class="description"><?php esc_html_e('Use 0 to send on the next daily run.', 'plogins-followup'); ?></p>
+                                        <span class="description"><?php esc_html_e('days after the order reaches the status above', 'sekvo'); ?></span>
+                                        <p class="description"><?php esc_html_e('Use 0 to send on the next daily run.', 'sekvo'); ?></p>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row">
-                                        <label for="<?php echo esc_attr($id . '_subject'); ?>"><?php esc_html_e('Subject', 'plogins-followup'); ?></label>
+                                        <label for="<?php echo esc_attr($id . '_subject'); ?>"><?php esc_html_e('Subject', 'sekvo'); ?></label>
                                     </th>
                                     <td>
                                         <input type="text" id="<?php echo esc_attr($id . '_subject'); ?>" class="large-text"
                                             name="<?php echo esc_attr($base); ?>[subject]"
                                             placeholder="<?php echo esc_attr((string) ($texts[ 'emails.' . $type . '.subject' ] ?? '')); ?>"
                                             value="<?php echo esc_attr((string) ($email['subject'] ?? '')); ?>" />
-                                        <p class="description"><?php esc_html_e('The inbox subject line. Tokens above work here too, a name in the subject lifts open rates.', 'plogins-followup'); ?></p>
-                                        <p class="description"><?php esc_html_e('Leave blank to use the wording shown in grey, which is translated into your store language.', 'plogins-followup'); ?></p>
+                                        <p class="description"><?php esc_html_e('The inbox subject line. Tokens above work here too, a name in the subject lifts open rates.', 'sekvo'); ?></p>
+                                        <p class="description"><?php esc_html_e('Leave blank to use the wording shown in grey, which is translated into your store language.', 'sekvo'); ?></p>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row">
-                                        <label for="<?php echo esc_attr($id . '_body'); ?>"><?php esc_html_e('Body', 'plogins-followup'); ?></label>
+                                        <label for="<?php echo esc_attr($id . '_body'); ?>"><?php esc_html_e('Body', 'sekvo'); ?></label>
                                     </th>
                                     <td>
                                         <textarea id="<?php echo esc_attr($id . '_body'); ?>" rows="6" class="large-text"
                                             name="<?php echo esc_attr($base); ?>[body]"
                                             placeholder="<?php echo esc_attr((string) ($texts[ 'emails.' . $type . '.body' ] ?? '')); ?>"><?php echo esc_textarea((string) ($email['body'] ?? '')); ?></textarea>
-                                        <p class="description"><?php esc_html_e('Plain text. Tokens above are replaced when the email is sent.', 'plogins-followup'); ?></p>
-                                        <p class="description"><?php esc_html_e('Leave blank to use the wording shown in grey, which is translated into your store language.', 'plogins-followup'); ?></p>
+                                        <p class="description"><?php esc_html_e('Plain text. Tokens above are replaced when the email is sent.', 'sekvo'); ?></p>
+                                        <p class="description"><?php esc_html_e('Leave blank to use the wording shown in grey, which is translated into your store language.', 'sekvo'); ?></p>
                                     </td>
                                 </tr>
                             </tbody>
@@ -417,7 +417,7 @@ final class SettingsPage implements HasHooks
         }
 
         if ([] === $out) {
-            $out = ['completed' => __('Completed', 'plogins-followup')];
+            $out = ['completed' => __('Completed', 'sekvo')];
         }
 
         return $out;

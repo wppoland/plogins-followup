@@ -35,10 +35,10 @@ final class Texts
     public static function defaults(): array
     {
         return [
-            'emails.thank_you.subject' => __('Thanks for your order, {customer}!', 'plogins-followup'),
-            'emails.thank_you.body'    => __("Hi {customer},\n\nThank you for shopping with {site}. We hope you love order {order}.\n\nIf you need anything at all, just reply to this email.\n\nWarm regards,\n{site}", 'plogins-followup'),
-            'emails.review.subject'    => __('How did we do, {customer}?', 'plogins-followup'),
-            'emails.review.body'       => __("Hi {customer},\n\nYou received order {order} a little while ago. Would you take a moment to leave a review? It helps us a lot and helps other shoppers too.\n\nThank you,\n{site}", 'plogins-followup'),
+            'emails.thank_you.subject' => __('Thanks for your order, {customer}!', 'sekvo'),
+            'emails.thank_you.body'    => __("Hi {customer},\n\nThank you for shopping with {site}. We hope you love order {order}.\n\nIf you need anything at all, just reply to this email.\n\nWarm regards,\n{site}", 'sekvo'),
+            'emails.review.subject'    => __('How did we do, {customer}?', 'sekvo'),
+            'emails.review.body'       => __("Hi {customer},\n\nYou received order {order} a little while ago. Would you take a moment to leave a review? It helps us a lot and helps other shoppers too.\n\nThank you,\n{site}", 'sekvo'),
         ];
     }
 

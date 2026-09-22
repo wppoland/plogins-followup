@@ -10,7 +10,7 @@
 defined('ABSPATH') || exit;
 
 return [
-    'name'       => 'Followup Pro',
+    'name'       => 'Sekvo Pro',
     'url'        => 'https://plogins.com/plogins-followup-pro/pricing/',
     'sellable'   => true,
     'price_from' => 29,
