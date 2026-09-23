@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Followup - Order Follow-Up Emails for WooCommerce 0.1.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sekvo\n"
-"POT-Creation-Date: 2026-09-13T07:22:41+00:00\n"
+"POT-Creation-Date: 2026-09-13T14:06:45+00:00\n"
 "PO-Revision-Date: 2026-06-17T15:07:34+00:00\n"
 "Last-Translator: motylanogha <szatkowski.mariusz@gmail.com>\n"
 "Language-Team: German <de@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 
 #. Plugin Name of the plugin
 #: sekvo.php
-msgid "Plogins Followup - Follow-Up Emails for WooCommerce"
+msgid "Sekvo - Follow-Up Emails for WooCommerce"
 msgstr ""
 
 #. Plugin URI of the plugin
@@ -46,13 +46,9 @@ msgstr ""
 msgid "https://wppoland.com"
 msgstr ""
 
-#: sekvo.php:79
-msgid ""
-"Followup - Order Follow-Up Emails for WooCommerce requires WooCommerce to be "
-"active."
+#: sekvo.php:80
+msgid "Sekvo requires WooCommerce to be installed and activated."
 msgstr ""
-"Follow-up, Bestell-Folge-E-Mails für WooCommerce erfordern, dass WooCommerce "
-"aktiv ist."
 
 #: src/Admin/ProUpsell.php:85
 msgid "Wkrótce"
@@ -109,26 +105,26 @@ msgid "What %s adds"
 msgstr "Was %s ergänzt"
 
 #: src/Admin/SettingsPage.php:50
-msgid "Follow-up Emails"
-msgstr "Folge-E-Mails"
+msgid "Sekvo: follow-up emails"
+msgstr ""
 
 #: src/Admin/SettingsPage.php:51
 msgid "Follow-ups"
 msgstr "Nachverfolgungen"
 
-#: src/Admin/SettingsPage.php:129
+#: src/Admin/SettingsPage.php:139
 msgid "Active"
 msgstr "Aktiv"
 
-#: src/Admin/SettingsPage.php:131
+#: src/Admin/SettingsPage.php:141
 msgid "No emails enabled"
 msgstr "Keine E-Mails aktiviert"
 
-#: src/Admin/SettingsPage.php:140
+#: src/Admin/SettingsPage.php:150
 msgid "Automated post-purchase emails"
 msgstr "Automatisierte E-Mails nach dem Kauf"
 
-#: src/Admin/SettingsPage.php:141
+#: src/Admin/SettingsPage.php:151
 msgid ""
 "Each enabled email is sent once per order, a set number of days after the "
 "order reaches the chosen status. A daily background task finds due orders "
@@ -137,28 +133,39 @@ msgid ""
 msgstr ""
 
 #. translators: %1$s: date of the cut-off before which orders are never followed up. %2$s: maximum emails per type per run.
-#: src/Admin/SettingsPage.php:147
+#: src/Admin/SettingsPage.php:157
 #, php-format
 msgid ""
-"Orders placed before %1$s are never followed up, so the customers who "
-"ordered before then were not mailed. Each daily run sends at most %2$s "
-"emails per type, oldest orders first."
+"No order placed before %1$s is ever followed up, so the customers who "
+"ordered before then were not mailed. That date is as far back as the sender "
+"reaches, not a promise about every order after it. Each daily run sends at "
+"most %2$s emails per type, oldest orders first."
 msgstr ""
 
 #. translators: %s: maximum emails per type per run.
-#: src/Admin/SettingsPage.php:154
+#: src/Admin/SettingsPage.php:164
 #, php-format
 msgid ""
-"Orders placed before this plugin started running here are never followed up, "
-"so the customers who ordered before then were not mailed. Each daily run "
-"sends at most %s emails per type, oldest orders first."
+"No order placed before this plugin started running here is ever followed up, "
+"so the customers who ordered before then were not mailed. That moment is as "
+"far back as the sender reaches, not a promise about every order after it. "
+"Each daily run sends at most %s emails per type, oldest orders first."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:167
+#. translators: %s: date the plugin was last switched back on.
+#: src/Admin/SettingsPage.php:173
+#, php-format
+msgid ""
+"The plugin was last switched back on %s, and from that moment each email "
+"reaches back by its own delay and no further, so orders that passed their "
+"delay while it was off are left alone as well."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:186
 msgid "Sender"
 msgstr "Absender"
 
-#: src/Admin/SettingsPage.php:168
+#: src/Admin/SettingsPage.php:187
 msgid ""
 "Who follow-up emails appear to come from. Leave blank to use your store name "
 "and admin email."
@@ -166,12 +173,12 @@ msgstr ""
 "Von wem Folge-E-Mails zu stammen scheinen. Lass das Feld leer, um deinen "
 "Shopnamen und deine Administrator-E-Mail-Adresse zu verwenden."
 
-#: src/Admin/SettingsPage.php:173
+#: src/Admin/SettingsPage.php:192
 msgid "From name"
 msgstr "Vom Namen"
 
 #. translators: %s: the store name used as the fall-back sender.
-#: src/Admin/SettingsPage.php:183
+#: src/Admin/SettingsPage.php:202
 #, php-format
 msgid ""
 "Shown as the sender in the customer inbox. Left blank, emails come from %s."
@@ -179,101 +186,101 @@ msgstr ""
 "Wird im Posteingang des Kunden als Absender angezeigt. Wenn du das Feld leer "
 "lassen, stammen die E-Mails von %s."
 
-#: src/Admin/SettingsPage.php:190
+#: src/Admin/SettingsPage.php:209
 msgid "From email"
 msgstr "Von E-Mail"
 
 #. translators: %s: the admin email used as the fall-back sender address.
-#: src/Admin/SettingsPage.php:200
+#: src/Admin/SettingsPage.php:219
 #, php-format
 msgid "Reply-to address for these emails. Left blank, they send from %s."
 msgstr ""
 "Antwortadresse für diese E-Mails. Bleibt das Feld leer, wird von %s gesendet."
 
-#: src/Admin/SettingsPage.php:202
+#: src/Admin/SettingsPage.php:221
 msgid "An address on your own domain delivers most reliably."
 msgstr "Eine Adresse auf deiner eigenen Domain liefert am zuverlässigsten."
 
-#: src/Admin/SettingsPage.php:210
+#: src/Admin/SettingsPage.php:229
 msgid "Available template tokens"
 msgstr "Verfügbare Vorlagentoken"
 
-#: src/Admin/SettingsPage.php:211
+#: src/Admin/SettingsPage.php:230
 msgid "Tokens you can use in subjects and bodies:"
 msgstr "Tokens, die du in Betreffzeilen und E-Mail-Texten verwenden kannst:"
 
-#: src/Admin/SettingsPage.php:230
+#: src/Admin/SettingsPage.php:249
 msgid "When off, this email is never scheduled or sent."
 msgstr ""
 "Wenn diese Option deaktiviert ist, wird diese E-Mail nie geplant oder "
 "gesendet."
 
-#: src/Admin/SettingsPage.php:234
+#: src/Admin/SettingsPage.php:253
 msgid "Send this email"
 msgstr "Sende diese E-Mail"
 
 #. translators: %s: order status name, e.g. Completed.
-#: src/Admin/SettingsPage.php:241
+#: src/Admin/SettingsPage.php:260
 #, php-format
 msgid "Order reaches %s"
 msgstr "Bestellung erreicht %s"
 
 #. translators: %d: number of days.
-#: src/Admin/SettingsPage.php:243
+#: src/Admin/SettingsPage.php:262
 #, php-format
 msgid "wait %d day"
 msgid_plural "wait %d days"
 msgstr[0] "warte %d Tag"
 msgstr[1] "warte %d Tage"
 
-#: src/Admin/SettingsPage.php:245
+#: src/Admin/SettingsPage.php:264
 msgid "next daily run"
 msgstr "nächster Tageslauf"
 
-#: src/Admin/SettingsPage.php:249 src/Admin/SettingsPage.php:255
+#: src/Admin/SettingsPage.php:268 src/Admin/SettingsPage.php:274
 msgid "day"
 msgid_plural "days"
 msgstr[0] "Tag"
 msgstr[1] "Tage"
 
-#: src/Admin/SettingsPage.php:249
+#: src/Admin/SettingsPage.php:268
 msgid "days"
 msgstr "Tage"
 
-#: src/Admin/SettingsPage.php:250 src/Admin/SettingsPage.php:255
+#: src/Admin/SettingsPage.php:269 src/Admin/SettingsPage.php:274
 msgid "soon"
 msgstr "bald"
 
-#: src/Admin/SettingsPage.php:258
+#: src/Admin/SettingsPage.php:277
 msgid "Email sent"
 msgstr "E-Mail gesendet"
 
-#: src/Admin/SettingsPage.php:265
+#: src/Admin/SettingsPage.php:284
 msgid "Trigger status"
 msgstr "Triggerstatus"
 
-#: src/Admin/SettingsPage.php:276
+#: src/Admin/SettingsPage.php:295
 msgid "The email is scheduled once an order reaches this status."
 msgstr ""
 "Die E-Mail wird geplant, sobald eine Bestellung diesen Status erreicht."
 
-#: src/Admin/SettingsPage.php:281
+#: src/Admin/SettingsPage.php:300
 msgid "Delay (days)"
 msgstr "Verzögerung (Tage)"
 
-#: src/Admin/SettingsPage.php:290
+#: src/Admin/SettingsPage.php:309
 msgid "days after the order reaches the status above"
 msgstr "Tage, nachdem die Bestellung den oben genannten Status erreicht hat"
 
-#: src/Admin/SettingsPage.php:291
+#: src/Admin/SettingsPage.php:310
 msgid "Use 0 to send on the next daily run."
 msgstr "Verwende 0, um beim nächsten täglichen Lauf zu senden."
 
-#: src/Admin/SettingsPage.php:296
+#: src/Admin/SettingsPage.php:315
 msgid "Subject"
 msgstr "Betreff"
 
-#: src/Admin/SettingsPage.php:303
+#: src/Admin/SettingsPage.php:322
 msgid ""
 "The inbox subject line. Tokens above work here too, a name in the subject "
 "lifts open rates."
@@ -281,23 +288,23 @@ msgstr ""
 "Die Betreffzeile des Posteingangs. Die oben genannten Token funktionieren "
 "auch hier, ein Name im Betreff erhöht die Öffnungsraten."
 
-#: src/Admin/SettingsPage.php:304 src/Admin/SettingsPage.php:316
+#: src/Admin/SettingsPage.php:323 src/Admin/SettingsPage.php:335
 msgid ""
 "Leave blank to use the wording shown in grey, which is translated into your "
 "store language."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:309
+#: src/Admin/SettingsPage.php:328
 msgid "Body"
 msgstr "Inhalt"
 
-#: src/Admin/SettingsPage.php:315
+#: src/Admin/SettingsPage.php:334
 msgid "Plain text. Tokens above are replaced when the email is sent."
 msgstr ""
 "Klartext. Die oben genannten Token werden ersetzt, wenn die E-Mail gesendet "
 "wird."
 
-#: src/Admin/SettingsPage.php:401
+#: src/Admin/SettingsPage.php:420
 msgid "Completed"
 msgstr "Abgeschlossen"
 
@@ -356,3 +363,13 @@ msgid ""
 "Thank you,\n"
 "{site}"
 msgstr ""
+
+#~ msgid ""
+#~ "Followup - Order Follow-Up Emails for WooCommerce requires WooCommerce to "
+#~ "be active."
+#~ msgstr ""
+#~ "Follow-up, Bestell-Folge-E-Mails für WooCommerce erfordern, dass "
+#~ "WooCommerce aktiv ist."
+
+#~ msgid "Follow-up Emails"
+#~ msgstr "Folge-E-Mails"
