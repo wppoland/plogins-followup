@@ -20,12 +20,12 @@ msgstr ""
 #. Plugin Name of the plugin
 #: sekvo.php
 msgid "Sekvo - Follow-Up Emails for WooCommerce"
-msgstr ""
+msgstr "Sekvo - wiadomości posprzedażowe dla WooCommerce"
 
 #. Plugin URI of the plugin
 #: sekvo.php
 msgid "https://plogins.com/sekvo/"
-msgstr ""
+msgstr "https://plogins.com/sekvo/"
 
 #. Description of the plugin
 #: sekvo.php
@@ -39,16 +39,16 @@ msgstr ""
 #. Author of the plugin
 #: sekvo.php
 msgid "WPPoland.com"
-msgstr ""
+msgstr "WPPoland.com"
 
 #. Author URI of the plugin
 #: sekvo.php
 msgid "https://wppoland.com"
-msgstr ""
+msgstr "https://wppoland.com"
 
 #: sekvo.php:80
 msgid "Sekvo requires WooCommerce to be installed and activated."
-msgstr ""
+msgstr "Sekvo wymaga zainstalowanego i aktywnego WooCommerce."
 
 #: src/Admin/ProUpsell.php:85
 msgid "Wkrótce"
@@ -106,7 +106,7 @@ msgstr "Co dodaje %s"
 
 #: src/Admin/SettingsPage.php:50
 msgid "Sekvo: follow-up emails"
-msgstr ""
+msgstr "Sekvo: wiadomości posprzedażowe"
 
 #: src/Admin/SettingsPage.php:51
 msgid "Follow-ups"
@@ -130,7 +130,7 @@ msgid ""
 "order reaches the chosen status. A daily background task finds due orders "
 "and sends them. The order is marked before the email is handed over, so a "
 "run that dies halfway through cannot quietly send it again every day."
-msgstr ""
+msgstr "Każda włączona wiadomość jest wysyłana raz na zamówienie, określoną liczbę dni po tym, jak zamówienie osiągnie wybrany status. Codzienne zadanie w tle znajduje zamówienia gotowe do wysyłki i wysyła je. Zamówienie jest oznaczane przed przekazaniem wiadomości, więc uruchomienie przerwane w połowie nie wyśle jej po cichu ponownie każdego dnia."
 
 #. translators: %1$s: date of the cut-off before which orders are never followed up. %2$s: maximum emails per type per run.
 #: src/Admin/SettingsPage.php:157
@@ -140,7 +140,7 @@ msgid ""
 "ordered before then were not mailed. That date is as far back as the sender "
 "reaches, not a promise about every order after it. Each daily run sends at "
 "most %2$s emails per type, oldest orders first."
-msgstr ""
+msgstr "Żadne zamówienie złożone przed %1$s nie otrzymuje wiadomości posprzedażowej, więc klienci, którzy zamówili wcześniej, nie dostali e-maila. Ta data to najdalszy punkt, do którego sięga wysyłka, a nie obietnica dotycząca każdego zamówienia po niej. Każde codzienne uruchomienie wysyła najwyżej %2$s wiadomości na typ, zaczynając od najstarszych zamówień."
 
 #. translators: %s: maximum emails per type per run.
 #: src/Admin/SettingsPage.php:164
@@ -150,7 +150,7 @@ msgid ""
 "so the customers who ordered before then were not mailed. That moment is as "
 "far back as the sender reaches, not a promise about every order after it. "
 "Each daily run sends at most %s emails per type, oldest orders first."
-msgstr ""
+msgstr "Żadne zamówienie złożone przed uruchomieniem tej wtyczki w tym sklepie nie otrzymuje wiadomości posprzedażowej, więc klienci, którzy zamówili wcześniej, nie dostali e-maila. Ten moment to najdalszy punkt, do którego sięga wysyłka, a nie obietnica dotycząca każdego zamówienia po nim. Każde codzienne uruchomienie wysyła najwyżej %s wiadomości na typ, zaczynając od najstarszych zamówień."
 
 #. translators: %s: date the plugin was last switched back on.
 #: src/Admin/SettingsPage.php:173
@@ -159,7 +159,7 @@ msgid ""
 "The plugin was last switched back on %s, and from that moment each email "
 "reaches back by its own delay and no further, so orders that passed their "
 "delay while it was off are left alone as well."
-msgstr ""
+msgstr "Wtyczka została ostatnio włączona ponownie %s i od tego momentu każda wiadomość sięga wstecz tylko o własne opóźnienie, więc zamówienia, którym termin minął w czasie wyłączenia, również pozostają pominięte."
 
 #: src/Admin/SettingsPage.php:186
 msgid "Sender"
@@ -292,7 +292,7 @@ msgstr ""
 msgid ""
 "Leave blank to use the wording shown in grey, which is translated into your "
 "store language."
-msgstr ""
+msgstr "Pozostaw puste, aby użyć treści pokazanej na szaro, przetłumaczonej na język Twojego sklepu."
 
 #: src/Admin/SettingsPage.php:328
 msgid "Body"
@@ -332,7 +332,7 @@ msgstr "Drogi Kliencie"
 
 #: src/Service/Texts.php:38
 msgid "Thanks for your order, {customer}!"
-msgstr ""
+msgstr "Dziękujemy za zamówienie, {customer}!"
 
 #: src/Service/Texts.php:39
 msgid ""
@@ -344,11 +344,11 @@ msgid ""
 "\n"
 "Warm regards,\n"
 "{site}"
-msgstr ""
+msgstr "Cześć {customer},\n\nDziękujemy za zakupy w {site}. Mamy nadzieję, że zamówienie {order} przypadnie Ci do gustu.\n\nJeśli czegokolwiek potrzebujesz, po prostu odpowiedz na tego e-maila.\n\nPozdrawiamy serdecznie,\n{site}"
 
 #: src/Service/Texts.php:40
 msgid "How did we do, {customer}?"
-msgstr ""
+msgstr "Jak nam poszło, {customer}?"
 
 #: src/Service/Texts.php:41
 msgid ""
@@ -359,7 +359,7 @@ msgid ""
 "\n"
 "Thank you,\n"
 "{site}"
-msgstr ""
+msgstr "Cześć {customer},\n\nJakiś czas temu dotarło do Ciebie zamówienie {order}. Znajdziesz chwilę, aby wystawić opinię? Bardzo nam to pomaga, a innym kupującym też.\n\nDziękujemy,\n{site}"
 
 #~ msgid ""
 #~ "Followup - Order Follow-Up Emails for WooCommerce requires WooCommerce to "
