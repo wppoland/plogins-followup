@@ -19,12 +19,12 @@ final class FollowupTypes
     {
         return [
             'thank_you' => [
-                'label'       => __('Thank-you', 'plogins-followup'),
-                'description' => __('A warm thank-you sent shortly after the order is fulfilled.', 'plogins-followup'),
+                'label'       => __('Thank-you', 'sekvo'),
+                'description' => __('A warm thank-you sent shortly after the order is fulfilled.', 'sekvo'),
             ],
             'review' => [
-                'label'       => __('Review request', 'plogins-followup'),
-                'description' => __('Asks the customer to leave a review once they have had time with the product.', 'plogins-followup'),
+                'label'       => __('Review request', 'sekvo'),
+                'description' => __('Asks the customer to leave a review once they have had time with the product.', 'sekvo'),
             ],
         ];
     }

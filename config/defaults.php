@@ -18,20 +18,27 @@ defined('ABSPATH') || exit;
 return [
     'from_name'  => '',
     'from_email' => '',
+
+    // Every subject and body below is empty on purpose. A sentence written here
+    // is not a gettext call, so it never reaches the .pot and no translator can
+    // reach it; once the settings screen had stored it, the shop mailed English
+    // whatever language pack was installed. Empty means "use
+    // Followup\Service\Texts", which is translated; anything a merchant writes
+    // still wins.
     'emails'     => [
         'thank_you' => [
             'enabled' => true,
             'status'  => 'completed',
             'delay'   => 1,
-            'subject' => 'Thanks for your order, {customer}!',
-            'body'    => "Hi {customer},\n\nThank you for shopping with {site}. We hope you love order {order}.\n\nIf you need anything at all, just reply to this email.\n\nWarm regards,\n{site}",
+            'subject' => '',
+            'body'    => '',
         ],
         'review' => [
             'enabled' => true,
             'status'  => 'completed',
             'delay'   => 7,
-            'subject' => 'How did we do, {customer}?',
-            'body'    => "Hi {customer},\n\nYou received order {order} a little while ago. Would you take a moment to leave a review? It helps us a lot and helps other shoppers too.\n\nThank you,\n{site}",
+            'subject' => '',
+            'body'    => '',
         ],
     ],
 ];

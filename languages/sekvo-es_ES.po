@@ -1,0 +1,377 @@
+# Copyright (C) 2026 WPPoland
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Followup - Order Follow-Up Emails for WooCommerce 0.1.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sekvo\n"
+"POT-Creation-Date: 2026-09-13T14:06:45+00:00\n"
+"PO-Revision-Date: 2026-06-17T15:07:34+00:00\n"
+"Last-Translator: motylanogha <szatkowski.mariusz@gmail.com>\n"
+"Language-Team: Spanish <es@li.org>\n"
+"Language: es_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: sekvo\n"
+"X-Generator: WP-CLI 2.11.0\n"
+
+#. Plugin Name of the plugin
+#: sekvo.php
+msgid "Sekvo - Follow-Up Emails for WooCommerce"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: sekvo.php
+msgid "https://plogins.com/sekvo/"
+msgstr ""
+
+#. Description of the plugin
+#: sekvo.php
+msgid ""
+"Send automated post-purchase emails to WooCommerce customers: thank-you and "
+"review requests, a set number of days after an order."
+msgstr ""
+"Envíe correos electrónicos automatizados posteriores a la compra a los "
+"clientes de WooCommerce: solicitudes de agradecimiento y revisión, una "
+"cantidad determinada de días después de realizar un pedido."
+
+#. Author of the plugin
+#: sekvo.php
+msgid "WPPoland.com"
+msgstr ""
+
+#. Author URI of the plugin
+#: sekvo.php
+msgid "https://wppoland.com"
+msgstr ""
+
+#: sekvo.php:80
+msgid "Sekvo requires WooCommerce to be installed and activated."
+msgstr ""
+
+#: src/Admin/ProUpsell.php:85
+msgid "Wkrótce"
+msgstr "Próximamente"
+
+#: src/Admin/ProUpsell.php:85
+msgid "Coming soon"
+msgstr "Próximamente"
+
+#. translators: 1: currency symbol, 2: yearly price
+#: src/Admin/ProUpsell.php:91
+#, php-format
+msgid "from %1$s%2$d/yr"
+msgstr "desde %1$s%2$d/año"
+
+#: src/Admin/ProUpsell.php:100
+msgid "Upgrade to PRO"
+msgstr "Mejora a PRO"
+
+#: src/Admin/ProUpsell.php:101
+msgid "Powiadom mnie"
+msgstr "Avísame"
+
+#: src/Admin/ProUpsell.php:101
+msgid "Get notified"
+msgstr "Avísame"
+
+#: src/Admin/ProUpsell.php:131
+msgid "Permission denied."
+msgstr "Permiso denegado."
+
+#. translators: %s: PRO edition name
+#: src/Admin/ProUpsell.php:161
+#, php-format
+msgid "Do more with %s"
+msgstr "Haz más con %s"
+
+#: src/Admin/ProUpsell.php:168
+msgid "Dismiss this notice"
+msgstr "Descartar este aviso"
+
+#: src/Admin/ProUpsell.php:185
+msgid "Unlock every PRO feature"
+msgstr "Desbloquea todas las funciones PRO"
+
+#: src/Admin/ProUpsell.php:198
+msgid "one licence, every PRO feature"
+msgstr "una licencia, todas las funciones PRO"
+
+#. translators: %s: PRO edition name
+#: src/Admin/ProUpsell.php:217
+#, php-format
+msgid "What %s adds"
+msgstr "Lo que añade %s"
+
+#: src/Admin/SettingsPage.php:50
+msgid "Sekvo: follow-up emails"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:51
+msgid "Follow-ups"
+msgstr "Seguimientos"
+
+#: src/Admin/SettingsPage.php:139
+msgid "Active"
+msgstr "Activo"
+
+#: src/Admin/SettingsPage.php:141
+msgid "No emails enabled"
+msgstr "No hay correos electrónicos habilitados"
+
+#: src/Admin/SettingsPage.php:150
+msgid "Automated post-purchase emails"
+msgstr "Correos electrónicos automatizados posteriores a la compra"
+
+#: src/Admin/SettingsPage.php:151
+msgid ""
+"Each enabled email is sent once per order, a set number of days after the "
+"order reaches the chosen status. A daily background task finds due orders "
+"and sends them. The order is marked before the email is handed over, so a "
+"run that dies halfway through cannot quietly send it again every day."
+msgstr ""
+
+#. translators: %1$s: date of the cut-off before which orders are never followed up. %2$s: maximum emails per type per run.
+#: src/Admin/SettingsPage.php:157
+#, php-format
+msgid ""
+"No order placed before %1$s is ever followed up, so the customers who "
+"ordered before then were not mailed. That date is as far back as the sender "
+"reaches, not a promise about every order after it. Each daily run sends at "
+"most %2$s emails per type, oldest orders first."
+msgstr ""
+
+#. translators: %s: maximum emails per type per run.
+#: src/Admin/SettingsPage.php:164
+#, php-format
+msgid ""
+"No order placed before this plugin started running here is ever followed up, "
+"so the customers who ordered before then were not mailed. That moment is as "
+"far back as the sender reaches, not a promise about every order after it. "
+"Each daily run sends at most %s emails per type, oldest orders first."
+msgstr ""
+
+#. translators: %s: date the plugin was last switched back on.
+#: src/Admin/SettingsPage.php:173
+#, php-format
+msgid ""
+"The plugin was last switched back on %s, and from that moment each email "
+"reaches back by its own delay and no further, so orders that passed their "
+"delay while it was off are left alone as well."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:186
+msgid "Sender"
+msgstr "Remitente"
+
+#: src/Admin/SettingsPage.php:187
+msgid ""
+"Who follow-up emails appear to come from. Leave blank to use your store name "
+"and admin email."
+msgstr ""
+"De quién parecen provenir los correos electrónicos de seguimiento. Déjelo en "
+"blanco para usar el nombre de su tienda y el correo electrónico del "
+"administrador."
+
+#: src/Admin/SettingsPage.php:192
+msgid "From name"
+msgstr "Del nombre"
+
+#. translators: %s: the store name used as the fall-back sender.
+#: src/Admin/SettingsPage.php:202
+#, php-format
+msgid ""
+"Shown as the sender in the customer inbox. Left blank, emails come from %s."
+msgstr ""
+"Se muestra como remitente en la bandeja de entrada del cliente. Si se deja "
+"en blanco, los correos electrónicos provienen de %s."
+
+#: src/Admin/SettingsPage.php:209
+msgid "From email"
+msgstr "Desde correo electrónico"
+
+#. translators: %s: the admin email used as the fall-back sender address.
+#: src/Admin/SettingsPage.php:219
+#, php-format
+msgid "Reply-to address for these emails. Left blank, they send from %s."
+msgstr ""
+"Dirección de respuesta para estos correos electrónicos. Si se deja en "
+"blanco, envían desde %s."
+
+#: src/Admin/SettingsPage.php:221
+msgid "An address on your own domain delivers most reliably."
+msgstr ""
+"Una dirección en su propio dominio ofrece resultados de manera más confiable."
+
+#: src/Admin/SettingsPage.php:229
+msgid "Available template tokens"
+msgstr "Tokens de plantilla disponibles"
+
+#: src/Admin/SettingsPage.php:230
+msgid "Tokens you can use in subjects and bodies:"
+msgstr "Tokens que puedes usar en asuntos y cuerpos:"
+
+#: src/Admin/SettingsPage.php:249
+msgid "When off, this email is never scheduled or sent."
+msgstr ""
+"Cuando está desactivado, este correo electrónico nunca se programa ni se "
+"envía."
+
+#: src/Admin/SettingsPage.php:253
+msgid "Send this email"
+msgstr "Enviar este correo electrónico"
+
+#. translators: %s: order status name, e.g. Completed.
+#: src/Admin/SettingsPage.php:260
+#, php-format
+msgid "Order reaches %s"
+msgstr "El pedido llega a %s"
+
+#. translators: %d: number of days.
+#: src/Admin/SettingsPage.php:262
+#, php-format
+msgid "wait %d day"
+msgid_plural "wait %d days"
+msgstr[0] "espera %d día"
+msgstr[1] "espera %d días"
+
+#: src/Admin/SettingsPage.php:264
+msgid "next daily run"
+msgstr "próxima ejecución diaria"
+
+#: src/Admin/SettingsPage.php:268 src/Admin/SettingsPage.php:274
+msgid "day"
+msgid_plural "days"
+msgstr[0] "día"
+msgstr[1] "días"
+
+#: src/Admin/SettingsPage.php:268
+msgid "days"
+msgstr "días"
+
+#: src/Admin/SettingsPage.php:269 src/Admin/SettingsPage.php:274
+msgid "soon"
+msgstr "pronto"
+
+#: src/Admin/SettingsPage.php:277
+msgid "Email sent"
+msgstr "Correo electrónico enviado"
+
+#: src/Admin/SettingsPage.php:284
+msgid "Trigger status"
+msgstr "Estado de activación"
+
+#: src/Admin/SettingsPage.php:295
+msgid "The email is scheduled once an order reaches this status."
+msgstr ""
+"El correo electrónico se programa una vez que un pedido alcanza este estado."
+
+#: src/Admin/SettingsPage.php:300
+msgid "Delay (days)"
+msgstr "Retraso (días)"
+
+#: src/Admin/SettingsPage.php:309
+msgid "days after the order reaches the status above"
+msgstr "días después de que el pedido alcance el estado anterior"
+
+#: src/Admin/SettingsPage.php:310
+msgid "Use 0 to send on the next daily run."
+msgstr "Utilice 0 para enviar en la siguiente ejecución diaria."
+
+#: src/Admin/SettingsPage.php:315
+msgid "Subject"
+msgstr "Asunto"
+
+#: src/Admin/SettingsPage.php:322
+msgid ""
+"The inbox subject line. Tokens above work here too, a name in the subject "
+"lifts open rates."
+msgstr ""
+"La línea de asunto de la bandeja de entrada. Los tokens anteriores también "
+"funcionan aquí, un nombre en el tema aumenta las tasas de apertura."
+
+#: src/Admin/SettingsPage.php:323 src/Admin/SettingsPage.php:335
+msgid ""
+"Leave blank to use the wording shown in grey, which is translated into your "
+"store language."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:328
+msgid "Body"
+msgstr "Cuerpo"
+
+#: src/Admin/SettingsPage.php:334
+msgid "Plain text. Tokens above are replaced when the email is sent."
+msgstr ""
+"Texto plano. Los tokens anteriores se reemplazan cuando se envía el correo "
+"electrónico."
+
+#: src/Admin/SettingsPage.php:420
+msgid "Completed"
+msgstr "Terminado"
+
+#: src/FollowupTypes.php:22
+msgid "Thank-you"
+msgstr "Gracias"
+
+#: src/FollowupTypes.php:23
+msgid "A warm thank-you sent shortly after the order is fulfilled."
+msgstr ""
+"Un cálido agradecimiento enviado poco después de que se complete el pedido."
+
+#: src/FollowupTypes.php:26
+msgid "Review request"
+msgstr "Solicitud de revisión"
+
+#: src/FollowupTypes.php:27
+msgid ""
+"Asks the customer to leave a review once they have had time with the product."
+msgstr ""
+"Pide al cliente que deje una reseña una vez que haya tenido tiempo con el "
+"producto."
+
+#: src/Service/Mailer.php:119
+msgid "there"
+msgstr "Hola"
+
+#: src/Service/Texts.php:38
+msgid "Thanks for your order, {customer}!"
+msgstr ""
+
+#: src/Service/Texts.php:39
+msgid ""
+"Hi {customer},\n"
+"\n"
+"Thank you for shopping with {site}. We hope you love order {order}.\n"
+"\n"
+"If you need anything at all, just reply to this email.\n"
+"\n"
+"Warm regards,\n"
+"{site}"
+msgstr ""
+
+#: src/Service/Texts.php:40
+msgid "How did we do, {customer}?"
+msgstr ""
+
+#: src/Service/Texts.php:41
+msgid ""
+"Hi {customer},\n"
+"\n"
+"You received order {order} a little while ago. Would you take a moment to "
+"leave a review? It helps us a lot and helps other shoppers too.\n"
+"\n"
+"Thank you,\n"
+"{site}"
+msgstr ""
+
+#~ msgid ""
+#~ "Followup - Order Follow-Up Emails for WooCommerce requires WooCommerce to "
+#~ "be active."
+#~ msgstr ""
+#~ "Seguimiento: los correos electrónicos de seguimiento de pedidos para "
+#~ "WooCommerce requieren que WooCommerce esté activo."
+
+#~ msgid "Follow-up Emails"
+#~ msgstr "Correos electrónicos de seguimiento"
