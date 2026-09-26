@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name:       Followup - Follow-Up Emails for WooCommerce
+ * Plugin Name:       Sekvo - Follow-Up Emails for WooCommerce
  * Plugin URI:        https://plogins.com/plogins-followup/
  * Description:        Send automated post-purchase emails to WooCommerce customers: thank-you and review requests, a set number of days after an order.
- * Version:           1.0.5
+ * Version:           1.1.1
  * Requires at least: 6.5
  * Requires PHP:      8.1
  * Requires Plugins:  woocommerce
@@ -11,11 +11,10 @@
  * Author URI:        https://wppoland.com
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       plogins-followup
+ * Text Domain:       sekvo
  * Domain Path:       /languages
- * Tested up to:      7.0
  * WC requires at least: 8.0
- * WC tested up to:      10.9
+ * WC tested up to:      11.0
  *
  * @package Followup
  */
@@ -26,7 +25,7 @@ namespace Followup;
 
 defined('ABSPATH') || exit;
 
-const VERSION     = '1.0.5';
+const VERSION     = '1.1.1';
 const PLUGIN_FILE = __FILE__;
 
 define('FOLLOWUP_DIR', plugin_dir_path(__FILE__));
@@ -37,6 +36,22 @@ require_once __DIR__ . '/autoload.php';
 // Schedule (and tear down) the daily follow-up cron. Activation hooks must work
 // without the full container, so we touch the schedule directly here.
 register_activation_hook(__FILE__, static function (): void {
+    // Record the install moment as the floor for the sender. Without it the
+    // first run would treat the shop's entire order history as due and start
+    // mailing customers who ordered years ago.
+    //
+    // add_option tells us which activation this is. When it reports the floor
+    // was already there, the plugin has been switched on before and switched
+    // off since, and nothing went out while it was off. The reach-back has to
+    // move forward or the first run mails everything that piled up, but not
+    // past the orders still inside their window, and that window is per step.
+    // So the moment is recorded here and every run after it measures each
+    // step's own delay back from it, where the configured delays (including any
+    // a PRO step adds) are known.
+    if (! add_option(Service\Scheduler::FLOOR_OPTION, (string) time(), '', false)) {
+        update_option(Service\Scheduler::REACTIVATED_OPTION, (string) time(), false);
+    }
+
     if (! wp_next_scheduled(Service\Scheduler::CRON_HOOK)) {
         wp_schedule_event(time() + HOUR_IN_SECONDS, 'daily', Service\Scheduler::CRON_HOOK);
     }
@@ -62,7 +77,7 @@ add_action('plugins_loaded', static function (): void {
     if (! class_exists('WooCommerce')) {
         add_action('admin_notices', static function (): void {
             echo '<div class="notice notice-error"><p>';
-            echo esc_html__('Followup - Order Follow-Up Emails for WooCommerce requires WooCommerce to be active.', 'plogins-followup');
+            echo esc_html__('Sekvo requires WooCommerce to be installed and activated.', 'sekvo');
             echo '</p></div>';
         });
         return;

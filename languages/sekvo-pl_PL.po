@@ -1,0 +1,372 @@
+# Copyright (C) 2026 WPPoland
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Followup - Order Follow-Up Emails for WooCommerce 0.1.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sekvo\n"
+"POT-Creation-Date: 2026-09-13T14:06:45+00:00\n"
+"PO-Revision-Date: 2026-06-15 00:00+0000\n"
+"Last-Translator: motylanogha <szatkowski.mariusz@gmail.com>\n"
+"Language-Team: Polish <pl@li.org>\n"
+"Language: pl_PL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 "
+"|| n%100>14) ? 1 : 2);\n"
+"X-Domain: sekvo\n"
+"X-Generator: WP-CLI 2.12.0\n"
+
+#. Plugin Name of the plugin
+#: sekvo.php
+msgid "Sekvo - Follow-Up Emails for WooCommerce"
+msgstr "Sekvo - wiadomości posprzedażowe dla WooCommerce"
+
+#. Plugin URI of the plugin
+#: sekvo.php
+msgid "https://plogins.com/sekvo/"
+msgstr "https://plogins.com/sekvo/"
+
+#. Description of the plugin
+#: sekvo.php
+msgid ""
+"Send automated post-purchase emails to WooCommerce customers: thank-you and "
+"review requests, a set number of days after an order."
+msgstr ""
+"Wysyłaj automatyczne wiadomości posprzedażowe do klientów WooCommerce: "
+"podziękowania i prośby o opinię, określoną liczbę dni po złożeniu zamówienia."
+
+#. Author of the plugin
+#: sekvo.php
+msgid "WPPoland.com"
+msgstr "WPPoland.com"
+
+#. Author URI of the plugin
+#: sekvo.php
+msgid "https://wppoland.com"
+msgstr "https://wppoland.com"
+
+#: sekvo.php:80
+msgid "Sekvo requires WooCommerce to be installed and activated."
+msgstr "Sekvo wymaga zainstalowanego i aktywnego WooCommerce."
+
+#: src/Admin/ProUpsell.php:85
+msgid "Wkrótce"
+msgstr "Wkrótce"
+
+#: src/Admin/ProUpsell.php:85
+msgid "Coming soon"
+msgstr "Wkrótce"
+
+#. translators: 1: currency symbol, 2: yearly price
+#: src/Admin/ProUpsell.php:91
+#, php-format
+msgid "from %1$s%2$d/yr"
+msgstr "od %1$s%2$d/rok"
+
+#: src/Admin/ProUpsell.php:100
+msgid "Upgrade to PRO"
+msgstr "Przejdź na PRO"
+
+#: src/Admin/ProUpsell.php:101
+msgid "Powiadom mnie"
+msgstr "Powiadom mnie"
+
+#: src/Admin/ProUpsell.php:101
+msgid "Get notified"
+msgstr "Powiadom mnie"
+
+#: src/Admin/ProUpsell.php:131
+msgid "Permission denied."
+msgstr "Brak uprawnień."
+
+#. translators: %s: PRO edition name
+#: src/Admin/ProUpsell.php:161
+#, php-format
+msgid "Do more with %s"
+msgstr "Zrób więcej dzięki %s"
+
+#: src/Admin/ProUpsell.php:168
+msgid "Dismiss this notice"
+msgstr "Odrzuć to powiadomienie"
+
+#: src/Admin/ProUpsell.php:185
+msgid "Unlock every PRO feature"
+msgstr "Odblokuj wszystkie funkcje PRO"
+
+#: src/Admin/ProUpsell.php:198
+msgid "one licence, every PRO feature"
+msgstr "jedna licencja, wszystkie funkcje PRO"
+
+#. translators: %s: PRO edition name
+#: src/Admin/ProUpsell.php:217
+#, php-format
+msgid "What %s adds"
+msgstr "Co dodaje %s"
+
+#: src/Admin/SettingsPage.php:50
+msgid "Sekvo: follow-up emails"
+msgstr "Sekvo: wiadomości posprzedażowe"
+
+#: src/Admin/SettingsPage.php:51
+msgid "Follow-ups"
+msgstr "Wiadomości posprzedażowe"
+
+#: src/Admin/SettingsPage.php:139
+msgid "Active"
+msgstr "Aktywne"
+
+#: src/Admin/SettingsPage.php:141
+msgid "No emails enabled"
+msgstr "Brak włączonych wiadomości"
+
+#: src/Admin/SettingsPage.php:150
+msgid "Automated post-purchase emails"
+msgstr "Automatyczne wiadomości posprzedażowe"
+
+#: src/Admin/SettingsPage.php:151
+msgid ""
+"Each enabled email is sent once per order, a set number of days after the "
+"order reaches the chosen status. A daily background task finds due orders "
+"and sends them. The order is marked before the email is handed over, so a "
+"run that dies halfway through cannot quietly send it again every day."
+msgstr "Każda włączona wiadomość jest wysyłana raz na zamówienie, określoną liczbę dni po tym, jak zamówienie osiągnie wybrany status. Codzienne zadanie w tle znajduje zamówienia gotowe do wysyłki i wysyła je. Zamówienie jest oznaczane przed przekazaniem wiadomości, więc uruchomienie przerwane w połowie nie wyśle jej po cichu ponownie każdego dnia."
+
+#. translators: %1$s: date of the cut-off before which orders are never followed up. %2$s: maximum emails per type per run.
+#: src/Admin/SettingsPage.php:157
+#, php-format
+msgid ""
+"No order placed before %1$s is ever followed up, so the customers who "
+"ordered before then were not mailed. That date is as far back as the sender "
+"reaches, not a promise about every order after it. Each daily run sends at "
+"most %2$s emails per type, oldest orders first."
+msgstr "Żadne zamówienie złożone przed %1$s nie otrzymuje wiadomości posprzedażowej, więc klienci, którzy zamówili wcześniej, nie dostali e-maila. Ta data to najdalszy punkt, do którego sięga wysyłka, a nie obietnica dotycząca każdego zamówienia po niej. Każde codzienne uruchomienie wysyła najwyżej %2$s wiadomości na typ, zaczynając od najstarszych zamówień."
+
+#. translators: %s: maximum emails per type per run.
+#: src/Admin/SettingsPage.php:164
+#, php-format
+msgid ""
+"No order placed before this plugin started running here is ever followed up, "
+"so the customers who ordered before then were not mailed. That moment is as "
+"far back as the sender reaches, not a promise about every order after it. "
+"Each daily run sends at most %s emails per type, oldest orders first."
+msgstr "Żadne zamówienie złożone przed uruchomieniem tej wtyczki w tym sklepie nie otrzymuje wiadomości posprzedażowej, więc klienci, którzy zamówili wcześniej, nie dostali e-maila. Ten moment to najdalszy punkt, do którego sięga wysyłka, a nie obietnica dotycząca każdego zamówienia po nim. Każde codzienne uruchomienie wysyła najwyżej %s wiadomości na typ, zaczynając od najstarszych zamówień."
+
+#. translators: %s: date the plugin was last switched back on.
+#: src/Admin/SettingsPage.php:173
+#, php-format
+msgid ""
+"The plugin was last switched back on %s, and from that moment each email "
+"reaches back by its own delay and no further, so orders that passed their "
+"delay while it was off are left alone as well."
+msgstr "Wtyczka została ostatnio włączona ponownie %s i od tego momentu każda wiadomość sięga wstecz tylko o własne opóźnienie, więc zamówienia, którym termin minął w czasie wyłączenia, również pozostają pominięte."
+
+#: src/Admin/SettingsPage.php:186
+msgid "Sender"
+msgstr "Nadawca"
+
+#: src/Admin/SettingsPage.php:187
+msgid ""
+"Who follow-up emails appear to come from. Leave blank to use your store name "
+"and admin email."
+msgstr ""
+"Od kogo mają pochodzić wiadomości posprzedażowe. Pozostaw puste, aby użyć "
+"nazwy sklepu i adresu e-mail administratora."
+
+#: src/Admin/SettingsPage.php:192
+msgid "From name"
+msgstr "Nazwa nadawcy"
+
+#. translators: %s: the store name used as the fall-back sender.
+#: src/Admin/SettingsPage.php:202
+#, php-format
+msgid ""
+"Shown as the sender in the customer inbox. Left blank, emails come from %s."
+msgstr ""
+"Wyświetlany jako nadawca w skrzynce odbiorczej klienta. Pozostawione puste, "
+"e-maile pochodzą z %s."
+
+#: src/Admin/SettingsPage.php:209
+msgid "From email"
+msgstr "Adres e-mail nadawcy"
+
+#. translators: %s: the admin email used as the fall-back sender address.
+#: src/Admin/SettingsPage.php:219
+#, php-format
+msgid "Reply-to address for these emails. Left blank, they send from %s."
+msgstr "Adres zwrotny dla tych e-maili. Pozostawione puste, wysyłają z %s."
+
+#: src/Admin/SettingsPage.php:221
+msgid "An address on your own domain delivers most reliably."
+msgstr "Najbardziej niezawodny jest adres we własnej domenie."
+
+#: src/Admin/SettingsPage.php:229
+msgid "Available template tokens"
+msgstr "Dostępne symbole zastępcze szablonu"
+
+#: src/Admin/SettingsPage.php:230
+msgid "Tokens you can use in subjects and bodies:"
+msgstr "Symbole zastępcze, których możesz użyć w tematach i treściach:"
+
+#: src/Admin/SettingsPage.php:249
+msgid "When off, this email is never scheduled or sent."
+msgstr ""
+"Gdy ta opcja jest wyłączona, ten e-mail nie jest nigdy planowany ani "
+"wysyłany."
+
+#: src/Admin/SettingsPage.php:253
+msgid "Send this email"
+msgstr "Wyślij tego e-maila"
+
+#. translators: %s: order status name, e.g. Completed.
+#: src/Admin/SettingsPage.php:260
+#, php-format
+msgid "Order reaches %s"
+msgstr "Zamówienie dociera do %s"
+
+#. translators: %d: number of days.
+#: src/Admin/SettingsPage.php:262
+#, php-format
+msgid "wait %d day"
+msgid_plural "wait %d days"
+msgstr[0] "poczekaj %d dzień"
+msgstr[1] "poczekaj %d dni"
+msgstr[2] "poczekaj %d dni"
+
+#: src/Admin/SettingsPage.php:264
+msgid "next daily run"
+msgstr "następne codzienne uruchomienie"
+
+#: src/Admin/SettingsPage.php:268 src/Admin/SettingsPage.php:274
+msgid "day"
+msgid_plural "days"
+msgstr[0] "dzień"
+msgstr[1] "dni"
+msgstr[2] "dni"
+
+#: src/Admin/SettingsPage.php:268
+msgid "days"
+msgstr "dni"
+
+#: src/Admin/SettingsPage.php:269 src/Admin/SettingsPage.php:274
+msgid "soon"
+msgstr "wkrótce"
+
+#: src/Admin/SettingsPage.php:277
+msgid "Email sent"
+msgstr "E-mail wysłany"
+
+#: src/Admin/SettingsPage.php:284
+msgid "Trigger status"
+msgstr "Stan wyzwalający"
+
+#: src/Admin/SettingsPage.php:295
+msgid "The email is scheduled once an order reaches this status."
+msgstr "Wiadomość zostaje zaplanowana, gdy zamówienie osiągnie ten status."
+
+#: src/Admin/SettingsPage.php:300
+msgid "Delay (days)"
+msgstr "Opóźnienie (dni)"
+
+#: src/Admin/SettingsPage.php:309
+msgid "days after the order reaches the status above"
+msgstr "dni po osiągnięciu przez zamówienie powyższego statusu"
+
+#: src/Admin/SettingsPage.php:310
+msgid "Use 0 to send on the next daily run."
+msgstr "Ustaw 0, aby wysłać przy następnym codziennym uruchomieniu."
+
+#: src/Admin/SettingsPage.php:315
+msgid "Subject"
+msgstr "Temat"
+
+#: src/Admin/SettingsPage.php:322
+msgid ""
+"The inbox subject line. Tokens above work here too, a name in the subject "
+"lifts open rates."
+msgstr ""
+"Temat skrzynki odbiorczej. Tokeny powyżej działają również tutaj, nazwa w "
+"temacie podnosi stawki otwarć."
+
+#: src/Admin/SettingsPage.php:323 src/Admin/SettingsPage.php:335
+msgid ""
+"Leave blank to use the wording shown in grey, which is translated into your "
+"store language."
+msgstr "Pozostaw puste, aby użyć treści pokazanej na szaro, przetłumaczonej na język Twojego sklepu."
+
+#: src/Admin/SettingsPage.php:328
+msgid "Body"
+msgstr "Treść"
+
+#: src/Admin/SettingsPage.php:334
+msgid "Plain text. Tokens above are replaced when the email is sent."
+msgstr ""
+"Zwykły tekst. Powyższe symbole zastępcze są podstawiane przy wysyłce "
+"wiadomości."
+
+#: src/Admin/SettingsPage.php:420
+msgid "Completed"
+msgstr "Zrealizowane"
+
+#: src/FollowupTypes.php:22
+msgid "Thank-you"
+msgstr "Podziękowanie"
+
+#: src/FollowupTypes.php:23
+msgid "A warm thank-you sent shortly after the order is fulfilled."
+msgstr "Serdeczne podziękowanie wysyłane krótko po zrealizowaniu zamówienia."
+
+#: src/FollowupTypes.php:26
+msgid "Review request"
+msgstr "Prośba o opinię"
+
+#: src/FollowupTypes.php:27
+msgid ""
+"Asks the customer to leave a review once they have had time with the product."
+msgstr ""
+"Prosi klienta o wystawienie opinii, gdy zdąży już zapoznać się z produktem."
+
+#: src/Service/Mailer.php:119
+msgid "there"
+msgstr "Drogi Kliencie"
+
+#: src/Service/Texts.php:38
+msgid "Thanks for your order, {customer}!"
+msgstr "Dziękujemy za zamówienie, {customer}!"
+
+#: src/Service/Texts.php:39
+msgid ""
+"Hi {customer},\n"
+"\n"
+"Thank you for shopping with {site}. We hope you love order {order}.\n"
+"\n"
+"If you need anything at all, just reply to this email.\n"
+"\n"
+"Warm regards,\n"
+"{site}"
+msgstr "Cześć {customer},\n\nDziękujemy za zakupy w {site}. Mamy nadzieję, że zamówienie {order} przypadnie Ci do gustu.\n\nJeśli czegokolwiek potrzebujesz, po prostu odpowiedz na tego e-maila.\n\nPozdrawiamy serdecznie,\n{site}"
+
+#: src/Service/Texts.php:40
+msgid "How did we do, {customer}?"
+msgstr "Jak nam poszło, {customer}?"
+
+#: src/Service/Texts.php:41
+msgid ""
+"Hi {customer},\n"
+"\n"
+"You received order {order} a little while ago. Would you take a moment to "
+"leave a review? It helps us a lot and helps other shoppers too.\n"
+"\n"
+"Thank you,\n"
+"{site}"
+msgstr "Cześć {customer},\n\nJakiś czas temu dotarło do Ciebie zamówienie {order}. Znajdziesz chwilę, aby wystawić opinię? Bardzo nam to pomaga, a innym kupującym też.\n\nDziękujemy,\n{site}"
+
+#~ msgid ""
+#~ "Followup - Order Follow-Up Emails for WooCommerce requires WooCommerce to "
+#~ "be active."
+#~ msgstr ""
+#~ "Followup - Wiadomości posprzedażowe dla WooCommerce wymaga aktywnej "
+#~ "wtyczki WooCommerce."
+
+#~ msgid "Follow-up Emails"
+#~ msgstr "Wiadomości posprzedażowe"
