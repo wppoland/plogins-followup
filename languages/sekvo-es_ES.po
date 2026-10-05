@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Followup - Order Follow-Up Emails for WooCommerce 0.1.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sekvo\n"
-"POT-Creation-Date: 2026-09-13T14:06:45+00:00\n"
+"POT-Creation-Date: 2026-10-05T11:15:19+00:00\n"
 "PO-Revision-Date: 2026-06-17T15:07:34+00:00\n"
 "Last-Translator: motylanogha <szatkowski.mariusz@gmail.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
@@ -23,7 +23,7 @@ msgstr ""
 
 #. Plugin URI of the plugin
 #: sekvo.php
-msgid "https://plogins.com/sekvo/"
+msgid "https://plogins.com/plogins-followup/"
 msgstr ""
 
 #. Description of the plugin
@@ -51,10 +51,6 @@ msgid "Sekvo requires WooCommerce to be installed and activated."
 msgstr ""
 
 #: src/Admin/ProUpsell.php:85
-msgid "Wkrótce"
-msgstr "Próximamente"
-
-#: src/Admin/ProUpsell.php:85
 msgid "Coming soon"
 msgstr "Próximamente"
 
@@ -67,10 +63,6 @@ msgstr "desde %1$s%2$d/año"
 #: src/Admin/ProUpsell.php:100
 msgid "Upgrade to PRO"
 msgstr "Mejora a PRO"
-
-#: src/Admin/ProUpsell.php:101
-msgid "Powiadom mnie"
-msgstr "Avísame"
 
 #: src/Admin/ProUpsell.php:101
 msgid "Get notified"
@@ -90,16 +82,16 @@ msgstr "Haz más con %s"
 msgid "Dismiss this notice"
 msgstr "Descartar este aviso"
 
-#: src/Admin/ProUpsell.php:185
+#: src/Admin/ProUpsell.php:190
 msgid "Unlock every PRO feature"
 msgstr "Desbloquea todas las funciones PRO"
 
-#: src/Admin/ProUpsell.php:198
+#: src/Admin/ProUpsell.php:203
 msgid "one licence, every PRO feature"
 msgstr "una licencia, todas las funciones PRO"
 
 #. translators: %s: PRO edition name
-#: src/Admin/ProUpsell.php:217
+#: src/Admin/ProUpsell.php:222
 #, php-format
 msgid "What %s adds"
 msgstr "Lo que añade %s"
@@ -365,13 +357,3 @@ msgid ""
 "Thank you,\n"
 "{site}"
 msgstr ""
-
-#~ msgid ""
-#~ "Followup - Order Follow-Up Emails for WooCommerce requires WooCommerce to "
-#~ "be active."
-#~ msgstr ""
-#~ "Seguimiento: los correos electrónicos de seguimiento de pedidos para "
-#~ "WooCommerce requieren que WooCommerce esté activo."
-
-#~ msgid "Follow-up Emails"
-#~ msgstr "Correos electrónicos de seguimiento"
