@@ -19,12 +19,12 @@ msgstr ""
 #. Plugin Name of the plugin
 #: sekvo.php
 msgid "Sekvo - Follow-Up Emails for WooCommerce"
-msgstr ""
+msgstr "Sekvo - correos electrónicos de seguimiento para WooCommerce"
 
 #. Plugin URI of the plugin
 #: sekvo.php
 msgid "https://plogins.com/plogins-followup/"
-msgstr ""
+msgstr "https://plogins.com/plogins-followup/"
 
 #. Description of the plugin
 #: sekvo.php
@@ -39,16 +39,16 @@ msgstr ""
 #. Author of the plugin
 #: sekvo.php
 msgid "WPPoland.com"
-msgstr ""
+msgstr "WPPoland.com"
 
 #. Author URI of the plugin
 #: sekvo.php
 msgid "https://wppoland.com"
-msgstr ""
+msgstr "https://wppoland.com"
 
 #: sekvo.php:80
 msgid "Sekvo requires WooCommerce to be installed and activated."
-msgstr ""
+msgstr "Sekvo requiere que WooCommerce esté instalado y activado."
 
 #: src/Admin/ProUpsell.php:85
 msgid "Coming soon"
@@ -98,7 +98,7 @@ msgstr "Lo que añade %s"
 
 #: src/Admin/SettingsPage.php:50
 msgid "Sekvo: follow-up emails"
-msgstr ""
+msgstr "Sekvo: correos electrónicos de seguimiento"
 
 #: src/Admin/SettingsPage.php:51
 msgid "Follow-ups"
@@ -119,20 +119,31 @@ msgstr "Correos electrónicos automatizados posteriores a la compra"
 #: src/Admin/SettingsPage.php:151
 msgid ""
 "Each enabled email is sent once per order, a set number of days after the "
-"order reaches the chosen status. A daily background task finds due orders "
-"and sends them. The order is marked before the email is handed over, so a "
-"run that dies halfway through cannot quietly send it again every day."
+"order reaches the chosen status. A daily background task finds due orders and"
+" sends them. The order is marked before the email is handed over, so a run "
+"that dies halfway through cannot quietly send it again every day."
 msgstr ""
+"Cada correo electrónico habilitado se envía una vez por pedido, un número "
+"fijo de días después de que el pedido alcance el estado elegido. Una tarea "
+"diaria en segundo plano encuentra los pedidos pendientes y los envía. El "
+"pedido se marca antes de entregar el correo, así que una ejecución "
+"interrumpida a mitad no puede volver a enviarlo en silencio cada día."
 
-#. translators: %1$s: date of the cut-off before which orders are never followed up. %2$s: maximum emails per type per run.
+#. translators: %1$s: date of the cut-off before which orders are never
+#. followed up. %2$s: maximum emails per type per run.
 #: src/Admin/SettingsPage.php:157
 #, php-format
 msgid ""
-"No order placed before %1$s is ever followed up, so the customers who "
-"ordered before then were not mailed. That date is as far back as the sender "
-"reaches, not a promise about every order after it. Each daily run sends at "
-"most %2$s emails per type, oldest orders first."
+"No order placed before %1$s is ever followed up, so the customers who ordered"
+" before then were not mailed. That date is as far back as the sender reaches,"
+" not a promise about every order after it. Each daily run sends at most %2$s "
+"emails per type, oldest orders first."
 msgstr ""
+"Ningún pedido realizado antes de %1$s recibe seguimiento, así que los "
+"clientes que compraron antes no recibieron correo. Esa fecha es lo más atrás "
+"que llega el envío, no una promesa sobre cada pedido posterior. Cada "
+"ejecución diaria envía como máximo %2$s correos por tipo, empezando por los "
+"pedidos más antiguos."
 
 #. translators: %s: maximum emails per type per run.
 #: src/Admin/SettingsPage.php:164
@@ -143,6 +154,11 @@ msgid ""
 "far back as the sender reaches, not a promise about every order after it. "
 "Each daily run sends at most %s emails per type, oldest orders first."
 msgstr ""
+"Ningún pedido realizado antes de que este plugin empezara a funcionar aquí "
+"recibe seguimiento, así que los clientes que compraron antes no recibieron "
+"correo. Ese momento es lo más atrás que llega el envío, no una promesa sobre "
+"cada pedido posterior. Cada ejecución diaria envía como máximo %s correos por"
+" tipo, empezando por los pedidos más antiguos."
 
 #. translators: %s: date the plugin was last switched back on.
 #: src/Admin/SettingsPage.php:173
@@ -152,6 +168,9 @@ msgid ""
 "reaches back by its own delay and no further, so orders that passed their "
 "delay while it was off are left alone as well."
 msgstr ""
+"El plugin se volvió a activar por última vez el %s y, desde ese momento, cada"
+" correo solo retrocede hasta su propio retraso, así que los pedidos cuyo "
+"retraso venció mientras estaba desactivado también se omiten."
 
 #: src/Admin/SettingsPage.php:186
 msgid "Sender"
@@ -176,8 +195,8 @@ msgstr "Del nombre"
 msgid ""
 "Shown as the sender in the customer inbox. Left blank, emails come from %s."
 msgstr ""
-"Se muestra como remitente en la bandeja de entrada del cliente. Si se deja "
-"en blanco, los correos electrónicos provienen de %s."
+"Se muestra como remitente en la bandeja de entrada del cliente. Si se deja en"
+" blanco, los correos electrónicos provienen de %s."
 
 #: src/Admin/SettingsPage.php:209
 msgid "From email"
@@ -188,8 +207,8 @@ msgstr "Desde correo electrónico"
 #, php-format
 msgid "Reply-to address for these emails. Left blank, they send from %s."
 msgstr ""
-"Dirección de respuesta para estos correos electrónicos. Si se deja en "
-"blanco, envían desde %s."
+"Dirección de respuesta para estos correos electrónicos. Si se deja en blanco,"
+" envían desde %s."
 
 #: src/Admin/SettingsPage.php:221
 msgid "An address on your own domain delivers most reliably."
@@ -288,6 +307,8 @@ msgid ""
 "Leave blank to use the wording shown in grey, which is translated into your "
 "store language."
 msgstr ""
+"Déjalo en blanco para usar el texto mostrado en gris, que se traduce al "
+"idioma de tu tienda."
 
 #: src/Admin/SettingsPage.php:328
 msgid "Body"
@@ -329,7 +350,7 @@ msgstr "Hola"
 
 #: src/Service/Texts.php:38
 msgid "Thanks for your order, {customer}!"
-msgstr ""
+msgstr "¡Gracias por tu pedido, {customer}!"
 
 #: src/Service/Texts.php:39
 msgid ""
@@ -342,18 +363,31 @@ msgid ""
 "Warm regards,\n"
 "{site}"
 msgstr ""
+"Hola {customer}:\n"
+"\n"
+"Gracias por comprar en {site}. Esperamos que te encante el pedido {order}.\n"
+"\n"
+"Si necesitas cualquier cosa, simplemente responde a este correo.\n"
+"\n"
+"Un cordial saludo,\n"
+"{site}"
 
 #: src/Service/Texts.php:40
 msgid "How did we do, {customer}?"
-msgstr ""
+msgstr "¿Qué tal lo hicimos, {customer}?"
 
 #: src/Service/Texts.php:41
 msgid ""
 "Hi {customer},\n"
 "\n"
-"You received order {order} a little while ago. Would you take a moment to "
-"leave a review? It helps us a lot and helps other shoppers too.\n"
+"You received order {order} a little while ago. Would you take a moment to leave a review? It helps us a lot and helps other shoppers too.\n"
 "\n"
 "Thank you,\n"
 "{site}"
 msgstr ""
+"Hola {customer}:\n"
+"\n"
+"Recibiste el pedido {order} hace poco. ¿Podrías dedicar un momento a dejar una reseña? Nos ayuda mucho y también ayuda a otros compradores.\n"
+"\n"
+"Gracias,\n"
+"{site}"
