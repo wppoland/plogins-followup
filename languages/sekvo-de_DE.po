@@ -32,9 +32,9 @@ msgid ""
 "Send automated post-purchase emails to WooCommerce customers: thank-you and "
 "review requests, a set number of days after an order."
 msgstr ""
-"Sende automatisierte E-Mails nach dem Kauf an WooCommerce-Kunden: Dankeschön-"
-" und Bewertungsanfragen, eine festgelegte Anzahl von Tagen nach einer "
-"Bestellung."
+"Sende automatisierte E-Mails nach dem Kauf an WooCommerce-Kunden: "
+"Dankeschön- und Bewertungsanfragen, eine festgelegte Anzahl von Tagen nach "
+"einer Bestellung."
 
 #. Author of the plugin
 #: sekvo.php
@@ -119,48 +119,48 @@ msgstr "Automatisierte E-Mails nach dem Kauf"
 #: src/Admin/SettingsPage.php:151
 msgid ""
 "Each enabled email is sent once per order, a set number of days after the "
-"order reaches the chosen status. A daily background task finds due orders and"
-" sends them. The order is marked before the email is handed over, so a run "
-"that dies halfway through cannot quietly send it again every day."
+"order reaches the chosen status. A daily background task finds due orders "
+"and sends them. The order is marked before the email is handed over, so a "
+"run that dies halfway through cannot quietly send it again every day."
 msgstr ""
-"Jede aktivierte E-Mail wird einmal pro Bestellung gesendet, eine festgelegte "
-"Anzahl von Tagen nachdem die Bestellung den gewählten Status erreicht hat. "
+"Jede aktivierte E-Mail wird einmal pro Bestellung gesendet, eine festgelegte"
+" Anzahl von Tagen nachdem die Bestellung den gewählten Status erreicht hat. "
 "Eine tägliche Hintergrundaufgabe findet fällige Bestellungen und sendet die "
 "E-Mails. Die Bestellung wird markiert, bevor die E-Mail übergeben wird, "
-"sodass ein mittendrin abgebrochener Lauf sie nicht jeden Tag unbemerkt erneut"
-" senden kann."
+"sodass ein mittendrin abgebrochener Lauf sie nicht jeden Tag unbemerkt "
+"erneut senden kann."
 
 #. translators: %1$s: date of the cut-off before which orders are never
 #. followed up. %2$s: maximum emails per type per run.
 #: src/Admin/SettingsPage.php:157
 #, php-format
 msgid ""
-"No order placed before %1$s is ever followed up, so the customers who ordered"
-" before then were not mailed. That date is as far back as the sender reaches,"
-" not a promise about every order after it. Each daily run sends at most %2$s "
-"emails per type, oldest orders first."
+"No order placed before %1$s is ever followed up, so the customers who "
+"ordered before then were not mailed. That date is as far back as the sender "
+"reaches, not a promise about every order after it. Each daily run sends at "
+"most %2$s emails per type, oldest orders first."
 msgstr ""
-"Bestellungen, die vor %1$s aufgegeben wurden, erhalten nie eine Folge-E-Mail,"
-" daher wurden Kunden, die vorher bestellt haben, nicht angeschrieben. Dieses "
-"Datum ist der früheste Punkt, bis zu dem der Versand zurückreicht, kein "
-"Versprechen für jede spätere Bestellung. Jeder tägliche Lauf sendet höchstens"
-" %2$s E-Mails pro Typ, die ältesten Bestellungen zuerst."
+"Bestellungen, die vor %1$s aufgegeben wurden, erhalten nie eine Folge-E-"
+"Mail, daher wurden Kunden, die vorher bestellt haben, nicht angeschrieben. "
+"Dieses Datum ist der früheste Punkt, bis zu dem der Versand zurückreicht, "
+"kein Versprechen für jede spätere Bestellung. Jeder tägliche Lauf sendet "
+"höchstens %2$s E-Mails pro Typ, die ältesten Bestellungen zuerst."
 
 #. translators: %s: maximum emails per type per run.
 #: src/Admin/SettingsPage.php:164
 #, php-format
 msgid ""
-"No order placed before this plugin started running here is ever followed up, "
-"so the customers who ordered before then were not mailed. That moment is as "
-"far back as the sender reaches, not a promise about every order after it. "
+"No order placed before this plugin started running here is ever followed up,"
+" so the customers who ordered before then were not mailed. That moment is as"
+" far back as the sender reaches, not a promise about every order after it. "
 "Each daily run sends at most %s emails per type, oldest orders first."
 msgstr ""
 "Bestellungen, die aufgegeben wurden, bevor dieses Plugin hier in Betrieb "
 "ging, erhalten nie eine Folge-E-Mail, daher wurden Kunden, die vorher "
-"bestellt haben, nicht angeschrieben. Dieser Zeitpunkt ist der früheste Punkt,"
-" bis zu dem der Versand zurückreicht, kein Versprechen für jede spätere "
-"Bestellung. Jeder tägliche Lauf sendet höchstens %s E-Mails pro Typ, die "
-"ältesten Bestellungen zuerst."
+"bestellt haben, nicht angeschrieben. Dieser Zeitpunkt ist der früheste "
+"Punkt, bis zu dem der Versand zurückreicht, kein Versprechen für jede "
+"spätere Bestellung. Jeder tägliche Lauf sendet höchstens %s E-Mails pro Typ,"
+" die ältesten Bestellungen zuerst."
 
 #. translators: %s: date the plugin was last switched back on.
 #: src/Admin/SettingsPage.php:173
@@ -171,8 +171,9 @@ msgid ""
 "delay while it was off are left alone as well."
 msgstr ""
 "Das Plugin wurde zuletzt am %s wieder eingeschaltet. Seitdem reicht jede "
-"E-Mail nur um ihre eigene Verzögerung zurück, daher bleiben auch Bestellungen"
-" unberührt, deren Verzögerung abgelaufen ist, während es ausgeschaltet war."
+"E-Mail nur um ihre eigene Verzögerung zurück, daher bleiben auch "
+"Bestellungen unberührt, deren Verzögerung abgelaufen ist, während es "
+"ausgeschaltet war."
 
 #: src/Admin/SettingsPage.php:186
 msgid "Sender"
@@ -180,8 +181,8 @@ msgstr "Absender"
 
 #: src/Admin/SettingsPage.php:187
 msgid ""
-"Who follow-up emails appear to come from. Leave blank to use your store name "
-"and admin email."
+"Who follow-up emails appear to come from. Leave blank to use your store name"
+" and admin email."
 msgstr ""
 "Von wem Folge-E-Mails zu stammen scheinen. Lass das Feld leer, um deinen "
 "Shopnamen und deine Administrator-E-Mail-Adresse zu verwenden."
@@ -196,8 +197,8 @@ msgstr "Vom Namen"
 msgid ""
 "Shown as the sender in the customer inbox. Left blank, emails come from %s."
 msgstr ""
-"Wird im Posteingang des Kunden als Absender angezeigt. Wenn du das Feld leer "
-"lassen, stammen die E-Mails von %s."
+"Wird im Posteingang des Kunden als Absender angezeigt. Wenn du das Feld leer"
+" lassen, stammen die E-Mails von %s."
 
 #: src/Admin/SettingsPage.php:209
 msgid "From email"
@@ -208,7 +209,8 @@ msgstr "Von E-Mail"
 #, php-format
 msgid "Reply-to address for these emails. Left blank, they send from %s."
 msgstr ""
-"Antwortadresse für diese E-Mails. Bleibt das Feld leer, wird von %s gesendet."
+"Antwortadresse für diese E-Mails. Bleibt das Feld leer, wird von %s "
+"gesendet."
 
 #: src/Admin/SettingsPage.php:221
 msgid "An address on your own domain delivers most reliably."
@@ -339,7 +341,8 @@ msgstr "Überprüfungsanfrage"
 
 #: src/FollowupTypes.php:27
 msgid ""
-"Asks the customer to leave a review once they have had time with the product."
+"Asks the customer to leave a review once they have had time with the "
+"product."
 msgstr ""
 "Fordert den Kunden auf, eine Bewertung abzugeben, sobald er Zeit mit dem "
 "Produkt hatte."
@@ -374,7 +377,7 @@ msgstr ""
 
 #: src/Service/Texts.php:40
 msgid "How did we do, {customer}?"
-msgstr "Wie waren wir, {customer}?"
+msgstr "Wie zufrieden bist du, {customer}?"
 
 #: src/Service/Texts.php:41
 msgid ""
