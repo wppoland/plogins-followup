@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Followup - Order Follow-Up Emails for WooCommerce 0.1.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sekvo\n"
-"POT-Creation-Date: 2026-09-13T14:06:45+00:00\n"
+"POT-Creation-Date: 2026-10-05T11:15:19+00:00\n"
 "PO-Revision-Date: 2026-06-17T15:07:34+00:00\n"
 "Last-Translator: motylanogha <szatkowski.mariusz@gmail.com>\n"
 "Language-Team: German <de@li.org>\n"
@@ -19,12 +19,12 @@ msgstr ""
 #. Plugin Name of the plugin
 #: sekvo.php
 msgid "Sekvo - Follow-Up Emails for WooCommerce"
-msgstr ""
+msgstr "Sekvo - Folge-E-Mails für WooCommerce"
 
 #. Plugin URI of the plugin
 #: sekvo.php
-msgid "https://plogins.com/sekvo/"
-msgstr ""
+msgid "https://plogins.com/plogins-followup/"
+msgstr "https://plogins.com/plogins-followup/"
 
 #. Description of the plugin
 #: sekvo.php
@@ -39,20 +39,16 @@ msgstr ""
 #. Author of the plugin
 #: sekvo.php
 msgid "WPPoland.com"
-msgstr ""
+msgstr "WPPoland.com"
 
 #. Author URI of the plugin
 #: sekvo.php
 msgid "https://wppoland.com"
-msgstr ""
+msgstr "https://wppoland.com"
 
 #: sekvo.php:80
 msgid "Sekvo requires WooCommerce to be installed and activated."
-msgstr ""
-
-#: src/Admin/ProUpsell.php:85
-msgid "Wkrótce"
-msgstr "Demnächst"
+msgstr "Sekvo setzt ein installiertes und aktiviertes WooCommerce voraus."
 
 #: src/Admin/ProUpsell.php:85
 msgid "Coming soon"
@@ -67,10 +63,6 @@ msgstr "ab %1$s%2$d/Jahr"
 #: src/Admin/ProUpsell.php:100
 msgid "Upgrade to PRO"
 msgstr "Auf PRO upgraden"
-
-#: src/Admin/ProUpsell.php:101
-msgid "Powiadom mnie"
-msgstr "Benachrichtige mich"
 
 #: src/Admin/ProUpsell.php:101
 msgid "Get notified"
@@ -90,23 +82,23 @@ msgstr "Mehr erreichen mit %s"
 msgid "Dismiss this notice"
 msgstr "Diesen Hinweis ausblenden"
 
-#: src/Admin/ProUpsell.php:185
+#: src/Admin/ProUpsell.php:190
 msgid "Unlock every PRO feature"
 msgstr "Alle PRO-Funktionen freischalten"
 
-#: src/Admin/ProUpsell.php:198
+#: src/Admin/ProUpsell.php:203
 msgid "one licence, every PRO feature"
 msgstr "eine Lizenz, alle PRO-Funktionen"
 
 #. translators: %s: PRO edition name
-#: src/Admin/ProUpsell.php:217
+#: src/Admin/ProUpsell.php:222
 #, php-format
 msgid "What %s adds"
 msgstr "Was %s ergänzt"
 
 #: src/Admin/SettingsPage.php:50
 msgid "Sekvo: follow-up emails"
-msgstr ""
+msgstr "Sekvo: Folge-E-Mails"
 
 #: src/Admin/SettingsPage.php:51
 msgid "Follow-ups"
@@ -131,8 +123,15 @@ msgid ""
 "and sends them. The order is marked before the email is handed over, so a "
 "run that dies halfway through cannot quietly send it again every day."
 msgstr ""
+"Jede aktivierte E-Mail wird einmal pro Bestellung gesendet, eine festgelegte"
+" Anzahl von Tagen nachdem die Bestellung den gewählten Status erreicht hat. "
+"Eine tägliche Hintergrundaufgabe findet fällige Bestellungen und sendet die "
+"E-Mails. Die Bestellung wird markiert, bevor die E-Mail übergeben wird, "
+"sodass ein mittendrin abgebrochener Lauf sie nicht jeden Tag unbemerkt "
+"erneut senden kann."
 
-#. translators: %1$s: date of the cut-off before which orders are never followed up. %2$s: maximum emails per type per run.
+#. translators: %1$s: date of the cut-off before which orders are never
+#. followed up. %2$s: maximum emails per type per run.
 #: src/Admin/SettingsPage.php:157
 #, php-format
 msgid ""
@@ -141,16 +140,27 @@ msgid ""
 "reaches, not a promise about every order after it. Each daily run sends at "
 "most %2$s emails per type, oldest orders first."
 msgstr ""
+"Bestellungen, die vor %1$s aufgegeben wurden, erhalten nie eine Folge-E-"
+"Mail, daher wurden Kunden, die vorher bestellt haben, nicht angeschrieben. "
+"Dieses Datum ist der früheste Punkt, bis zu dem der Versand zurückreicht, "
+"kein Versprechen für jede spätere Bestellung. Jeder tägliche Lauf sendet "
+"höchstens %2$s E-Mails pro Typ, die ältesten Bestellungen zuerst."
 
 #. translators: %s: maximum emails per type per run.
 #: src/Admin/SettingsPage.php:164
 #, php-format
 msgid ""
-"No order placed before this plugin started running here is ever followed up, "
-"so the customers who ordered before then were not mailed. That moment is as "
-"far back as the sender reaches, not a promise about every order after it. "
+"No order placed before this plugin started running here is ever followed up,"
+" so the customers who ordered before then were not mailed. That moment is as"
+" far back as the sender reaches, not a promise about every order after it. "
 "Each daily run sends at most %s emails per type, oldest orders first."
 msgstr ""
+"Bestellungen, die aufgegeben wurden, bevor dieses Plugin hier in Betrieb "
+"ging, erhalten nie eine Folge-E-Mail, daher wurden Kunden, die vorher "
+"bestellt haben, nicht angeschrieben. Dieser Zeitpunkt ist der früheste "
+"Punkt, bis zu dem der Versand zurückreicht, kein Versprechen für jede "
+"spätere Bestellung. Jeder tägliche Lauf sendet höchstens %s E-Mails pro Typ,"
+" die ältesten Bestellungen zuerst."
 
 #. translators: %s: date the plugin was last switched back on.
 #: src/Admin/SettingsPage.php:173
@@ -160,6 +170,10 @@ msgid ""
 "reaches back by its own delay and no further, so orders that passed their "
 "delay while it was off are left alone as well."
 msgstr ""
+"Das Plugin wurde zuletzt am %s wieder eingeschaltet. Seitdem reicht jede "
+"E-Mail nur um ihre eigene Verzögerung zurück, daher bleiben auch "
+"Bestellungen unberührt, deren Verzögerung abgelaufen ist, während es "
+"ausgeschaltet war."
 
 #: src/Admin/SettingsPage.php:186
 msgid "Sender"
@@ -167,8 +181,8 @@ msgstr "Absender"
 
 #: src/Admin/SettingsPage.php:187
 msgid ""
-"Who follow-up emails appear to come from. Leave blank to use your store name "
-"and admin email."
+"Who follow-up emails appear to come from. Leave blank to use your store name"
+" and admin email."
 msgstr ""
 "Von wem Folge-E-Mails zu stammen scheinen. Lass das Feld leer, um deinen "
 "Shopnamen und deine Administrator-E-Mail-Adresse zu verwenden."
@@ -183,8 +197,8 @@ msgstr "Vom Namen"
 msgid ""
 "Shown as the sender in the customer inbox. Left blank, emails come from %s."
 msgstr ""
-"Wird im Posteingang des Kunden als Absender angezeigt. Wenn du das Feld leer "
-"lassen, stammen die E-Mails von %s."
+"Wird im Posteingang des Kunden als Absender angezeigt. Wenn du das Feld leer"
+" lassen, stammen die E-Mails von %s."
 
 #: src/Admin/SettingsPage.php:209
 msgid "From email"
@@ -195,7 +209,8 @@ msgstr "Von E-Mail"
 #, php-format
 msgid "Reply-to address for these emails. Left blank, they send from %s."
 msgstr ""
-"Antwortadresse für diese E-Mails. Bleibt das Feld leer, wird von %s gesendet."
+"Antwortadresse für diese E-Mails. Bleibt das Feld leer, wird von %s "
+"gesendet."
 
 #: src/Admin/SettingsPage.php:221
 msgid "An address on your own domain delivers most reliably."
@@ -293,6 +308,8 @@ msgid ""
 "Leave blank to use the wording shown in grey, which is translated into your "
 "store language."
 msgstr ""
+"Lass das Feld leer, um den grau angezeigten Text zu verwenden, der in die "
+"Sprache deines Shops übersetzt wird."
 
 #: src/Admin/SettingsPage.php:328
 msgid "Body"
@@ -324,7 +341,8 @@ msgstr "Überprüfungsanfrage"
 
 #: src/FollowupTypes.php:27
 msgid ""
-"Asks the customer to leave a review once they have had time with the product."
+"Asks the customer to leave a review once they have had time with the "
+"product."
 msgstr ""
 "Fordert den Kunden auf, eine Bewertung abzugeben, sobald er Zeit mit dem "
 "Produkt hatte."
@@ -335,7 +353,7 @@ msgstr "Hallo"
 
 #: src/Service/Texts.php:38
 msgid "Thanks for your order, {customer}!"
-msgstr ""
+msgstr "Danke für deine Bestellung, {customer}!"
 
 #: src/Service/Texts.php:39
 msgid ""
@@ -348,28 +366,31 @@ msgid ""
 "Warm regards,\n"
 "{site}"
 msgstr ""
+"Hallo {customer},\n"
+"\n"
+"danke für deinen Einkauf bei {site}. Wir hoffen, dass dir die Bestellung {order} gefällt.\n"
+"\n"
+"Wenn du irgendetwas brauchst, antworte einfach auf diese E-Mail.\n"
+"\n"
+"Herzliche Grüße\n"
+"{site}"
 
 #: src/Service/Texts.php:40
 msgid "How did we do, {customer}?"
-msgstr ""
+msgstr "Wie zufrieden bist du, {customer}?"
 
 #: src/Service/Texts.php:41
 msgid ""
 "Hi {customer},\n"
 "\n"
-"You received order {order} a little while ago. Would you take a moment to "
-"leave a review? It helps us a lot and helps other shoppers too.\n"
+"You received order {order} a little while ago. Would you take a moment to leave a review? It helps us a lot and helps other shoppers too.\n"
 "\n"
 "Thank you,\n"
 "{site}"
 msgstr ""
-
-#~ msgid ""
-#~ "Followup - Order Follow-Up Emails for WooCommerce requires WooCommerce to "
-#~ "be active."
-#~ msgstr ""
-#~ "Follow-up, Bestell-Folge-E-Mails für WooCommerce erfordern, dass "
-#~ "WooCommerce aktiv ist."
-
-#~ msgid "Follow-up Emails"
-#~ msgstr "Folge-E-Mails"
+"Hallo {customer},\n"
+"\n"
+"du hast die Bestellung {order} vor kurzem erhalten. Nimmst du dir einen Moment Zeit für eine Bewertung? Sie hilft uns sehr und auch anderen Kunden.\n"
+"\n"
+"Danke\n"
+"{site}"
