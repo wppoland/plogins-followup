@@ -30,6 +30,33 @@ Developers can extend the sequence through the `followup/sequence_steps` filter.
 
 The plugin is not on the WordPress.org directory yet. Source code and issue tracker live at [github.com/wppoland/plogins-followup](https://github.com/wppoland/plogins-followup).
 
+== Sekvo Pro ==
+
+Sekvo Pro is a separate paid plugin that extends Sekvo.
+
+Included in Sekvo:
+
+* Two email types
+* Per-type control
+* Template placeholders
+* Trigger status
+* Daily background task
+
+Sekvo Pro adds:
+
+* Branded HTML emails
+* Custom post-purchase sequences
+* Coupon blocks
+* Send reporting
+* Send-time scheduling
+* Open and click reporting
+
+The free edition is not a trial and its features stay available without a time limit.
+
+* **Sekvo Pro** - [plogins.com/plogins-followup-pro/](https://plogins.com/plogins-followup-pro/)
+* **Compare editions and pricing** - [plogins.com/plogins-followup-pro/pricing/](https://plogins.com/plogins-followup-pro/pricing/)
+* **PRO documentation** - [plogins.com/plogins-followup-pro/docs/](https://plogins.com/plogins-followup-pro/docs/)
+
 == Installation ==
 
 1. Upload the plugin to `/wp-content/plugins/sekvo`, or install via Plugins -> Add New.
