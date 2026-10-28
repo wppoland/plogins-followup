@@ -4,14 +4,14 @@
  * scripts/gen-pro-upsell.mjs. The admin upsell renders this; curate the
  * feature list to fit this plugin's settings screen (do not invent features).
  *
- * @package plogins-followup-pro
+ * @package sekvo-pro
  */
 
 defined('ABSPATH') || exit;
 
 return [
     'name'       => 'Sekvo Pro',
-    'url'        => 'https://plogins.com/plogins-followup-pro/pricing/',
+    'url'        => 'https://plogins.com/sekvo-pro/pricing/',
     'sellable'   => true,
     'price_from' => 29,
     'currency'   => 'EUR',
