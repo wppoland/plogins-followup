@@ -5,7 +5,7 @@ Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.1
 Requires Plugins: woocommerce
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,7 +28,7 @@ Only orders placed after the plugin started running on your site are followed up
 
 Developers can extend the sequence through the `followup/sequence_steps` filter. Each custom step can provide its own trigger status, delay, subject and body while reusing Followup's send-once scheduler.
 
-The plugin is not on the WordPress.org directory yet. Source code and issue tracker live at [github.com/wppoland/plogins-followup](https://github.com/wppoland/plogins-followup).
+The plugin is not on the WordPress.org directory yet. Source code and issue tracker live at [github.com/wppoland/sekvo](https://github.com/wppoland/sekvo).
 
 == Sekvo Pro ==
 
@@ -53,9 +53,9 @@ Sekvo Pro adds:
 
 The free edition is not a trial and its features stay available without a time limit.
 
-* **Sekvo Pro** - [plogins.com/plogins-followup-pro/](https://plogins.com/plogins-followup-pro/)
-* **Compare editions and pricing** - [plogins.com/plogins-followup-pro/pricing/](https://plogins.com/plogins-followup-pro/pricing/)
-* **PRO documentation** - [plogins.com/plogins-followup-pro/docs/](https://plogins.com/plogins-followup-pro/docs/)
+* **Sekvo Pro** - [plogins.com/sekvo-pro/](https://plogins.com/sekvo-pro/)
+* **Compare editions and pricing** - [plogins.com/sekvo-pro/pricing/](https://plogins.com/sekvo-pro/pricing/)
+* **PRO documentation** - [plogins.com/sekvo-pro/docs/](https://plogins.com/sekvo-pro/docs/)
 
 == Installation ==
 
@@ -67,10 +67,10 @@ The free edition is not a trial and its features stay available without a time l
 
 = Documentation and links =
 
-* **Documentation**: [plogins.com/plogins-followup/docs/](https://plogins.com/plogins-followup/docs/)
-* **Plugin page**: [plogins.com/plogins-followup/](https://plogins.com/plogins-followup/)
-* **Source code**: [github.com/wppoland/plogins-followup](https://github.com/wppoland/plogins-followup)
-* **Bug reports and feature requests**: [github.com/wppoland/plogins-followup/issues](https://github.com/wppoland/plogins-followup/issues)
+* **Documentation**: [plogins.com/sekvo/docs/](https://plogins.com/sekvo/docs/)
+* **Plugin page**: [plogins.com/sekvo/](https://plogins.com/sekvo/)
+* **Source code**: [github.com/wppoland/sekvo](https://github.com/wppoland/sekvo)
+* **Bug reports and feature requests**: [github.com/wppoland/sekvo/issues](https://github.com/wppoland/sekvo/issues)
 
 
 = Does it require WooCommerce? =
@@ -131,6 +131,9 @@ Sekvo does not connect to any external services. It has no API keys, sends no da
 Sekvo is fully translatable and ships the `sekvo.pot` template. Translations are delivered by WordPress.org language packs from translate.wordpress.org, which is where Polish, German and Spanish are being contributed; the package itself carries no compiled translation files.
 
 == Changelog ==
+
+= 1.1.3 =
+* Links point at the new plogins.com address and the renamed GitHub repository.
 
 = 1.1.2 =
 * The upgrade notice's "Coming soon" and "Get notified" labels are English source strings for every language; Polish sites used to get their own Polish source text, which translators in other languages then saw untranslated.

@@ -21,7 +21,7 @@ msgstr ""
 
 #. Plugin URI of the plugin
 #: sekvo.php
-msgid "https://plogins.com/plogins-followup/"
+msgid "https://plogins.com/sekvo/"
 msgstr ""
 
 #. Description of the plugin

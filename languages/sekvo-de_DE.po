@@ -23,8 +23,8 @@ msgstr "Sekvo - Folge-E-Mails für WooCommerce"
 
 #. Plugin URI of the plugin
 #: sekvo.php
-msgid "https://plogins.com/plogins-followup/"
-msgstr "https://plogins.com/plogins-followup/"
+msgid "https://plogins.com/sekvo/"
+msgstr "https://plogins.com/sekvo/"
 
 #. Description of the plugin
 #: sekvo.php
