@@ -12,14 +12,32 @@ declare(strict_types=1);
 
 defined('WP_UNINSTALL_PLUGIN') || exit;
 
-delete_option('followup_settings');
-delete_option('followup_db_version');
-// The install floor: the timestamp the sender refuses to reach back past, the
-// last re-activation each step measures its own delay back from, and how far
-// the last run read without being able to send.
-delete_option('followup_install_floor');
-delete_option('followup_reactivated_at');
-delete_option('followup_scan_offset');
+/**
+ * Remove this plugin's options from the current site.
+ */
+function followup_uninstall_site(): void
+{
+    delete_option('followup_settings');
+    delete_option('followup_db_version');
+    // The install floor: the timestamp the sender refuses to reach back past, the
+    // last re-activation each step measures its own delay back from, and how far
+    // the last run read without being able to send.
+    delete_option('followup_install_floor');
+    delete_option('followup_reactivated_at');
+    delete_option('followup_scan_offset');
+}
+
+// Options are per site, so a network uninstall has to visit every site.
+if (is_multisite()) {
+    foreach (get_sites(['fields' => 'ids', 'number' => 0]) as $followup_site_id) {
+        switch_to_blog((int) $followup_site_id);
+        followup_uninstall_site();
+        restore_current_blog();
+    }
+    unset($followup_site_id);
+} else {
+    followup_uninstall_site();
+}
 
 // The PRO banner's dismissal is stored per user, so it belongs to the
 // plugin rather than to the site content. User meta is global, not
